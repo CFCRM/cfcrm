@@ -1,0 +1,2421 @@
+{% load static %}
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Salary Details</title>
+  <link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}" >
+  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <style>
+    .form-container{
+        background-color: rgb(245, 245, 245);
+        padding: 30px;
+        margin-right: -20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px #000;
+        /* margin -100px; */
+      }
+      .header{
+        padding: 10px;
+
+      }
+  </style>
+
+
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div class ="container-fluid">
+
+    <!-- Sidebar -->
+    {% include 'account/sidebar.html' %}
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <h3 class="card-title text-center">Income Details for Salaried</h3><br>
+
+     <div class="container">
+      <form class=" form-container" action="/account/salaried/{{cust.add_det_id}}" method="POST">
+        {% csrf_token %}
+        <!-- {% csrf_token %} -->
+        <!-- <p class="card-description"> Personal primary </p> -->
+
+        <!-- <div class="container"> -->
+          <div class="row" align="center">
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-5 col-form-label"> <b>Customer Name</b> </label>
+                <div class="col-sm-9">
+                 <br> <input type="text" value="{{cust.cust_name}}" class="form-control" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-5 col-form-label"> <b>Applicant Type</b> </label>
+                <div class="col-sm-9">
+                 <br> <input type="text" value="{{cust.applicant_type}}" class="form-control" disabled>
+                </div>
+              </div>
+            </div><br>
+          </div>
+          <hr>
+
+
+          <div class="alert alert-primary">
+            <label for="PersonalDetails">
+              <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"  />
+              <b>Personal Details</b>
+          </label>
+          </div>
+
+
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header"style="background-color: #007bff">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Personal details</h4>
+                  </div>
+                  <div class="modal-body">
+
+                  <hr />
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label><b>Loan amount Required</b></label>
+                        <div class="col-sm-9">
+                         <br> <input type="text" name="loan_amt" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-6 col-form-label"  for="cibil_type"><b>CIBIL Type</b></label>
+                  <div class="col-sm-9">
+                    <select class="form-control" name="cibil_type" id="cibil_type">
+                      <option value="Known">Known</option>
+                      <option value="Not Known">Not Known</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group row" id="cibil">
+                  <label class="col-sm-6 col-form-label" for="cibil_score"><b>CIBIL Score</b></label>
+                  <div class="col-sm-9">
+                   <br> <input type="text" name="cibil_score" id="cibil" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <script>
+                $("#cibil_type").change(function() {
+                    if ($(this).val() == "Not Known") {
+                      $('#cibil').hide();
+                      $('#cibil_score').removeAttr('required', '');
+                      $('#cibil_score').removeAttr('data-error', 'This field is required.');
+                    } else {
+                      $('#cibil').show();
+                      $('#cibil_score').attr('required');
+                      $('#cibil_score').attr('data-error');
+                    }
+                  });
+                  $("#cibil_type").trigger("change");
+              </script>
+            </div><br>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-10 col-form-label"><b>Have You Taken any Loan or CC in past</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="loanTaken">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-10 col-form-label"><b>How Was Your Repayment History</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="repaymentHistory">
+                            <option value="Good">Good</option>
+                            <option value="Bad">Bad</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><b>Default Year</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="defaultYear">
+                            <option value="Last 12 Months">Last 12 Months</option>
+                            <option value="Past">Past</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div><br>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-8 col-form-label"><b>Details About The Default</b></label>
+                        <div class="col-sm-9">
+                        <br> <br> <input type="text" name="details_bout_default" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><b>Gender</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Date Of Birth</b></label>
+                        <div class="col-sm-9">
+                        <br> <br> <input type="date" name="dob" class="form-control" placeholder="DD-MM-YY">
+                        </div>
+                      </div>
+                    </div>
+                  </div><br>
+
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-8 col-form-label"><b>Age</b></label>
+                        <div class="col-sm-9">
+                         <br> <input type="number" name="age" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label><b>Retirement Age</b></label>
+                        <div class="col-sm-9">
+                        <br>  <input type="number" name="retire_age" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label><b>Age of Consideration</b></label>
+                        <div class="col-sm-9">
+                         <br> <input type="number" name="consi_age" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div><br>
+
+                  <div class="row">
+                      <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><b>Proof</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="proof">
+                            <option value="1">Available</option>
+                            <option value="0">Not Available</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-8 col-form-label"><b>Marital Status</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="maritalStatus">
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="qualification"><b>Qualification</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="qualification" id="qualification">
+                            <option>Select</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Post Graduate">Post Graduate</option>
+                            <option value="Undergraduate">Undergraduate</option>
+                            <option value="SSC and Below">SSC and Below</option>
+                            <option value="Others">Others</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                     <div class="col-md-4">
+                      <div class="form-group row" id="post_degree">
+                        <label for="post" id="post"><b>Post Graduate Degree / Other</b></label>
+                        <div class="col-sm-9">
+                          <input type="text" name="degree_others" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row" id="professional">
+                        <label class="col-sm-4 col-form-label" for="profession"><b>Profession</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="profession" id="profession">
+                            <option value="CA">CA</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Lawyer">Lawyer</option>
+                            <option value="Architect">Architect</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    $("#qualification").change(function() {
+                          if ($(this).val() == "Post Graduate" || $(this).val() == "Others") {
+                            $('#post_degree').show();
+                            $('#post').attr('required', '');
+                            $('#post').attr('data-error', 'This field is required.');
+                          } else {
+                            $('#post_degree').hide();
+                            $('#post').removeAttr('required');
+                            $('#post').removeAttr('data-error');
+                          }
+                        });
+                        $("#qualification").trigger("change");
+                    $("#qualification").change(function() {
+                        if ($(this).val() == "Professional") {
+                          $('#professional').show();
+                          $('#profession').attr('required', '');
+                          $('#profession').attr('data-error', 'This field is required.');
+                        } else {
+                          $('#professional').hide();
+                          $('#profession').removeAttr('required');
+                          $('#profession').removeAttr('data-error');
+                        }
+                      });
+                      $("#qualification").trigger("change");
+                  </script>
+                    <div class="row">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row" id="doctor_degree">
+                        <label class="col-sm-4 col-form-label" for="otherField"><b>Degree</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="otherField">
+                            <option value="MD">MD</option>
+                            <option value="MBBS">MBBS</option>
+                            <option value="MDS">MDS</option>
+                            <option value="BDS">BDS</option>
+                            <option value="BUMS">BUMS</option>
+                            <option value="BHMS">BHMS</option>
+                            <option value="BAMS">BAMS</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row" id="lawyer_type">
+                        <label for="lawyerField"><b>Lawyer Type</b></label>
+                        <div class="col-sm-9" >
+                          <select class="form-control" name="lawyerType" id="lawyerField">
+                            <option value="Civil">Civil</option>
+                            <option value="Criminal">Criminal</option>
+                          </select>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                  <script>
+                    $("#profession").change(function() {
+                          if ($(this).val() == "Doctor") {
+                            $('#doctor_degree').show();
+                            $('#otherField').attr('required', '');
+                            $('#otherField').attr('data-error', 'This field is required.');
+                          } else {
+                            $('#doctor_degree').hide();
+                            $('#otherField').removeAttr('required');
+                            $('#otherField').removeAttr('data-error');
+                          }
+                        });
+                        $("#profession").trigger("change");
+
+                    $("#profession").change(function() {
+                          if ($(this).val() == "Lawyer") {
+                            $('#lawyer_type').show();
+                            $('#lawyerField').attr('required', '');
+                            $('#lawyerField').attr('data-error', 'This field is required.');
+                          } else {
+                            $('#lawyer_type').hide();
+                            $('#lawyerField').removeAttr('required');
+                            $('#lawyerField').removeAttr('data-error');
+                          }
+                        });
+                        $("#profession").trigger("change");
+                  </script>
+
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="nationality"><b>Nationality</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="nationality" id="nationality">
+                            <option value="Indian">Indian</option>
+                            <option value="Non Resident Indian">Non Resident Indian</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-5 col-form-label"><b>End-Use</b></label>
+                        <div class="col-sm-9">
+                         <br> <input type="text" name="enduse" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row" id="nation_type">
+                        <label class="col-sm-4 col-form-label" for="nationField"><b>Country</b></label>
+                        <div class="col-sm-9">
+                          <input type="text" name ="country" class="form-control" id="nationField">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <script>
+                      $("#nationality").change(function() {
+                          if ($(this).val() == "Non Resident Indian") {
+                            $('#nation_type').show();
+                            $('#nationField').attr('required', '');
+                            $('#nationField').attr('data-error', 'This field is required.');
+                          } else {
+                            $('#nation_type').hide();
+                            $('#nationField').removeAttr('required');
+                            $('#nationField').removeAttr('data-error');
+                          }
+                        });
+                        $("#nationality").trigger("change");
+                    </script>
+
+
+
+
+                </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                </div><br>
+
+
+          <div class="alert alert-primary">
+            <label for="IncomeDetails">
+            <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1" />
+            <b>Income Details</b>
+            </label>
+          </div>
+
+          <div class="modal fade" id="myModal1" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #007bff">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Income Details</h4>
+                </div>
+                <div class="modal-body">
+
+                <hr />
+                <div class="row">
+                     <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Bank Name</b></label>
+                      <div class="col-sm-9">
+                        <br> <input type="text" name="bank_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label">Salary Type</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="salary_type">
+                          <option value="Cash">Cash</option>
+                          <option value="Cheque">Cheque</option>
+                          <option value="Bank Credit">Bank Credit</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Gross Salary</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="gross_sal"  class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Net Salary</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="net_sal" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Bonus Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="bonusType">
+                          <option value="No Bonus">No Bonus</option>
+                          <option value="Monthly">Monthly </option>
+                          <option value="Quarterly">Quarterly</option>
+                          <option value="Half Yearly">Half Yearly </option>
+                          <option value="Yearly">Yearly </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- This bonus tenure would be a dropdown whose values will depend on bonus type -->
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Bonus Tenure</b></label>
+                      <div class="col-sm-9">
+                        <br> <input type="number" name="bonus_tenure" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Bonus Amount</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="bonus_amt" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Incentives Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="incentivesType">
+                          <option value="No Bonus/Incentive">No Bonus/Incentives</option>
+                          <option value="Monthly">Monthly </option>
+                          <option value="Quarterly">Quarterly</option>
+                          <option value="Half Yearly">Half Yearly </option>
+                          <option value="Yearly">Yearly </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- This incentive tenure would be a dropdown whose values will depend on bonus type -->
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Incentives Tenure</b></label>
+                      <div class="col-sm-9">
+                      <br>  <input type="number" name="incentive_tenure" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Incentives Amount</b></label>
+                      <div class="col-sm-9">
+                      <br>  <input type="number" name="incentive_amt" class="form-control">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div> <br>
+
+
+            </div>
+          </div><br>
+
+          <div class="alert alert-primary">
+            <label for="OtherIncomes">
+              <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2" />
+              <b>Other Incomes</b>
+          </label>
+          </div>
+
+
+           <!-- Modal -->
+           <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #007bff">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Other Incomes</h4>
+                </div>
+                <div class="modal-body">
+
+                <hr />
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Rental Income</b></label>
+                      <div class="col-sm-9">
+                        <br><input type="number" class="form-control" name="rent_inc">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label ><b>Lessee Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="Lessee_type">
+                          <option value="Individual">Individual</option>
+                          <option value="Corporate">Corporate</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Lessee Name</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text" name="Lessee_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Rent Amount</b></label>
+                      <div class="col-sm-9">
+                        <br><input type="number" name="rent_amt" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Tenure of Agreement</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="ten_of_agmnt" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Tenure Pending</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="ten_pending" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class=><b>Valid Rent Agreement</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="validRentAgreement">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>If No, Will You Make Agreement</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="make_agreement">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>How Old is Agreement</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text" name="old_agreement" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Agreement Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="agreementType">
+                          <option value="Registered">Registered</option>
+                          <option value="Not Registered">Not Registered</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Reflection in Bank Account</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number"name="reflectionInAccount" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Reflection in ITR</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="reflectionInItr">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Extension Expected In Years</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="ext_exp_in_years" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group-row">
+                  <br>
+                  <div>
+                    <button class="btn btn-primary add_button" id="addOtherButton" type="button" style="color:white">
+                      + Add Other Income </button><hr/>
+                  </div>
+                </div>
+                  <div class="additionalCustomerDetail">
+                  </div>
+
+                  <!-- <h1></h1> -->
+
+                  <script type="text/javascript">
+
+                    var x=1;
+
+                      $("#addOtherButton").click(function(){
+                        swal("One More", "Other Income is Added", "success");
+                       x++; //Increment field counter
+                       $('.additionalCustomerDetail').append(`
+                       <div class="customerDetails${x}">
+                        <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Rental Income</b></label>
+                      <div class="col-sm-9">
+                        <input type="number" class="form-control" name="rent_inc">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label"><b>Lessee Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="Lessee_type">
+                          <option value="Individual">Individual</option>
+                          <option value="Corporate">Corporate</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Lessee Name</b></label>
+                      <div class="col-sm-9">
+                        <input type="text" name="Lessee_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Rent Amount</b></label>
+                      <div class="col-sm-9">
+                        <input type="number" name="rent_amt" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Tenure of Agreement</b></label>
+                      <div class="col-sm-9">
+                        <input type="number" name="ten_of_agmnt" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Tenure Pending</b></label>
+                      <div class="col-sm-9">
+                        <input type="number" name="ten_pending" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class=><b>Valid Rent Agreement</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="validRentAgreement">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>If No, Will You Make Agreement</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="make_agreement">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>How Old is Agreement</b></label>
+                      <div class="col-sm-9">
+                        <input type="text" name="old_agreement" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Agreement Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="agreementType">
+                          <option value="Registered">Registered</option>
+                          <option value="Not Registered">Not Registered</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Reflection in Bank Account</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="reflectionInAccount">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Reflection in ITR</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="reflectionInItr">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Extension Expected In Years</b></label>
+                      <div class="col-sm-9">
+                        <input type="number" name="ext_exp_in_years" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div style="text-align:left">
+              <button class="btn btn-primary mr-3 removeOtherDetails${x}Button" onclick="removeOtherDetails('customerDetails${x}')" >
+                  Remove
+              </button><hr>
+      </div>
+       <br>
+                  `); //Add field html
+    });
+      function removeOtherDetails(parentclass){
+        swal("Other Incomes", "have been deleted", "warning");
+        $("."+`${parentclass}`).remove();
+      }
+      </script>
+
+              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+      <div class="alert alert-primary">
+              <label for="AdditionalOtherIncomes">
+                <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal3"  />
+                <b>Other Than Income Mentioned Above</b>
+            </label>
+            </div>
+
+      <!-- Modal -->
+                <div class="modal fade" id="myModal3" role="dialog">
+                  <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header"style="background-color: #007bff">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Other Than Income Mentioned Above</h4>
+                      </div>
+                      <div class="modal-body">
+
+                      <hr />
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label><b>Other Income than Mentioned Above</b></label>
+                            <div class="col-sm-9">
+                             <br> <input type="text" name="other_income" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label><b>Income Amount</b></label>
+                            <div class="col-sm-9">
+                             <br> <input type="number" name="income_amount" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group-row">
+                        <br>
+                        <div>
+                          <button class="btn btn-primary add_button" id="addAdditionalIncomeButton1" type="button" style="color:white">
+                            + Add </button><hr>
+                        </div>
+                      </div>
+                        <br>
+                        <div class="additionalCustomerDetail1">
+                        </div>
+
+                        <!-- <h1></h1> -->
+
+
+                    <script type="text/javascript">
+
+                      var x=1;
+
+                        $("#addAdditionalIncomeButton1").click(function(){
+                          swal("One More", "Additional Other Income is Added", "success");                           x++; //Increment field counter
+                         $('.additionalCustomerDetail1').append(`
+                         <div class="customerDetail1${x}">
+                          <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label><b>Other Income than Mentioned Above</b></label>
+                            <div class="col-sm-9">
+                              <input type="text" name="other_income" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label><b>Income Amount</b></label>
+                            <div class="col-sm-9">
+                              <input type="number" name="income_amount" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    <div style="text-align:left">
+                    <button class="btn btn-primary mr-3 removeAdditionalIncomeDetails1${x}Button" onclick="removeAdditionalIncomeDetails1('customerDetail1${x}')" >
+                        Remove
+                    </button><hr>
+                  </div>
+                  <br>
+
+                    `); //Add field html
+              });
+              function removeAdditionalIncomeDetails1(parentclass){
+                swal("Additional Other Incomes", "have been deleted", "warning");
+              $("."+`${parentclass}`).remove();
+              }
+              </script>
+
+
+                    </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div><br>
+
+
+
+          <div class="alert alert-primary">
+            <label for="CompanyDetails">
+            <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal4"  />
+            <b>Company Details</b>
+            </label>
+          </div>
+
+          <!-- Modal -->
+
+          <div class="modal fade" id="myModal4" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #007bff">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Company details</h4>
+                </div>
+                <div class="modal-body">
+
+                <hr />
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Company Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="comp_type">
+                          <option value="Proprietorship">Proprietorship</option>
+                          <option value="Partnership">Partnership</option>
+                          <option value="LLP">LLP</option>
+                          <option value="Pvt Ltd">Pvt Ltd</option>
+                          <option value="Public Ltd">Public Ltd</option>
+                          <option value="MNC's">MNC's</option>
+                          <option value="Govt">Govt</option>
+                          <option value="HUF">HUF</option>
+                          <option value="Trust">Trust</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label"><b>Location</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text" class="form-control" name="location" placeholder="Input (City)">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Company Name</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text"  name="comp_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+
+                    <label><b>Company Name Not Listed Above?</b>
+                      <a href="http://www.mca.gov.in/mcafoportal/login.do" target="_blank">Click Here</a> OR
+                      <a href="https://www.zaubacorp.com/" target="_blank">Click Here</a><br>
+                    </label><br>
+                    <br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Paid Up Capital</b></label>
+                      <div class="col-sm-9">
+                      <br>  <input type="number" name="paid_up_cap" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>How Old is Compay</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text" name="comp_age" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Nature of Business of Company</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text"  name="nature_business" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label"><b>Designation</b></label>
+                      <div class="col-sm-9">
+                        <br> <input type="text" name="designation" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Designation Type</b></label>
+                      <div class="col-sm-10">
+                        <select class="form-control" name="des_type">
+                          <option value="Below Clerk Level / Blue Collar">Below Clerk Level / Blue Collar</option>
+                          <option value="Above Clerk Level / White Collar">Above Clerk Level / White Collar</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Current Experience</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="curr_exp"  class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Total Experience</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="number" name="total_exp" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Employment Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="emp_type">
+                          <option value="Permanant">Permanant</option>
+                          <option value="Temporary">Temporary</option>
+                          <option value="Contractual">Contractual</option>
+                          <option value="Consulting">Consulting</option>
+                          <option value="Freelancer">Freelancer</option>
+                          <option value="Internship">Internship</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-7 col-form-label"><b>Form 16</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="form16">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div><br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Office Number</b></label>
+                      <div class="col-sm-9">
+                      <br>  <input type="number"name="office_phone" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Official Email-Id</b></label>
+                      <div class="col-sm-13">
+                       <br> <input type="email" name="office_email" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+          <div class="alert alert-primary">
+            <label for="ResidenceDetails">
+            <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal5"  />
+            <b>Residence Details</b>
+            </label>
+          </div>
+
+          <!-- Modal -->
+
+          <div class="modal fade" id="myModal5" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #007bff">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Residence Details</h4>
+                </div>
+                <div class="modal-body">
+
+                <hr />
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Current Residence Type</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="current_residence_type">
+                          <option value="Owned">Owned</option>
+                          <option value="Rented">Rented</option>
+                          <option value="Parental">Parental</option>
+                          <option value="Co. Provided Accomodation">Co. Provided Accomodation</option>
+                          <option value="Paying Guest">Paying Guest</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Current Location</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="City" class="form-control" name="city">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-9 col-form-label"><b>State</b></label>
+                      <div class="col-sm-9">
+                       <br> <input type="text" class="form-control" name="state">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div><br>
+
+
+            <div class="alert alert-primary">
+              <label for="ExistingLoanDetails">
+                <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal6" />
+                <b>Existing Loan Details</b>
+            </label>
+            </div>
+
+         <!-- Modal -->
+        <div class="modal fade" id="myModal6" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header"style="background-color: #007bff">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Existing Loan Details</h4>
+          </div>
+          <div class="modal-body">
+            <hr />
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-8 col-form-label"><b>Bank Name</b></label>
+              <div class="col-sm-9">
+
+               <br> <input type="text" class="form-control" name="bank_name">
+              </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label"><b>Product/Services</b></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="product">
+                  {% for product in products %}
+                    <option value={{ product.product }}>{{ product.product }}</option>
+                  {% endfor %}
+                </select>
+
+              </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-6 col-form-label"><b>Loan Amount</b></label>
+              <div class="col-sm-9">
+
+               <br> <input type="text" class="form-control" name="loan_amts">
+              </div>
+                </div>
+              </div>
+
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"><b>EMI</b></label>
+                <div class="col-sm-9">
+
+                  <input type="text" class="form-control" name="emi">
+                </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-8 col-form-label"><b>Rate of interest</b></label>
+                <div class="col-sm-9">
+
+                 <br> <input type="text" class="form-control" name="roi">
+                </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"><b>Tenure</b></label>
+                <div class="col-sm-9">
+
+                 <br> <input type="text" class="form-control" name="tenure">
+                </div>
+                  </div>
+                </div>
+
+
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-6 col-form-label"><b>EMI Start Date</b></label>
+                  <div class="col-sm-9">
+
+                    <br> <input type="date" class="form-control" name="emi_start_date">
+                  </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label"><b>EMI End Date</b></label>
+                  <div class="col-sm-9">
+
+                  <br>  <input type="date" class="form-control" name="emi_end_date">
+                  </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Outstanding Paid by Customer if any</b></label>
+                  <div class="col-sm-9">
+
+                    <br> <input type="text" class="form-control" name="outstanding_paid">
+                  </div>
+                    </div>
+                  </div>
+
+
+
+                  </div>
+
+
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-6 col-form-label"><b>Outstanding Amount</b></label>
+                            <div class="col-sm-9">
+
+                             <br><br> <input type="text" class="form-control" name="outstanding_amt">
+                            </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-6 col-form-label"><b>Any Bounces?</b></label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="any_bounce">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                              </select>
+
+                            </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-6 col-form-label"><b>Moratorium Taken?</b></label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="moratorium_taken">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                              </select>
+
+                            </div>
+                              </div>
+                            </div>
+
+
+
+                            </div>
+
+                            <label class="col-md-4 col-form-label"><b>Applicant Type</b></label>
+
+                            <select class="form-control col-md-4" name="applicant_type">
+                              <option value="applicant">Applicant</option>
+                              <option value="co_applicant">Co-Applicant</option>
+                              <option value="gurantor">Guarantor</option>
+                            </select>
+
+                          <div class="form-group-row">
+                            <br>
+                            <div>
+                              <button class="btn btn-primary add_button" id="addCustomerButton" type="button" style="color:white">
+                                + Add </button>
+                            </div>
+                          </div>
+                            <br>
+                            <div class="additionalCustomerDetail">
+                            </div>
+
+
+
+                            <script type="text/javascript">
+
+                              var x=1;
+
+                                $("#addCustomerButton").click(function(){
+                                  // alert("One More Existing Loan Details is Added");
+                                  swal("One More", "Existing Loan details is Added", "success");
+
+                                x++; //Increment field counter
+                                $('.additionalCustomerDetail').append(`
+                                <div class="customerDetails${x}">
+                                  <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-8 col-form-label"><b>Bank name</b></label>
+                      <div class="col-sm-9">
+
+                        <input type="text" class="form-control" name="bank_name">
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label"><b>Product/Services</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="product_services">
+                          <option value="Indian">Personal</option>
+                          <option value="Non Resident Indian">Buiness</option>
+                          <option value="Non Resident Indian">Home</option>
+                          <option value="Non Resident Indian">LAP</option>
+                          <option value="Non Resident Indian">2Wheeler</option>
+                          <option value="Non Resident Indian">4Wheeler</option>
+                          <option value="Non Resident Indian">Consumer</option>
+                        </select>
+
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-6 col-form-label"><b>Loan Amount</b></label>
+                      <div class="col-sm-9">
+
+                        <input type="text" class="form-control" name="loan_amts">
+                      </div>
+                        </div>
+                      </div>
+
+
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label"><b>EMI</b></label>
+                        <div class="col-sm-9">
+
+                          <input type="text" class="form-control" name="emi">
+                        </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class="col-sm-8 col-form-label"><b>Rate of interest</b></label>
+                        <div class="col-sm-9">
+
+                          <input type="text" class="form-control" name= "roi">
+                        </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label"><b>Tenure</b></label>
+                        <div class="col-sm-9">
+
+                          <input type="text" class="form-control" name="tenure">
+                        </div>
+                          </div>
+                        </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label"><b>EMI Start Date</b></label>
+                          <div class="col-sm-9">
+
+                            <input type="date" class="form-control" name="emi_start_date">
+                          </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-5 col-form-label"><b>EMI End Date</b></label>
+                          <div class="col-sm-9">
+
+                            <input type="date" class="form-control" name="emi_end_date">
+                          </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-8 col-form-label"><b>Outstanding Paid by Customer if any</b></label>
+                          <div class="col-sm-9">
+
+                            <input type="text" class="form-control" name="outstanding_paid">
+                          </div>
+                            </div>
+                          </div>
+
+
+
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-6 col-form-label"><b>Outstanding Amount</b></label>
+                            <div class="col-sm-9">
+
+                              <input type="text" class="form-control" name="outstanding_amt">
+                            </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-6 col-form-label"><b>Any Bounces?</b></label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="any_bounce">
+                                <option value="yes">Yes</option>
+                                <option value="no" Resident Indian">No</option>
+                              </select>
+
+                            </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group row">
+                                <label class="col-sm-8 col-form-label"><b>Moratorium Taken?</b></label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="moratorium_taken">
+                                <option value="yes">Yes</option>
+                                <option value="no" Resident Indian">No</option>
+                              </select>
+
+                            </div>
+                              </div>
+                            </div>
+
+
+
+                            </div>
+
+                            <label class="col-md-4 col-form-label"><b>Applicant Type</b></label>
+                            <!-- <input type="text" class="form-control col-md-4"> -->
+                            <select class="form-control col-md-4" name="applicant_type">
+                              <option value="applicant">Applicant</option>
+                              <option value="co_applicant">Co-Applicant</option>
+                              <option value="gurantor">Gurantor</option>
+                            </select>
+                            <br>
+
+
+
+                            <div style="text-align:left">
+                        <button class="btn btn-primary mr-3 removeCustomerDetails${x}Button" onclick="removeCustomerDetail('customerDetails${x}')" >
+                            Remove
+                        </button>
+                </div>
+                <br>
+
+
+
+
+
+                            `); //Add field html
+              });
+                function removeCustomerDetail(parentclass){
+                    // alert("Remove Existing Loan Details")
+                    swal("Existing Loan Details", "have being deleted", "warning");
+
+
+                  $("."+`${parentclass}`).remove();
+                }
+                </script>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div><br>
+
+
+
+              <div class="alert alert-primary">
+              <label for="ExistingCardDetails">
+                <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal7" />
+              <b> Existing Card Details</b>
+              </label>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal7" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #007bff">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Existing Card Details</h4>
+                </div>
+                <div class="modal-body">
+                  <hr />
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Bank Name</b></label>
+                    <div class="col-sm-9">
+
+                     <br> <input type="text" class="form-control" name="bank_name">
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Credit Limit</b></label>
+                    <div class="col-sm-9">
+
+                     <br> <input type="text" class="form-control" name="credit_limit">
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Limit Utilize</b></label>
+                    <div class="col-sm-9">
+
+                     <br> <input type="text" class="form-control" name="limit_utilized">
+                    </div>
+                      </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label"><b>Minimum Due</b></label>
+                      <div class="col-md-9">
+
+                       <br><br> <input type="text" class="form-control" name="min_due">
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-6 col-form-label"><b>Credit Card Age</b></label>
+                      <div class="col-md-9">
+
+                       <br><br> <input type="text" class="form-control" name="card_age">
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-8 col-form-label"><b>Any Delay In Payment</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="pay_delay">
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+
+                      </div>
+                        </div>
+                      </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class="col-sm-9 col-form-label"><b>Year Of Payment Delay</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="pay_delay_year">
+                            <option value="last_year">Last 1 year</option>
+                            <option value="prior_year">Prior to 1 year</option>
+                          </select>
+
+                        </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label><b>Moratorium Taken?</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="moratorium_taken">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                          </select>
+
+                        </div>
+                          </div>
+                        </div>
+                      </div>
+
+                          <!-- <h1></h1> -->
+                          <br>
+
+                            <div>
+                              <button class="btn btn-primary add_button" id="addCustomerButton1" type="button" style="color:white">
+                                + Add </button>
+
+                            </div>
+                          <br>
+                            <div class="additionalCustomerDetail1">
+
+
+                            <!-- <h1></h1> -->
+
+                          <script type="text/javascript">
+
+                              var x=1;
+
+                                $("#addCustomerButton1").click(function(){
+                                  // alert("One More Existing Card Details is Added");
+                                  // alert("One More Existing Card Details is Added");
+                        swal("One More", "Existing Card details is Added", "success");
+
+
+                                x++; //Increment field counter
+                                $('.additionalCustomerDetail1').append(`
+                                <div class="customerDetails1${x}">
+
+                                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Bank Name</b></label>
+                    <div class="col-sm-9">
+
+                      <input type="text" class="form-control" name="bank_name">
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Credit Limit</b></label>
+                    <div class="col-sm-9">
+
+                      <input type="text" class="form-control" name="credit_limit">
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><b>Limit Utilize</b></label>
+                    <div class="col-sm-9">
+
+                      <input type="text" class="form-control" name="limit_utilized">
+                    </div>
+                      </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label"><b>Minimum Due</b></label>
+                      <div class="col-md-9">
+
+                        <input type="text" class="form-control" name ="min_due">
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-6 col-form-label"><b>Credit Card Age</b></label>
+                      <div class="col-md-9">
+
+                        <input type="text" class="form-control" name="card_age">
+                      </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-8 col-form-label"><b>Any Delay In Payment</b></label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="pay_delay">
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+
+                      </div>
+                        </div>
+                      </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-6 col-form-label"><b>Year Of Payment Delay</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="pay_delay_year">
+                            <option value="last_year">Last 1 year</option>
+                            <option value="prior_year">Prior to 1 year</option>
+                          </select>
+
+                        </div>
+                          </div>
+                          </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-6 col-form-label"><b>Moratorium Taken?</b></label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="moratorium_taken">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                          </select>
+
+                          </div>
+                          </div>
+                          </div>
+
+
+                        <div class="form-group-row">
+                        <br>
+                        <div>
+                        <button class="btn btn-primary mr-3 removeCustomerDetails1${x}Button" onclick="removeCustomerDetail1('customerDetails1${x}')" >
+                            Remove
+                        </button>
+                        </div>
+                </div>
+                <br>
+
+                            `); //Add field html
+              });
+                function removeCustomerDetail1(parentclass){
+                    // alert("Remove Existing Card Details?")
+                    swal("Existing Loan Details", "have being deleted", "warning");
+
+                  $("."+`${parentclass}`).remove();
+                }
+
+                </script>
+
+              </script>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+              </div>
+              </div>
+              </div>
+
+
+              <br>
+
+
+              <script type="text/javascript">
+                $(function () {
+                  $("#AdditionalDetails").click(function () {
+                    if ($(this).is(":checked")) {
+                      $("#details9").show();
+                    } else {
+                      $("#details9").hide();
+                    }
+                  });
+                });
+              </script>
+
+
+            <div class="alert alert-primary">
+              <label for="AdditionalDetails">
+                <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal8"  />
+                <b>Additional Details</b>
+            </label>
+            </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal8" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header"style="background-color: #007bff">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Personal details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    <hr />
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label><b>Inward Cheque Return Last 6 Months</b></label>
+                          <div class="col-sm-9">
+                           <br><br> <input type="text" name="inw_cheque_return" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label><b>Any Loan Inquiry / Loan Disbursement</b></label>
+                          <div class="col-sm-9">
+                            <select class="form-control" name="loanInquiry">
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label><b>Details of Loan Inquiries / Loan Disbursement</b></label>
+                          <div class="col-sm-12">
+                            <br><input type="text" name="loan_enq_det" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div><br>
+
+                <div class="alert alert-primary">
+                  <label for="Investment">
+                    <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal9"  />
+                    <b>Investment</b>
+                </label>
+                </div>
+
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal9" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header"style="background-color: #007bff">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Personal details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    <hr />
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label><b>Investments You Have </b></label>
+                          <div class="col-sm-10">
+                            <select class="form-control" name="investments_u_have" id="investment" onchange="showfield(this.options[this.selectedIndex].value)">
+                              <option value="Bank Savings/Deposit">Bank Savings/Deposit</option>
+                              <option value="Other Properties">Other Properties</option>
+                              <option value="Current Balance In PF/PPF">Current Balance In PF/PPF </option>
+                              <option value="Life Insurance Policies/PLI">Life Insurance Policies/PLI</option>
+                              <option value="Share and Securities">Share and Securities</option>
+                              <option value="Other Assets">Other Assets</option>
+                              <option value="Other">Other Owned Property Details</option>
+                            </select>
+                            <br>
+                            <div id="div1"></div>
+                                  <script>
+                                      function showfield(name)
+                                      {
+                                          if(name=='Other')
+                                              document.getElementById('div1').innerHTML = 'Other Owned Property Details: <input type="text" name="other" class="form-control" />';
+                                          else
+                                              document.getElementById('div1').innerHTML='';
+                                      }
+                                  </script>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label><b>Investment Amount</b></label>
+                          <div class="col-sm-12">
+                           <br><input type="text" name="investment_amt" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div><br>
+
+              </div>
+
+
+<br>
+
+
+
+<!-- <h1></h1> -->
+<div style="text-align:center">
+<button class="btn btn-primary mr-3" name="cancel" type="submit">CANCEL</button>
+<button class="btn btn-primary mr-3" name="save" type="submit">SAVE & SUBMIT</button>
+<button class="btn btn-primary mr-3" name="next" type="submit">NEXT</button>
+<br>
+<br>
+
+</div>
+
+
+
+
+
+      </form>
+      </div>
+
+
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+    </div>
+  </div>
+
+
+  <!-- End of Page Wrapper -->
+
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+  <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/jquery.min.js' %} "></script>
+  <script src="{% static 'assets/js/core/popper.min.js'%} "></script>
+  <script src="{% static 'assets/js/core/bootstrap-material-design.min.js' %} "></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %} "></script>
+  <!-- Plugin for the momentJs  -->
+  <script src="{%static 'assets/js/plugins/moment.min.js' %} "></script>
+  <!--  Plugin for Sweet Alert -->
+  <script src="../assets/js/plugins/sweetalert2.js"></script>
+  <!-- Forms Validations Plugin -->
+  <script src=" {% static ' assets/js/plugins/jquery.validate.min.js' %}"></script>
+  <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+  <script src=" {% static 'assets/js/plugins/jquery.bootstrap-wizard.js' %} "></script>
+  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+  <script src="{% static 'assets/js/plugins/bootstrap-selectpicker.js' %} "></script>
+  <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+  <script src=" {% static 'assets/js/plugins/bootstrap-datetimepicker.min.js' %} "></script>
+  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
+  <script src="{% static ' assets/js/plugins/jquery.dataTables.min.js' %}"></script>
+  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+  <script src="{% static 'assets/js/plugins/bootstrap-tagsinput.js' %} "></script>
+  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+  <script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
+  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+  <script src="../assets/js/plugins/fullcalendar.min.js"></script>
+  <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+  <script src="{% static 'assets/js/plugins/jquery-jvectormap.js' %} "></script>
+  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+  <script src="{% static 'assets/js/plugins/nouislider.min.js' %} "></script>
+  <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+  <!-- Library for adding dinamically elements -->
+  <script src="{%static 'assets/js/plugins/arrive.min.js"' %} "></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chartist JS -->
+  <script src="{% static 'assets/js/plugins/chartist.min.js'%} "></script>
+  <!--  Notifications Plugin    -->
+  <script src=" {% static ' assets/js/plugins/bootstrap-notify.js' %}"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'assets/js/material-dashboard.js?v=2.1.2' %} " type="text/javascript"></script>
+  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+  <script src="{% static ' assets/demo/demo.js'%}"></script>
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+
+        $sidebar_img_container = $sidebar.find('.sidebar-background');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+            $('.fixed-plugin .dropdown').addClass('open');
+          }
+
+        }
+
+        $('.fixed-plugin a').click(function(event) {
+          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .active-color span').click(function() {
+          $full_page_background = $('.full-page-background');
+
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data-color', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data-color', new_color);
+          }
+        });
+
+        $('.fixed-plugin .background-color .badge').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('background-color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data-background-color', new_color);
+          }
+        });
+
+        $('.fixed-plugin .img-holder').click(function() {
+          $full_page_background = $('.full-page-background');
+
+          $(this).parent('li').siblings().removeClass('active');
+          $(this).parent('li').addClass('active');
+
+
+          var new_image = $(this).find("img").attr('src');
+
+          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            $sidebar_img_container.fadeOut('fast', function() {
+              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+              $sidebar_img_container.fadeIn('fast');
+            });
+          }
+
+          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+
+            $full_page_background.fadeOut('fast', function() {
+              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+              $full_page_background.fadeIn('fast');
+            });
+          }
+
+          if ($('.switch-sidebar-image input:checked').length == 0) {
+            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+
+            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+          }
+        });
+
+        $('.switch-sidebar-image input').change(function() {
+          $full_page_background = $('.full-page-background');
+
+          $input = $(this);
+
+          if ($input.is(':checked')) {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar_img_container.fadeIn('fast');
+              $sidebar.attr('data-image', '#');
+            }
+
+            if ($full_page_background.length != 0) {
+              $full_page_background.fadeIn('fast');
+              $full_page.attr('data-image', '#');
+            }
+
+            background_image = true;
+          } else {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar.removeAttr('data-image');
+              $sidebar_img_container.fadeOut('fast');
+            }
+
+            if ($full_page_background.length != 0) {
+              $full_page.removeAttr('data-image', '#');
+              $full_page_background.fadeOut('fast');
+            }
+
+            background_image = false;
+          }
+        });
+
+        $('.switch-sidebar-mini input').change(function() {
+          $body = $('body');
+
+          $input = $(this);
+
+          if (md.misc.sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            md.misc.sidebar_mini_active = false;
+
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+
+          } else {
+
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+
+            setTimeout(function() {
+              $('body').addClass('sidebar-mini');
+
+              md.misc.sidebar_mini_active = true;
+            }, 300);
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
+</body>
+
+</html>

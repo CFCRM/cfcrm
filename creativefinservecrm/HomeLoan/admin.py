@@ -1,0 +1,30 @@
+from django.contrib import admin
+from .models import *
+
+# Register your models here.
+
+admin.site.register(Bank)
+admin.site.register(Age)
+admin.site.register(Cibil)
+admin.site.register(Company)
+admin.site.register(CostSheet)
+admin.site.register(Customer)
+admin.site.register(CustomerDesignation)
+admin.site.register(CustomerNationality)
+admin.site.register(Fees)
+admin.site.register(Income)
+admin.site.register(IncomeFoir)
+admin.site.register(LoanAmount)
+admin.site.register(LoanTowardsValuation)
+admin.site.register(LtvResale)
+admin.site.register(NegativeEmployerProfile)
+admin.site.register(NegativeArea)
+admin.site.register(Obligation)
+admin.site.register(OtherDetails)
+admin.site.register(OtherDetailsROI)
+admin.site.register(Products)
+admin.site.register(Property)
+admin.site.register(PropertyType)
+admin.site.register(RoomType)
+admin.site.register(StageOfConstruction)
+admin.site.register(Remarks)

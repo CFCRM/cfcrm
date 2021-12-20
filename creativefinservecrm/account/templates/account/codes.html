@@ -1,0 +1,155 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Codes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .form-container{
+          background-color: rgb(245, 245, 245);
+          padding: 30px;
+          margin-right: -20px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px 0px #000;
+          /* margin -100px; */
+        }
+        .header{
+          padding: 10px;
+
+        }
+
+      </style>
+</head>
+<body>
+    <div class ="container-fluid">
+
+        <!-- Sidebar -->
+        {% include 'account/sidebar.html' %}
+
+        <div class="container" style="width:800px; margin:0 auto;" >
+            <h3 class="card-title text-center header"> Bank Codes</h3>
+
+
+            <form class="form-container" method="POST" action={% url 'codes' %} id='addcodes' style="display:none">
+                {% csrf_token %}
+                <div class="form-group row"></div>
+
+                <div class="container" >
+                    <div class="row">
+                      <div class="col-12 md-6 sm-4">
+                        <label class="col-sm-6 col-form-label"> <b>Bank Name</b> </label>
+                            <div class="col-sm-6">
+                              <!-- <input type="text" class="form-control" name="bank_name"> -->
+                              <select class="form-control" name="bank"><br>
+                                {% for bank in banks %}
+                                <option value={{ bank.bank_id }}>{{ bank.bank_name }}</option>
+                                {% endfor %}
+                              </select>
+                            <br>
+                            </div>
+                    </div>
+
+                      <div class="col-12 md-6 sm-4">
+                          <label class="col-sm-6 col-form-label"> <b>Product</b> </label>
+                              <div class="col-sm-6">
+                              <!-- <input type="text" class="form-control" name="cust_type"> -->
+                              <select class="form-control" name="product"><br>
+                                {% for product in products %}
+                                <option value={{ product.id }}>{{ product.product }}</option>
+                                {% endfor %}
+                              </select><br>
+                              </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-12 md-6 sm-4">
+                        <label class="col-sm-6 col-form-label"> <b>Code</b> </label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" name="code">
+                            </div>
+                    </div>
+
+                      <div class="col-12 md-6 sm-4">
+                          <label class="col-sm-6 col-form-label"> <b>Name of Company</b> </label>
+                              <div class="col-sm-6">
+                              <input type="text" class="form-control" name="cmp_name">
+                              </div>
+                      </div>
+
+                    </div>
+
+                      <br><div style="text-align:center">
+
+                        <a class="btn btn-danger" onclick="hideaddform()">cancel</a>
+                        <button class="btn btn-success mr-3 " type="submit">Submit</button>
+
+                    </div>
+
+                </div>
+            </form>
+          </div>
+
+
+            <div class="container form-container" style="width: 80%; margin:0 auto">
+
+              <h3 class="card-title text-center header"> List Of Codes</h3>
+
+              <table class="table table-bordered" style='width:100%'>
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name Of company</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   {% for bankcode in bankcodes %}
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{{ bankcode.bank.bank_name }}</td>
+                    <td>{{ bankcode.product.product }}</td>
+                    <td>{{ bankcode.code }}</td>
+                    <td>{{ bankcode.name_of_company }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <a class="btn btn-info" onclick="showaddform()">Add code</a>
+            </div>
+    </div>
+
+    <script>
+
+      function hideaddform() {
+        event.preventDefault();
+        document.getElementById('addcodes').style.display = 'none';
+      }
+      function showaddform() {
+        document.getElementById('addcodes').style.display = 'Block';
+      }
+    </script>
+
+</body>
+</html>

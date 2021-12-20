@@ -1,0 +1,116 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eligibility</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .form-container{
+          background-color: rgb(245, 245, 245);
+          padding: 30px;
+          margin-right: -20px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px 0px #000;
+          /* margin -100px; */
+        }
+        .header{
+          padding: 10px;
+
+        }
+
+      </style>
+</head>
+<body>
+    <div class ="container-fluid">
+
+        <!-- Sidebar -->
+        {% include 'account/sidebar.html' %}
+
+        <div class="container" style="width:800px; margin:0 auto;">
+            <h3 class="card-title text-center header"> Bank Details</h3>
+
+
+           <h1>Customer's Eligibility</h1>
+
+
+        {% for key, value in display.items %}
+        <h3>{{key}}</h3>
+        <table border="1">
+        <thead>
+            <tr>
+                <th>Bank</th>
+                <th>Tenure (in months)</th>
+                <th>Total Income</th>
+                <th>Total Income Eligibility</th>
+                <th>Rate of Interest</th>
+                <th>Per Lac EMI</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for key1, value1 in value.items %}
+            <tr>
+                <td><b>{{key1}}</b></td>
+                {% if value1 == 0 %}
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                {% else %}
+                    {% for key3, value3 in value1.items %}
+                    <td>{{value3}}</td>
+                    {%endfor%}
+                {% endif %}
+
+            </tr>
+            {%endfor%}
+        </tbody>
+
+
+    </table>
+    {%endfor%}
+    <br><br>
+
+    <h2>Total Loan Approved</h2>
+    {% for key, value in loan_approved.items %}
+    <b>{{key}}</b> : {{value}} <br>
+    {%endfor%}
+
+    <h2>Total EMI to be paid</h2>
+    {% for key, value in total_emi.items %}
+    <b>{{key}}</b> : {{value}} <br>
+    {%endfor%}
+
+    <br><br>
+    <h2>Remarks:</h2>
+    {% for key, value in remarks.items %}
+    <h3>{{key}}:</h3>
+    {% for keys, values in value.items %}
+    <b>{{keys}}:</b><br>
+    {% for e in values %}
+    {{e}}<br>
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+
+        </div>
+    </div>
+
+</body>
+</html>
