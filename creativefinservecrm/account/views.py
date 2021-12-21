@@ -31,6 +31,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 from leadgenerator.settings import EMAIL_HOST_USER
 from HomeLoan.models import *
 
+def timepass(request):
+    return render(request, 'timepass.html')
 
 def register(request):
     if request.method == 'POST':
