@@ -1,27 +1,16 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Master</title>
-	<link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}">
-	<link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+{% block other_css %}
 	<link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% endblock other_css %}
 
-</head>
+{% block title %}Master{% endblock title %}
 
-<body id="page-top">
+
+{% block other_body %}
 	<!-- Page Wrapper -->
 	<div class="container-fluid">
-		<!-- Sidebar -->
-		{% include 'account/sidebar.html' %}
-		<!-- End of Sidebar -->
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div class="container">
@@ -468,9 +457,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-	</script>s
+{% endblock other_body %}
+
+{% block other_js %}
 	<!-- Bootstrap core JavaScript-->
 	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -512,7 +501,7 @@
 	<!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	<!-- Library for adding dinamically elements -->
-	<script src="{%static 'assets/js/plugins/arrive.min.js"' %} "></script>
+	<script src="{%static 'assets/js/plugins/arrive.min.js' %} "></script>
 	<!--  Google Maps Plugin    -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 	<!-- Chartist JS -->
@@ -521,7 +510,7 @@
 	<script src=" {% static ' assets/js/plugins/bootstrap-notify.js' %}"></script>
 	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 	<script src="{% static 'assets/js/material-dashboard.js?v=2.1.2' %} " type="text/javascript"></script>
-	<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+	<!-- Material Dashboard DEMO methods, dont include it in your project -->
 	<script src="{% static ' assets/demo/demo.js'%}"></script>
 	<script>
 		$(document).ready(function () {
@@ -665,6 +654,4 @@
 			md.initDashboardPageCharts();
 		});
 	</script>
-</body>
-
-</html>
+{% endblock other_js %}

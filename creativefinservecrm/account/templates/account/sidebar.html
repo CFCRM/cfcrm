@@ -1,435 +1,757 @@
-<!--
-=========================================================
-Material Dashboard - v2.1.2
-=========================================================
-
-Product Page: https://www.creative-tim.com/product/material-dashboard
-Copyright 2020 Creative Tim (https://www.creative-tim.com)
-Coded by Creative Tim
-
-=========================================================
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}" >
-  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Dashboard
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-  <!-- CSS Files -->
-  <link href="{%static 'assets/css/material-dashboard.css?v=2.1.2' %}"  rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="{% static 'assets/demo/demo.css'%} " rel="stylesheet" />
-</head>
-
-<body class="">
-  <div class="wrapper ">
-    <div class="sidebar"  data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
-      <div class="logo"><a href="{% url 'dashboard' %}" class="simple-text ">
-        <i class="large material-icons icon-blue">dashboard </i>
-
-        dashboard
-        </a></div>
-      <div class="sidebar-wrapper" id="accordionSidebar">
-        <ul class="nav">
-          <li class="nav-item ">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="material-icons">Master </i>
-
-              <p>Master</p>
-
-            </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-              <div class="bg-warning py-2 collapse-inner rounded  ">
-                <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                <p> <a class="collapse-item" href="{% url 'Master_details' %}"><b>General</b></a> <br> </p>
-                <a class="collapse-item" href="{% url 'listproductandpolicy' %}">Product & Policy</a>
-                <!-- <a class="collapse-item" href="/crm_app/master _bank_name">Bank Name</a> -->
-              </div>
-            </div>
-
-
-
-
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="large material-icons icon-blue">person </i>
-              <p>Registration</p>
-
-
-
-
-            </a>
-            <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-              <div class="bg-warning py-2 collapse-inner rounded  ">
-                <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                <p> <a class="collapse-item" href="{% url 'register' %}"><b>Referal Partner</b></a> <br> </p>
-                <a class="collapse-item" href="{% url 'register2' %}">Creative Finserve Centre</a>
-                <!-- <a class="collapse-item" href="/crm_app/master_bank_name">Bank Name</a> -->
-              </div>
-            </div>
-
-
-
-
-            <li class="nav-item ">
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="material-icons">content_paste</i>
-              <p>Partner/Customer Details</p>
-
-
-
-
-
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark ps ps--active-y" id="sidenav-main">
+  <div class="sidenav-header">
+    <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+    <a class="navbar-brand m-0" href="analytics.html" target="_blank">
+      <img src="{% static 'new_assets/img/brand_logo.jfif' %}" class="navbar-brand-img h-100" alt="Brand Logo">
+      <span class="ms-1 font-weight-bold text-white">CFCRM</span>
+    </a>
+  </div>
+  <hr class="horizontal light mt-0 mb-2">
+  <div class="collapse navbar-collapse w-auto h-auto ps" id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+      <li class="nav-item mb-2 mt-0">
+        <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-white" aria-controls="ProfileNav" role="button" aria-expanded="false">
+          <img src="../../assets/img/team-3.jpg" class="avatar">
+          <span class="nav-link-text ms-2 ps-1">Brooklyn Alice</span>
+        </a>
+        <div class="collapse" id="ProfileNav" style="">
+          <ul class="nav ">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/profile/overview.html">
+                <span class="sidenav-mini-icon"> MP </span>
+                <span class="sidenav-normal  ms-3  ps-1"> My Profile </span>
               </a>
-              <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                <div class="bg-warning py-2 collapse-inner rounded  ">
-                  <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                  <p> <a class="collapse-item" href="{% url 'customer_details' %}"><b>Customer</b></a> <br> </p>
-                  <a class="collapse-item" href="{% url 'partner_list' %}">Partner</a>
-                  <!-- <a class="collapse-item" href="/crm_app/master_bank_name">Bank Name</a> -->
-                </div>
-              </div>
-
-
-
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="material-icons">library_books</i>
-              <p>Lead</p>
-
-
-            </a>
-            <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-              <div class="bg-warning py-2 collapse-inner rounded  ">
-                <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                <p> <a class="collapse-item" href="{% url 'add_leads' %}"><b>Add Leads</b></a> <br> </p>
-                <a class="collapse-item" href="{% url 'list_leads' %}">List Lead</a>
-                <!-- <a class="collapse-item" href="/crm_app/master_bank_name">Bank Name</a> -->
-              </div>
-            </div>
-
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#"  data-toggle="collapse" data-target="#collapseUtilitiesB" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="material-icons">home</i>
-              <p>Bank / NBFC Format</p>
-            </a>
-            <div id="collapseUtilitiesB" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-              <div class="bg-warning py-2 collapse-inner rounded  ">
-                <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                <p> <a class="collapse-item" href="{% url 'codes' %}"><b>Codes</b></a> <br> </p>
-                <a class="collapse-item" href="{% url 'bank_download' %}">Documents Upload</a>
-                <!-- <a class="collapse-item" href="/crm_app/master_bank_name">Bank Name</a> -->
-              </div>
-            </div>
-
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'approved' %}">
-              <i class="material-icons">location_ons</i>
-              <p>Approved Projects </p>
-            </a>
-          </li>
-
-          <li class="nav-item ">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities4" aria-expanded="true" aria-controls="collapseUtilities">
-              <i class="material-icons">notifications</i>
-              <p>Apps</p>
-
-
-
-
-
-            </a>
-            <div id="collapseUtilities4" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-              <div class="bg-warning py-2 collapse-inner rounded  ">
-                <!-- <h6 class="collapse-header">Custom Masters:</h6> <br> -->
-
-                <p> <a class="collapse-item" href="{% url 'email' %}"><b>Email</b></a> <br> </p>
-                <a class="collapse-item" href="{% url 'whatsapp' %}">Whatsapp</a> <br>
-                <a class="collapse-item" href="{% url 'calculator' %}">Calculator</a> <br>
-                <a class="collapse-item" href="#">Bank Statement Analyzer</a> <br>
-
-                <!-- <a class="collapse-item" href="/crm_app/master_bank_name">Bank Name</a> -->
-              </div>
-            </div>
-          </a>
-
             </li>
-
-
-
-
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'training' %}">
-              <i class="material-icons">language</i>
-              <p>Training</p>
-            </a>
-          </li>
-           <li class="nav-item ">
-            <a class="nav-link" href={% url 'support' %}>
-              <i class="material-icons">contact_support</i>
-              <p>support</p>
-            </a>
-          </li>
-
-          <li class="nav-item active-pro ">
-            <a class="nav-link" href="http://creativefinservecrm.pythonanywhere.com">
-              <i class="material-icons">logout</i>
-              <p>Logout</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="main-panel">
-
-
-  <!--   Core JS Files   -->
-  <script src="{% static 'assets/js/core/jquery.min.js' %} "></script>
-  <script src="{% static 'assets/js/core/popper.min.js'%} "></script>
-  <script src="{% static 'assets/js/core/bootstrap-material-design.min.js' %} "></script>
-  <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %} "></script>
-  <!-- Plugin for the momentJs  -->
-  <script src="{%static 'assets/js/plugins/moment.min.js' %} "></script>
-  <!--  Plugin for Sweet Alert -->
-  <script src="../assets/js/plugins/sweetalert2.js"></script>
-  <!-- Forms Validations Plugin -->
-  <script src=" {% static ' assets/js/plugins/jquery.validate.min.js' %}"></script>
-  <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-  <script src=" {% static 'assets/js/plugins/jquery.bootstrap-wizard.js' %} "></script>
-  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-  <script src="{% static 'assets/js/plugins/bootstrap-selectpicker.js' %} "></script>
-  <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-  <script src=" {% static 'assets/js/plugins/bootstrap-datetimepicker.min.js' %} "></script>
-  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-  <script src="{% static ' assets/js/plugins/jquery.dataTables.min.js' %}"></script>
-  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-  <script src="{% static 'assets/js/plugins/bootstrap-tagsinput.js' %} "></script>
-  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-  <script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
-  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-  <script src="../assets/js/plugins/fullcalendar.min.js"></script>
-  <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-  <script src="{% static 'assets/js/plugins/jquery-jvectormap.js' %} "></script>
-  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="{% static 'assets/js/plugins/nouislider.min.js' %} "></script>
-  <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-  <!-- Library for adding dinamically elements -->
-  <script src="{%static 'assets/js/plugins/arrive.min.js"' %} "></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chartist JS -->
-  <script src="{% static 'assets/js/plugins/chartist.min.js'%} "></script>
-  <!--  Notifications Plugin    -->
-  <script src=" {% static ' assets/js/plugins/bootstrap-notify.js' %}"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{% static 'assets/js/material-dashboard.js?v=2.1.2' %} " type="text/javascript"></script>
-  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-  <script src="{% static ' assets/demo/demo.js'%}"></script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
-
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
-
-        $full_page = $('.full-page');
-
-        $sidebar_responsive = $('body > .navbar-collapse');
-
-        window_width = $(window).width();
-
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-            $('.fixed-plugin .dropdown').addClass('open');
-          }
-
-        }
-
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
-
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('background-color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
-
-
-          var new_image = $(this).find("img").attr('src');
-
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
-              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
-            });
-          }
-
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $full_page_background.fadeOut('fast', function() {
-              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
-            });
-          }
-
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
-
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
-
-          $input = $(this);
-
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
-            }
-
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
-            }
-
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
-
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
-
-            background_image = false;
-          }
-        });
-
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
-
-          $input = $(this);
-
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-          } else {
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
-
-            setTimeout(function() {
-              $('body').addClass('sidebar-mini');
-
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-
-        });
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-
-    });
-  </script>
-</body>
-
-</html>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/account/settings.html">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-3  ps-1"> Settings </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signin/basic.html">
+                <span class="sidenav-mini-icon"> L </span>
+                <span class="sidenav-normal  ms-3  ps-1"> Logout </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <hr class="horizontal light mt-0">
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-white active" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round opacity-10">dashboard</i>
+          <span class="nav-link-text ms-2 ps-1">Dashboards</span>
+        </a>
+        <div class="collapse  show " id="dashboardsExamples">
+          <ul class="nav ">
+            <li class="nav-item active">
+              <a class="nav-link text-white active" href="analytics.html">
+                <span class="sidenav-mini-icon"> A </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Analytics </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="discover.html">
+                <span class="sidenav-mini-icon"> D </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Discover </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="sales.html">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Sales </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="automotive.html">
+                <span class="sidenav-mini-icon"> A </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Automotive </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="smart-home.html">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Smart Home </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item mt-3">
+        <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">PAGES</h6>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link text-white " aria-controls="pagesExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">image</i>
+          <span class="nav-link-text ms-2 ps-1">Pages</span>
+        </a>
+        <div class="collapse " id="pagesExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#profileExample">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Profile <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="profileExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/profile/overview.html">
+                      <span class="sidenav-mini-icon"> P </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Profile Overview </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/profile/projects.html">
+                      <span class="sidenav-mini-icon"> A </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> All Projects </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/profile/messages.html">
+                      <span class="sidenav-mini-icon"> M </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Messages </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#usersExample">
+                <span class="sidenav-mini-icon"> U </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Users <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="usersExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/users/reports.html">
+                      <span class="sidenav-mini-icon"> R </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Reports </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/users/new-user.html">
+                      <span class="sidenav-mini-icon"> N </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> New User </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#accountExample">
+                <span class="sidenav-mini-icon"> A </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Account <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="accountExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/account/settings.html">
+                      <span class="sidenav-mini-icon"> S </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Settings </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/account/billing.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Billing </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/account/invoice.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Invoice </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/account/security.html">
+                      <span class="sidenav-mini-icon"> S </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Security </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#projectsExample">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Projects <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="projectsExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/projects/general.html">
+                      <span class="sidenav-mini-icon"> G </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> General </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/projects/timeline.html">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Timeline </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/projects/new-project.html">
+                      <span class="sidenav-mini-icon"> N </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> New Project </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#vrExamples">
+                <span class="sidenav-mini-icon"> V </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Virtual Reality <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="vrExamples">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/vr/vr-default.html">
+                      <span class="sidenav-mini-icon"> V </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> VR Default </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/vr/vr-info.html">
+                      <span class="sidenav-mini-icon"> V </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> VR Info </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/pricing-page.html">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Pricing Page </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/rtl-page.html">
+                <span class="sidenav-mini-icon"> R </span>
+                <span class="sidenav-normal  ms-2  ps-1"> RTL </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/widgets.html">
+                <span class="sidenav-mini-icon"> W </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Widgets </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/charts.html">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Charts </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/sweet-alerts.html">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Sweet Alerts </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/pages/notifications.html">
+                <span class="sidenav-mini-icon"> N </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Notifications </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link text-white " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">apps</i>
+          <span class="nav-link-text ms-2 ps-1">Applications</span>
+        </a>
+        <div class="collapse " id="applicationsExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/crm.html">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> CRM </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/kanban.html">
+                <span class="sidenav-mini-icon"> K </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Kanban </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/wizard.html">
+                <span class="sidenav-mini-icon"> W </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Wizard </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/datatables.html">
+                <span class="sidenav-mini-icon"> D </span>
+                <span class="sidenav-normal  ms-2  ps-1"> DataTables </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/calendar.html">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Calendar </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/applications/stats.html">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Stats </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link text-white " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">shopping_basket</i>
+          <span class="nav-link-text ms-2 ps-1">Ecommerce</span>
+        </a>
+        <div class="collapse " id="ecommerceExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#productsExample">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Products <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="productsExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/products/new-product.html">
+                      <span class="sidenav-mini-icon"> N </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> New Product </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/products/edit-product.html">
+                      <span class="sidenav-mini-icon"> E </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Edit Product </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/products/product-page.html">
+                      <span class="sidenav-mini-icon"> P </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Product Page </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/products/products-list.html">
+                      <span class="sidenav-mini-icon"> P </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Products List </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#ordersExample">
+                <span class="sidenav-mini-icon"> O </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Orders <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="ordersExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/orders/list.html">
+                      <span class="sidenav-mini-icon"> O </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Order List </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/orders/details.html">
+                      <span class="sidenav-mini-icon"> O </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Order Details </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/ecommerce/referral.html">
+                <span class="sidenav-mini-icon"> R </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Referral </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#authExamples" class="nav-link text-white " aria-controls="authExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">content_paste</i>
+          <span class="nav-link-text ms-2 ps-1">Authentication</span>
+        </a>
+        <div class="collapse " id="authExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#signinExample">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Sign In <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="signinExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signin/basic.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Basic </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signin/cover.html">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Cover </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signin/illustration.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Illustration </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#signupExample">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Sign Up <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="signupExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signup/basic.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Basic </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signup/cover.html">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Cover </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/signup/illustration.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Illustration </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#resetExample">
+                <span class="sidenav-mini-icon"> R </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Reset Password <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="resetExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/reset/basic.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Basic </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/reset/cover.html">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Cover </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/reset/illustration.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Illustration </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#lockExample">
+                <span class="sidenav-mini-icon"> L </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Lock <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="lockExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/lock/basic.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Basic </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/lock/cover.html">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Cover </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/lock/illustration.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Illustration </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#StepExample">
+                <span class="sidenav-mini-icon"> 2 </span>
+                <span class="sidenav-normal  ms-2  ps-1"> 2-Step Verification <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="StepExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/verification/basic.html">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Basic </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/verification/cover.html">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Cover </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/verification/illustration.html">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Illustration </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#errorExample">
+                <span class="sidenav-mini-icon"> E </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Error <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="errorExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/error/404.html">
+                      <span class="sidenav-mini-icon"> E </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Error 404 </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://demos.creative-tim.com/material-dashboard-pro/pages/authentication/error/500.html">
+                      <span class="sidenav-mini-icon"> E </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Error 500 </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <hr class="horizontal light">
+        <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">DOCS</h6>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#basicExamples" class="nav-link text-white " aria-controls="basicExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">upcoming</i>
+          <span class="nav-link-text ms-2 ps-1">Basic</span>
+        </a>
+        <div class="collapse " id="basicExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#gettingStartedExample">
+                <span class="sidenav-mini-icon"> G </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Getting Started <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="gettingStartedExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/quick-start/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> Q </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Quick Start </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/license/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> L </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> License </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Contents </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/build-tools/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Build Tools </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#foundationExample">
+                <span class="sidenav-mini-icon"> F </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Foundation <b class="caret"></b></span>
+              </a>
+              <div class="collapse " id="foundationExample">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/colors/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Colors </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/grid/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> G </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Grid </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/typography/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Typography </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/icons/material-dashboard" target="_blank">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal  ms-2  ps-1"> Icons </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#componentsExamples" class="nav-link text-white " aria-controls="componentsExamples" role="button" aria-expanded="false">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">view_in_ar</i>
+          <span class="nav-link-text ms-2 ps-1">Components</span>
+        </a>
+        <div class="collapse " id="componentsExamples">
+          <ul class="nav ">
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/alerts/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> A </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Alerts </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/badge/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> B </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Badge </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/buttons/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> B </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Buttons </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/cards/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Card </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/carousel/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Carousel </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/collapse/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Collapse </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/dropdowns/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> D </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Dropdowns </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/forms/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> F </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Forms </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/modal/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> M </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Modal </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/navs/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> N </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Navs </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/navbar/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> N </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Navbar </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/pagination/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Pagination </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/popovers/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Popovers </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/progress/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Progress </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/spinners/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> S </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Spinners </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/tables/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> T </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Tables </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="https://www.creative-tim.com/learning-lab/bootstrap/tooltips/material-dashboard" target="_blank">
+                <span class="sidenav-mini-icon"> T </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Tooltips </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/creativetimofficial/ct-material-dashboard-pro/blob/master/CHANGELOG.md" target="_blank">
+          <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">receipt_long</i>
+          <span class="nav-link-text ms-2 ps-1">Changelog</span>
+        </a>
+      </li>
+    </ul>
+  <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 593px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 380px;"></div></div></aside>

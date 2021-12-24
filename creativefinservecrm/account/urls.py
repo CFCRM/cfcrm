@@ -8,7 +8,7 @@ from django.conf import settings
 
 urlpatterns = [
 
-    path('', views.timepass, name="timepass"),
+    path('', views.base_dashboard, name="base_dashboard"),
     path('homeloan/',include('HomeLoan.urls')),
     path('register', views.register, name="register"),
     path('login', views.login, name="login"),

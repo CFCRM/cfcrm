@@ -1,31 +1,17 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>List Leads</title>
-  <link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}" >
-  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+{% block other_css %}
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+{% endblock other_css %}
 
+{% block title %}List Leads{% endblock title %}
 
+{% block other_body_css %}id="page-top"{% endblock other_body_css %}
 
-</head>
-
-<body id="page-top">
-
+{% block other_body %}
   <!-- Page Wrapper -->
   <div class ="container-fluid">
-
-    <!-- Sidebar -->
-    {% include 'account/sidebar.html' %}
-    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -140,17 +126,15 @@
         </div>
     </div>
   </div>
-
-
   <!-- End of Page Wrapper -->
-
-
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+{% endblock other_body %}
 
+{% block other_js %}
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -164,7 +148,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 
   <!--   Core JS Files   -->
   <script src="{% static 'assets/js/core/jquery.min.js' %} "></script>
@@ -198,7 +181,7 @@
   <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
-  <script src="{%static 'assets/js/plugins/arrive.min.js"' %} "></script>
+  <script src="{%static 'assets/js/plugins/arrive.min.js' %} "></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->
@@ -387,6 +370,4 @@
 
     });
   </script>
-</body>
-
-</html>
+{% endblock other_js %}

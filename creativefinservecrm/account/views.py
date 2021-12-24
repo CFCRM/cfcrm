@@ -31,8 +31,9 @@ from django.utils.datastructures import MultiValueDictKeyError
 from leadgenerator.settings import EMAIL_HOST_USER
 from HomeLoan.models import *
 
-def timepass(request):
-    return render(request, 'timepass.html')
+@login_required (redirect_field_name='login', login_url='login')
+def base_dashboard(request):
+    return render(request, 'base/base.html')
 
 def register(request):
     if request.method == 'POST':
@@ -215,7 +216,7 @@ def login(request):
 
             auth.login(request, user)
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
         else:
@@ -255,7 +256,7 @@ def add_leads(request):
     if request.method == 'POST':
         if 'cancel' in request.POST:
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
         name = request.POST['name']
@@ -286,7 +287,7 @@ def add_leads(request):
 
         if 'save' in request.POST:
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
 
             elif user.role == "Referral Partner":
                 return redirect('base')
@@ -577,7 +578,7 @@ def additionaldetails(request,id):
 
         if 'cancel' in request.POST:
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
 
@@ -615,7 +616,7 @@ def additionaldetails(request,id):
 
         if 'save' in request.POST:
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
 
             elif user.role == "Referral Partner":
                 return redirect('base')
