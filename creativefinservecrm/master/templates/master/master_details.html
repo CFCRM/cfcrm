@@ -6,12 +6,11 @@
 {% endblock other_css %}
 
 {% block title %}Master{% endblock title %}
-
+	
+{% block other_body_css %}id="page-top"{% endblock other_body_css %}
 
 {% block other_body %}
-	<!-- Page Wrapper -->
 	<div class="container-fluid">
-		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div class="container">
 				<div class="container">
@@ -20,7 +19,50 @@
 							<h1 class="display-3 text-gray-800">General Master</h1>
 						</div>
 					</div>
-					<div class="card pb-3">
+					<div class="card z-index-2 pb-3 mb-3">
+						<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+							<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 pe-1 text-white">
+								<div class="row">
+									<div class="col">
+										<a data-bs-toggle="collapse" href="#Qualification" role="button" aria-expanded="false" aria-controls="Qualification">
+											<h4 class="card-title fw-bold">Qualification</h4>
+											<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+										</a>
+									</div>
+									<div class="col-auto">
+										<a href="{% url 'Qualification_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="Qualification">
+							<div class="table-responsive">
+								<table class="table">
+									<thead class="text-primary">
+										<tr>
+											<th>Qualification</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for qualification in qualifications %}
+										<tr>
+											<td>{{ qualification.qualification }}</td>
+											<td>{{ qualification.effective_date }}</td>
+											<td>{{ qualification.ineffective_date }}</td>
+											<td><a href={% url 'editqualification' id=qualification.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span>
+												</a>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					  </div>
+					<div class="card mb-3">
 						<div class="card-header card-header-primary ">
 							<div class="row">
 								<div class="col">
@@ -30,7 +72,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Qualification_form' %}" class="btn btn-info "> Add</a>
+									<a href="{% url 'Qualification_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -51,11 +93,7 @@
 											<td>{{ qualification.qualification }}</td>
 											<td>{{ qualification.effective_date }}</td>
 											<td>{{ qualification.ineffective_date }}</td>
-											<td>
-												<a href={% url 'editqualification' id=qualification.id %}>
-													<span class="icon text-black-50">
-														<i class="fa fa-edit"></i>
-													</span>
+											<td><a href={% url 'editqualification' id=qualification.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span>
 												</a>
 											</td>
 										</tr>
@@ -75,7 +113,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Qualification_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'Qualification_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -120,7 +158,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Role_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'Role_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -165,7 +203,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Product_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'Product_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -207,7 +245,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'SubProduct_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'SubProduct_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -246,7 +284,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'CustomerType_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'CustomerType_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -267,11 +305,7 @@
 											<td>{{ customertype.cust_type }}</td>
 											<td>{{ customertype.effective_date }}</td>
 											<td>{{ customertype.ineffective_date }}</td>
-											<td><a href={% url 'editcustomertype' id=customertype.id %}>
-													<span class="icon text-black-50">
-														<i class="fa fa-edit"></i>
-													</span>
-												</a></td>
+											<td><a href={% url 'editcustomertype' id=customertype.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -289,7 +323,7 @@
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'DesignationType_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'DesignationType_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
@@ -322,40 +356,34 @@
 						<div class="card-header card-header-primary ">
 							<div class="row">
 								<div class="col">
-									<a data-bs-toggle="collapse" href="#Qualification" role="button" aria-expanded="false" aria-controls="Qualification">
-									<h4 class="card-title fw-bold">Simple Table</h4>
+									<a data-bs-toggle="collapse" href="#SalaryType" role="button" aria-expanded="false" aria-controls="SalaryType">
+									<h4 class="card-title fw-bold">Salary Type</h4>
 									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Qualification_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'SalaryType_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
-						<div class="collapse card-body" id="Qualification" >
+						<div class="collapse card-body" id="SalaryType" >
 							<div class="table-responsive">
 								<table class="table">
 									<thead class=" text-primary">
 										<tr>
-											<th>Qualification</th>
+											<th>SalaryType</th>
 											<th>Effective Date</th>
 											<th>Ineffective Date</th>
 											<th>Edit</th>
 										</tr>
 									</thead>
 									<tbody>
-										{% for qualification in qualifications %}
+										{% for salarytype in salarytypes %}
 										<tr>
-											<td>{{ qualification.qualification }}</td>
-											<td>{{ qualification.effective_date }}</td>
-											<td>{{ qualification.ineffective_date }}</td>
-											<td>
-												<a href={% url 'editqualification' id=qualification.id %}>
-													<span class="icon text-black-50">
-														<i class="fa fa-edit"></i>
-													</span>
-												</a>
-											</td>
+											<td>{{ salarytype.salary_type }}</td>
+											<td>{{ salarytype.effective_date }}</td>
+											<td>{{ salarytype.ineffective_date }}</td>
+											<td><a href={% url 'editsalarytype' id=salarytype.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -367,40 +395,34 @@
 						<div class="card-header card-header-primary ">
 							<div class="row">
 								<div class="col">
-									<a data-bs-toggle="collapse" href="#Qualification" role="button" aria-expanded="false" aria-controls="Qualification">
-									<h4 class="card-title fw-bold">Simple Table</h4>
+									<a data-bs-toggle="collapse" href="#ResidenceType" role="button" aria-expanded="false" aria-controls="ResidenceType">
+									<h4 class="card-title fw-bold">Residence Type</h4>
 									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Qualification_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'ResidenceType_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
-						<div class="collapse card-body" id="Qualification" >
+						<div class="collapse card-body" id="ResidenceType" >
 							<div class="table-responsive">
 								<table class="table">
 									<thead class=" text-primary">
 										<tr>
-											<th>Qualification</th>
+											<th>ResidenceType</th>
 											<th>Effective Date</th>
 											<th>Ineffective Date</th>
 											<th>Edit</th>
 										</tr>
 									</thead>
 									<tbody>
-										{% for qualification in qualifications %}
+										{% for residencetype in residencetypes %}
 										<tr>
-											<td>{{ qualification.qualification }}</td>
-											<td>{{ qualification.effective_date }}</td>
-											<td>{{ qualification.ineffective_date }}</td>
-											<td>
-												<a href={% url 'editqualification' id=qualification.id %}>
-													<span class="icon text-black-50">
-														<i class="fa fa-edit"></i>
-													</span>
-												</a>
-											</td>
+											<td>{{ residencetype.residence_type }}</td>
+											<td>{{ residencetype.effective_date }}</td>
+											<td>{{ residencetype.ineffective_date }}</td>
+											<td><a href={% url 'editresidencetype' id=residencetype.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -412,40 +434,34 @@
 						<div class="card-header card-header-primary ">
 							<div class="row">
 								<div class="col">
-									<a data-bs-toggle="collapse" href="#Qualification" role="button" aria-expanded="false" aria-controls="Qualification">
-									<h4 class="card-title fw-bold">Simple Table</h4>
+									<a data-bs-toggle="collapse" href="#BankName" role="button" aria-expanded="false" aria-controls="BankName">
+									<h4 class="card-title fw-bold">Bank Name</h4>
 									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
 									</a>
 								</div>
 								<div class="col-auto">
-									<a href="{% url 'Qualification_form' %}" class="btn btn-info ">Add</a>
+									<a href="{% url 'BankName_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
 								</div>
 							</div>
 						</div>
-						<div class="collapse card-body" id="Qualification" >
+						<div class="collapse card-body" id="BankName" >
 							<div class="table-responsive">
 								<table class="table">
 									<thead class=" text-primary">
 										<tr>
-											<th>Qualification</th>
+											<th>BankName</th>
 											<th>Effective Date</th>
 											<th>Ineffective Date</th>
 											<th>Edit</th>
 										</tr>
 									</thead>
 									<tbody>
-										{% for qualification in qualifications %}
+										{% for bankname in banknames %}
 										<tr>
-											<td>{{ qualification.qualification }}</td>
-											<td>{{ qualification.effective_date }}</td>
-											<td>{{ qualification.ineffective_date }}</td>
-											<td>
-												<a href={% url 'editqualification' id=qualification.id %}>
-													<span class="icon text-black-50">
-														<i class="fa fa-edit"></i>
-													</span>
-												</a>
-											</td>
+											<td>{{ bankname.bank_name }}</td>
+											<td>{{ bankname.effective_date }}</td>
+											<td>{{ bankname.ineffective_date }}</td>
+											<td><a href={% url 'editbankname' id=bankname.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -453,205 +469,522 @@
 							</div>
 						</div>
 					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#LeadSource" role="button" aria-expanded="false" aria-controls="LeadSource">
+									<h4 class="card-title fw-bold">Lead Source</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'LeadSource_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="LeadSource" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>LeadSource</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for leadsource in leadsources %}
+										<tr>
+											<td>{{ leadsource.lead_source }}</td>
+											<td>{{ leadsource.effective_date }}</td>
+											<td>{{ leadsource.ineffective_date }}</td>
+											<td><a href={% url 'editleadsource' id=leadsource.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#Degree" role="button" aria-expanded="false" aria-controls="Degree">
+									<h4 class="card-title fw-bold">Bank Name</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'Degree_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="Degree" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>Degree</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for degree in degrees %}
+										<tr>
+											<td>{{ degree.degree }}</td>
+											<td>{{ degree.effective_date }}</td>
+											<td>{{ degree.ineffective_date }}</td>
+											<td><a href={% url 'editdegree' id=degree.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#Nationality" role="button" aria-expanded="false" aria-controls="Nationality">
+									<h4 class="card-title fw-bold">Nationality</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'Nationality_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="Nationality" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>Nationality</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for nationality in nationalitys %}
+										<tr>
+											<td>{{ nationality.nationality }}</td>
+											<td>{{ nationality.effective_date }}</td>
+											<td>{{ nationality.ineffective_date }}</td>
+											<td><a href={% url 'editnationality' id=nationality.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#State" role="button" aria-expanded="false" aria-controls="State">
+									<h4 class="card-title fw-bold">State</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'State_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="State" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>State</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for state in states %}
+										<tr>
+											<td>{{ state.state }}</td>
+											<td>{{ state.effective_date }}</td>
+											<td>{{ state.ineffective_date }}</td>
+											<td><a href={% url 'editstate' id=state.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#City" role="button" aria-expanded="false" aria-controls="City">
+									<h4 class="card-title fw-bold">City</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'City_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="City" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<th>City</th>
+										<th>Effective Date</th>
+										<th>Ineffective Date</th>
+										<th>Edit</th>
+									</thead>
+									<tbody>
+										{% for city in citys %}
+										<tr>
+											<td>{{ city.city_name }}</td>
+											<td>{{ city.effective_date }}</td>
+											<td>{{ city.ineffective_date }}</td>
+											<td><a href={% url 'editcity' id=city.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#ApplicantType" role="button" aria-expanded="false" aria-controls="ApplicantType">
+									<h4 class="card-title fw-bold">Applicant Type</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'Applicanttype_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="ApplicantType" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>ApplicantType</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for applicanttype in applicanttypes %}
+										<tr>
+											<td>{{ applicanttype.applicant_type }}</td>
+											<td>{{ applicanttype.effective_date }}</td>
+											<td>{{ applicanttype.ineffective_date }}</td>
+											<td><a href={% url 'editapplicanttype' id=applicanttype.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#PropertyIn" role="button" aria-expanded="false" aria-controls="PropertyIn">
+									<h4 class="card-title fw-bold">Property In</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'PropertyIn_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="PropertyIn" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>PropertyIn</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for propertyin in propertyins %}
+										<tr>
+											<td>{{ propertyin.property_in }}</td>
+											<td>{{ propertyin.effective_date }}</td>
+											<td>{{ propertyin.ineffective_date }}</td>
+											<td><a href={% url 'editpropertyln' id=propertyin.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#Status" role="button" aria-expanded="false" aria-controls="Status">
+									<h4 class="card-title fw-bold">Status</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'Status_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="Status" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>Status</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for status in statues %}
+										<tr>
+											<td>{{ status.status }}</td>
+											<td>{{ status.effective_date }}</td>
+											<td>{{ status.ineffective_date }}</td>
+											<td><a href={% url 'editstatus' id=status.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#NatureOfBusiness" role="button" aria-expanded="false" aria-controls="NatureOfBusiness">
+									<h4 class="card-title fw-bold">Nature Of Business</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'NatureOfBusiness_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="NatureOfBusiness" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>NatureOfBusiness</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for natureofbusiness in natureofbusinesss %}
+										<tr>
+											<td>{{ natureofbusiness.nature_business }}</td>
+											<td>{{ natureofbusiness.effective_date }}</td>
+											<td>{{ natureofbusiness.ineffective_date }}</td>
+											<td><a href={% url 'editnatureofbusiness' id=natureofbusiness.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#AYYear" role="button" aria-expanded="false" aria-controls="AYYear">
+									<h4 class="card-title fw-bold">AYYear</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'AYyear_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="AYYear" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>AYYear</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for ayyear in ayyears %}
+										<tr>
+											<td>{{ ayyear.ay_year }}</td>
+											<td>{{ ayyear.effective_date }}</td>
+											<td>{{ ayyear.ineffective_date }}</td>
+											<td><a href={% url 'editayyear' id=ayyear.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#AgreementType" role="button" aria-expanded="false" aria-controls="AgreementType">
+									<h4 class="card-title fw-bold">Agreement Type</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'Agreementtype_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="AgreementType" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>AgreementType</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for agreementtype in agreementtypes %}
+										<tr>
+											<td>{{ agreementtype.agreement_type }}</td>
+											<td>{{ agreementtype.effective_date }}</td>
+											<td>{{ agreementtype.ineffective_date }}</td>
+											<td><a href={% url 'editagreementtype' id=agreementtype.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#StageOfConstruction" role="button" aria-expanded="false" aria-controls="StageOfConstruction">
+									<h4 class="card-title fw-bold">StageOfConstruction</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'StageOfConstruction_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="StageOfConstruction" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>StageOfConstruction</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for stageOfconstruction in stageOfconstructions %}
+										<tr>
+											<td>{{ stageOfconstruction.stage }}</td>
+											<td>{{ stageOfconstruction.effective_date }}</td>
+											<td>{{ stageOfconstruction.ineffective_date }}</td>
+											<td><a href={% url 'editstageofconstruction' id=stageOfconstruction.id %}><span class="icon text-black-50"><i class="fa fa-edit"></i></span></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="card pb-3">
+						<div class="card-header card-header-primary ">
+							<div class="row">
+								<div class="col">
+									<a data-bs-toggle="collapse" href="#RejectionType" role="button" aria-expanded="false" aria-controls="RejectionType">
+									<h4 class="card-title fw-bold">RejectionType</h4>
+									<p class="card-category fw-bold"> Here is a subtitle for this table</p>
+									</a>
+								</div>
+								<div class="col-auto">
+									<a href="{% url 'RejectionType_form' %}" class="btn btn-info "><span class="material-icons">add</span> Add</a>
+								</div>
+							</div>
+						</div>
+						<div class="collapse card-body" id="RejectionType" >
+							<div class="table-responsive">
+								<table class="table">
+									<thead class=" text-primary">
+										<tr>
+											<th>RejectionType</th>
+											<th>Rejection Reason</th>
+											<th>Effective Date</th>
+											<th>Ineffective Date</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for rejectiontype in rejectiontypes %}
+										<tr>
+											<td><a href={% url 'editrejectiontype' id=rejectiontype.id %}>
+													<span class="icon text-black-50">
+														<i class="fa fa-edit"></i>
+													</span>
+												</a></td>
+											<td>{{ rejectiontype.rejection_type }}</td>
+											<td>{{ rejectiontype.rejection_reason }}</td>
+											<td>{{ rejectiontype.effective_date }}</td>
+											<td>{{ rejectiontype.ineffective_date }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 {% endblock other_body %}
 
-{% block other_js %}
-	<!-- Bootstrap core JavaScript-->
-	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-	<!-- Custom scripts for all pages-->
-	<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<!--   Core JS Files   -->
-	<script src="{% static 'assets/js/core/jquery.min.js' %} "></script>
-	<script src="{% static 'assets/js/core/popper.min.js'%} "></script>
-	<script src="{% static 'assets/js/core/bootstrap-material-design.min.js' %} "></script>
-	<script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %} "></script>
-	<!-- Plugin for the momentJs  -->
-	<script src="{%static 'assets/js/plugins/moment.min.js' %} "></script>
-	<!--  Plugin for Sweet Alert -->
-	<script src="../assets/js/plugins/sweetalert2.js"></script>
-	<!-- Forms Validations Plugin -->
-	<script src=" {% static ' assets/js/plugins/jquery.validate.min.js' %}"></script>
-	<!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-	<script src=" {% static 'assets/js/plugins/jquery.bootstrap-wizard.js' %} "></script>
-	<!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-	<script src="{% static 'assets/js/plugins/bootstrap-selectpicker.js' %} "></script>
-	<!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-	<script src=" {% static 'assets/js/plugins/bootstrap-datetimepicker.min.js' %} "></script>
-	<!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-	<script src="{% static ' assets/js/plugins/jquery.dataTables.min.js' %}"></script>
-	<!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-	<script src="{% static 'assets/js/plugins/bootstrap-tagsinput.js' %} "></script>
-	<!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-	<script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
-	<!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-	<script src="../assets/js/plugins/fullcalendar.min.js"></script>
-	<!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-	<script src="{% static 'assets/js/plugins/jquery-jvectormap.js' %} "></script>
-	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-	<script src="{% static 'assets/js/plugins/nouislider.min.js' %} "></script>
-	<!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-	<!-- Library for adding dinamically elements -->
-	<script src="{%static 'assets/js/plugins/arrive.min.js' %} "></script>
-	<!--  Google Maps Plugin    -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-	<!-- Chartist JS -->
-	<script src="{% static 'assets/js/plugins/chartist.min.js'%} "></script>
-	<!--  Notifications Plugin    -->
-	<script src=" {% static ' assets/js/plugins/bootstrap-notify.js' %}"></script>
-	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="{% static 'assets/js/material-dashboard.js?v=2.1.2' %} " type="text/javascript"></script>
-	<!-- Material Dashboard DEMO methods, dont include it in your project -->
-	<script src="{% static ' assets/demo/demo.js'%}"></script>
-	<script>
-		$(document).ready(function () {
-			$().ready(function () {
-				$sidebar = $('.sidebar');
-				$sidebar_img_container = $sidebar.find('.sidebar-background');
-				$full_page = $('.full-page');
-				$sidebar_responsive = $('body > .navbar-collapse');
-				window_width = $(window).width();
-				fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-				if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-					if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-						$('.fixed-plugin .dropdown').addClass('open');
-					}
-				}
-				$('.fixed-plugin a').click(function (event) {
-					// Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-					if ($(this).hasClass('switch-trigger')) {
-						if (event.stopPropagation) {
-							event.stopPropagation();
-						} else if (window.event) {
-							window.event.cancelBubble = true;
-						}
-					}
-				});
-				$('.fixed-plugin .active-color span').click(function () {
-					$full_page_background = $('.full-page-background');
-					$(this).siblings().removeClass('active');
-					$(this).addClass('active');
-					var new_color = $(this).data('color');
-					if ($sidebar.length != 0) {
-						$sidebar.attr('data-color', new_color);
-					}
-					if ($full_page.length != 0) {
-						$full_page.attr('filter-color', new_color);
-					}
-					if ($sidebar_responsive.length != 0) {
-						$sidebar_responsive.attr('data-color', new_color);
-					}
-				});
-				$('.fixed-plugin .background-color .badge').click(function () {
-					$(this).siblings().removeClass('active');
-					$(this).addClass('active');
-					var new_color = $(this).data('background-color');
-					if ($sidebar.length != 0) {
-						$sidebar.attr('data-background-color', new_color);
-					}
-				});
-				$('.fixed-plugin .img-holder').click(function () {
-					$full_page_background = $('.full-page-background');
-					$(this).parent('li').siblings().removeClass('active');
-					$(this).parent('li').addClass('active');
-					var new_image = $(this).find("img").attr('src');
-					if ($sidebar_img_container.length != 0 && $(
-							'.switch-sidebar-image input:checked').length != 0) {
-						$sidebar_img_container.fadeOut('fast', function () {
-							$sidebar_img_container.css('background-image',
-								'url("' + new_image + '")');
-							$sidebar_img_container.fadeIn('fast');
-						});
-					}
-					if ($full_page_background.length != 0 && $(
-							'.switch-sidebar-image input:checked').length != 0) {
-						var new_image_full_page = $(
-								'.fixed-plugin li.active .img-holder').find('img')
-							.data('src');
-						$full_page_background.fadeOut('fast', function () {
-							$full_page_background.css('background-image',
-								'url("' + new_image_full_page + '")');
-							$full_page_background.fadeIn('fast');
-						});
-					}
-					if ($('.switch-sidebar-image input:checked').length == 0) {
-						var new_image = $('.fixed-plugin li.active .img-holder')
-							.find("img").attr('src');
-						var new_image_full_page = $(
-								'.fixed-plugin li.active .img-holder').find('img')
-							.data('src');
-						$sidebar_img_container.css('background-image', 'url("' +
-							new_image + '")');
-						$full_page_background.css('background-image', 'url("' +
-							new_image_full_page + '")');
-					}
-					if ($sidebar_responsive.length != 0) {
-						$sidebar_responsive.css('background-image', 'url("' +
-							new_image + '")');
-					}
-				});
-				$('.switch-sidebar-image input').change(function () {
-					$full_page_background = $('.full-page-background');
-					$input = $(this);
-					if ($input.is(':checked')) {
-						if ($sidebar_img_container.length != 0) {
-							$sidebar_img_container.fadeIn('fast');
-							$sidebar.attr('data-image', '#');
-						}
-						if ($full_page_background.length != 0) {
-							$full_page_background.fadeIn('fast');
-							$full_page.attr('data-image', '#');
-						}
-						background_image = true;
-					} else {
-						if ($sidebar_img_container.length != 0) {
-							$sidebar.removeAttr('data-image');
-							$sidebar_img_container.fadeOut('fast');
-						}
-						if ($full_page_background.length != 0) {
-							$full_page.removeAttr('data-image', '#');
-							$full_page_background.fadeOut('fast');
-						}
-						background_image = false;
-					}
-				});
-				$('.switch-sidebar-mini input').change(function () {
-					$body = $('body');
-					$input = $(this);
-					if (md.misc.sidebar_mini_active == true) {
-						$('body').removeClass('sidebar-mini');
-						md.misc.sidebar_mini_active = false;
-						$('.sidebar .sidebar-wrapper, .main-panel')
-							.perfectScrollbar();
-					} else {
-						$('.sidebar .sidebar-wrapper, .main-panel')
-							.perfectScrollbar('destroy');
-						setTimeout(function () {
-							$('body').addClass('sidebar-mini');
-							md.misc.sidebar_mini_active = true;
-						}, 300);
-					}
-					// we simulate the window Resize so the charts will get updated in realtime.
-					var simulateWindowResize = setInterval(function () {
-						window.dispatchEvent(new Event('resize'));
-					}, 180);
-					// we stop the simulation of Window Resize after the animations are completed
-					setTimeout(function () {
-						clearInterval(simulateWindowResize);
-					}, 1000);
-				});
-			});
-			// Javascript method's body can be found in assets/js/demos.js
-			md.initDashboardPageCharts();
-		});
-	</script>
-{% endblock other_js %}
+{% block other_js %}{% endblock other_js %}
