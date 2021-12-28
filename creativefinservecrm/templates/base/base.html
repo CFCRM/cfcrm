@@ -13,8 +13,11 @@
         {% include 'base/dashboard_css.html' %}
 
         {% block other_css %}{% endblock other_css %}
-
-        <title>{% block title %}{% endblock title %}</title>
+        {% if title %}
+            <title>{{title}}</title>
+        {% else %}
+            <title>{% block title %}{% endblock title %}</title>
+        {% endif %}
 
     </head>
     <body {% include 'base/dashboard_body_css.html' %} {% block other_body_css %}{% endblock other_body_css %}>

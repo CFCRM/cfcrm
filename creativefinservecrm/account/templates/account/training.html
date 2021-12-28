@@ -1,32 +1,23 @@
+{% extends 'base/base.html' %}
 {% load static %}
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block other_css %}
+    <style>
+        img {
+            height: 200px;
+            width: 200px;
+        }
+        iframe {
+            height: 200px;
+            width: 300px;
+        }
+    </style>
+{% endblock other_css %}
 
-        <title>Support</title>
+{% block title %}Training{% endblock title %}
 
-        <style>
-            img {
-                height: 200px;
-                width: 200px;
-            }
-            iframe {
-                height: 200px;
-                width: 300px;
-            }
-        </style>
-    </head>
-
-
-    <body>
-        {% include 'account/sidebar.html' %}
-
-        <br><br>
-        <h2 align="center"> <b>Training</b></h2><br>
-
-
+{% block other_body %}
+        <h1 class="mb-5 mt-3 display-3 text-center">Training</h1> 
         <table align="center" cellspacing="20" cellpadding="20">
             <tr>
                 <td>
@@ -49,7 +40,5 @@
                 </td>
             </tr>
         </table>
-
-    </body>
-</html>
+{% endblock other_body %}
 

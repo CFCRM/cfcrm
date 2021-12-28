@@ -33,7 +33,10 @@ from HomeLoan.models import *
 
 @login_required (redirect_field_name='login', login_url='login')
 def base_dashboard(request):
-    return render(request, 'base/base.html')
+    context = {
+        'title': 'Dashboard'
+    }
+    return render(request, 'base/base.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -276,19 +279,13 @@ def add_leads(request):
         pincode = request.POST['pincode']
         country = request.POST['country']
         added_by = request.user.id
-
-
-        lead = Leads(name = name, phone = phone, alt_phone = alt_phone, email = email, reference = ref, product = product, sub_product = sub_product, loan_amt = loan_amt, address = address, pincode = pincode, country = country, state = state, city= city, added_by = added_by )
+        lead = Leads(name = name, phone = phone, alt_phone = alt_phone, email = email, 
+        reference = ref, product = product, sub_product = sub_product, loan_amt = loan_amt, 
+        address = address, pincode = pincode, country = country, state = state, city= city, added_by = added_by )
         lead.save()
-
-
-
-
-
         if 'save' in request.POST:
             if user.role == "Admin":
                 return redirect('base_dashboard')
-
             elif user.role == "Referral Partner":
                 return redirect('base')
         if 'next' in request.POST:

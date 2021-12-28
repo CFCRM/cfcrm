@@ -1,5 +1,5 @@
-{% extends 'base/base.html' %}
-{% load static %}
+{% extends 'base/base.html' %} 
+{% load static %} 
 
 {% block other_css %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -7,223 +7,85 @@
   <link rel="stylesheet" href="../../static/material_2_pro_assets/css/material-dashboard.min.css">
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <style>
-    .form-container{
-      background-color: rgb(245, 245, 245);
-      padding: 30px;
-      margin-right: -20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px 0px #000;
-      /* margin -100px; */
-    }
-    .header{
-      padding: 10px;
-    }
-
-    .size{
-      font-size:initial;
-      background-image:none;
-    }
-
-    .button-style{
-      font-size: larger;
-    }
+      .form-container {
+          background-color: rgb(245, 245, 245);
+          padding: 30px;
+          margin-right: -20px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px 0px #000;
+          /* margin -100px; */
+      }
+      
+      .header {
+          padding: 10px;
+      }
   </style>
 {% endblock other_css %}
 
-{% block title %}Additional Details{% endblock title %}
+{% block title %}Additional Details{% endblock title %} 
 
-{% block other_body_css %}id="page-top"{% endblock other_body_css %}
+{% block other_body_css %}id="page-top"{% endblock other_body_css %} 
 
 {% block other_body %}
-  <!-- Page Wrapper -->
-  <div class ="container-fluid">
-    <div id="content-wrapper" class="d-flex flex-column">
-      <div class="container">
-        <h3 class="card-title text-center">Additional Details</h3><br>
-        <form class=" form-container" action="/account/additionaldetails/{{lead.lead_id}}" method="POST">
-          {% csrf_token %}
-          <div class="alert size">
-            <label for="customerDetails" style="display:grid; height:50px;">
-              <button type="buttoon" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="font-size: 15px;" />
-              <b>Additional Details Of Customer</b>
-            </label>
-          </div>
-          <div class="modal fade" id="myModal1" role="dialog">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header"style="background-color: #fffff">
-                  {% comment %} <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Personal details</h4> {% endcomment %}
-                  <h6 class="modal-title font-weight-normal" id="modal-title-default" style="font-size: 17px;"><b>Additional Details Of Customer</b></h6>
-                </div> <!--End of Modal Header-1-->
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-outline my-3">
-                        <label class="form-label size"><b>Customer Full Name</b></label>
-                        <input type="text" name="name_1" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size" style="font-size:1.275rem"><b>Income Holder</b></label>
-                          <select class="form-control" name="incomeHolder_1">
-                            <option value="yes" class="size">Yes</option>
-                            <option value="no" class="size">No</option>
-                          </select>
+  <!-- Content Wrapper -->
+    <div class="container mb-5">
+      <h3 class="card-title text-center fw-bold fs-3"> Additional Details</h3><br>
+      <form class=" form-container" action="/account/additionaldetails/{{lead.lead_id}}" method="POST">
+        {% csrf_token %}
+        <div class="alert alert-primary fs-4 text-white" style="cursor: pointer;" data-toggle="modal" data-target="#myModal1">
+            Additional Details Of Customer
+        </div>
+        <div class="modal fade" id="myModal1" role="dialog">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                  <div class="col-11 modal-title text-center fw-bold fs-3">Personal details</div>
+                  <div class="col-1 close" data-dismiss="modal"><i class="fas fa-times"></i></div>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Customer Full Name</b></label>
+                      <div class="col-sm-12">
+                        <input type="text" name="name_1" class="form-control" placeholder="eg. Chheda Adit Bharat">
                       </div>
                     </div>
                   </div>
-                  
-                  <br>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Property Owner</b></label>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Income Holder</b></label>
+                      <div class="col-sm-12">
+                        <select class="form-control" name="incomeHolder_1">
+                          <option value="">-- Yes or No --</option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Property Owner</b></label>
+                      <div class="col-sm-12">
                         <select class="form-control" name="propertyOwner_1">
-                          <option value="yes" class="size">Yes</option>
-                          <option value="no" class="size">No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Applicant Type</b></label>
-                        <select class="form-control" name="applicantType_1">
-                          <option value="Applicant">Applicant</option>
-                          <option value="1st Co-Applicant" class="size">1st Co-Applicant</option>
-                          <option value="2nd Co-Applicant" class="size">2nd Co-Applicant</option>
-                          <option value="3rd Co-Applicant" class="size">3rd Co-Applicant</option>
-                          <option value="4th Co-Applicant" class="size">4th Co-Applicant</option>
+                          <option value="">-- Yes or No --</option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
                         </select>
                       </div>
                     </div>
                   </div>
-
-                  <br>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Relation</b></label>
-                        <select class="form-control" name="relation_1">
-                          <option value="Self" class="size">Self</option>
-                          <option value="Husband" class="size">Husband</option>
-                          <option value="Wife" class="size">Wife</option>
-                          <option value="Daughter" class="size">Daughter</option>
-                          <option value="Son" class="size">Son</option>
-                          <option value="Brother" class="size">Brother</option>
-                          <option value="Sister" class="size">Sister</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Customer Type</b></label>
-                        <select class="form-control" name="customerType_1">
-                          <option value="Salaried" class="size">Salaried</option>
-                          <option value="Self Employed" class="size">Self Employed</option>
-                          <option value="Salaried Professional" class="size">Salaried Professional</option>
-                          <option value="Business Professional" class="size">Business Professional</option>
-                          <option value="Housewife" class="size">Housewife</option>
-                          <option value="Student" class="size">Student</option>
-                          <option value="Retired Pensioner" class="size">Retired Pensioner</option>
-                          <option value="Retired" class="size">Retired</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <br>
-                  
-                  <div>
-                    <button class="btn btn-primary add_button button-style" id="addCustomerButton1" type="button" style="color:white">
-                    + Add </button>
-                  </div>
-                  <div class="additionalCustomerDetail1"></div>
-                </div> <!--End of Modal Body-1-->
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary button-style">Save changes</button>
-                  <button type="button" class="btn btn-link  ml-auto button-style" data-dismiss="modal">Close</button>
-                  {% comment %} <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> {% endcomment %}
-                </div> <!--End of Modal footer-1-->
-                {% comment %} <div class="additionalCustomerDetail1"></div> {% endcomment %}
-              </div> <!--End of Modal Content-1-->
-            </div> <!--End of modal-dialog modal-lg-1-->
-              {% comment %} <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div> {% endcomment %}
-          </div> <!--End of modal fade-1-->
-
-
-
-          <div class="alert size">
-            <label for="contactPerson" style="display:grid; height:50px;">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="font-size: 15px;"/>
-              <b>Is Customer and Contact Person Different</b>
-            </label>
-          </div>
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header"style="background-color: #fffff">
-                  <h6 class="modal-title font-weight-normal" id="modal-title-default" style="font-size: 17px;"><b>Is Customer and Contact Person Different</b></h6>
-                  {% comment %} <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Is Customer and Contact Person Different</h4> {% endcomment %}
                 </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-outline my-3">
-                        <label class="form-label size"><b>Contact Person </b></label>
-                        <input type="text" name="con_person" class="form-control size">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-outline my-3">
-                        <label class="form-label size"><b>Contact Person Number</b></label>
-                        <input type="tel" pattern="[0-9]{10}" name="con_phone" class="form-control size">
-                      </div>
-                    </div>
-                  </div>
-                      
-                  <br>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-outline my-3">
-                        <label class="form-label size"><b>Customer Name</b></label>
-                        <input type="text" name="name" class="form-control size">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Income Holder</b></label>
-                        <select class="form-control size" name="incomeHolder">
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <br>
-                      
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Property Owner</b></label>
-                        <select class="form-control size" name="propertyOwner">
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Applicant Type</b></label>
-                        <select class="form-control size" name="applicantType">
+                <br>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Applicant Type</b></label>
+                      <div class="col-sm-12">
+                        <select class="form-control" name="applicantType_1">
+                          <option value="">-- Select Applicant --</option>
                           <option value="Applicant">Applicant</option>
                           <option value="1st Co-Applicant">1st Co-Applicant</option>
                           <option value="2nd Co-Applicant">2nd Co-Applicant</option>
@@ -233,14 +95,12 @@
                       </div>
                     </div>
                   </div>
-
-                  <br>
-                      
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Relation</b></label>
-                        <select class="form-control size" name="relation">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Relation</b></label>
+                      <div class="col-sm-12">
+                        <select class="form-control" name="relation_1">
+                          <option value="">-- Select Relation --</option>
                           <option value="Self">Self</option>
                           <option value="Husband">Husband</option>
                           <option value="Wife">Wife</option>
@@ -251,10 +111,13 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 size"><b>Customer Type</b></label>
-                        <select class="form-control" name="customerType">
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"><b>Customer Type</b></label>
+                      <div class="col-sm-12">
+                        <select class="form-control" name="customerType_1">
+                          <option value="">-- Select Customer Type --</option>
                           <option value="Salaried">Salaried</option>
                           <option value="Self Employed">Self Employed</option>
                           <option value="Salaried Professional">Salaried Professional</option>
@@ -267,104 +130,175 @@
                       </div>
                     </div>
                   </div>
-
-                  <br>
-                </div> <!--End of Modal Body-2-->
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                </div> <!--End of Modal Footer-2-->
-              </div> <!--End of Modal Content-2-->
-            </div> <!--End of modal-dialog modal-lg-2-->
-          </div> <!--End of modal fade-2-->
-          <div style="text-align:center">
-            <button class="btn btn-primary mr-3 " name="cancel" type="submit" style="font-size: 13px;">CANCEL</button>
-            <button class="btn btn-primary mr-3" name="save" type="submit" style="font-size: 13px;">SAVE & SUBMIT</button>
-            <button class="btn btn-primary mr-3" name="next" type="submit" style="font-size: 13px;">NEXT</button>
+                </div>
+                <br>
+              </div>
+              <div class="additionalCustomerDetail1"></div>
+              <div class="modal-footer">
+                <button class="btn btn-primary add_button" id="addCustomerButton1" type="button" style="color:white">
+                  + Add 
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <br>
           </div>
-        </form> <!--End of Form-->
-      </div> <!--End of Container-->
-    </div> <!-- End of Content Wrapper -->
-  </div> <!-- End of Content Fluid -->
-      
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-{% endblock other_body %}
+        </div>
+        <div class="alert alert-primary fs-4 text-white" style="cursor: pointer;" data-toggle="modal" data-target="#myModal">
+          Is Customer and Contact Person Different
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-11 modal-title text-center fw-bold fs-3">Is Customer and Contact Person Different ?</div>
+                    <div class="col-1 close" data-dismiss="modal"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Contact Person's Full Name</b></label>
+                                <div class="col-sm-12">
+                                    <input type="text" name="con_person" class="form-control" placeholder="eg. Adit Chheda">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Contact Person's Number</b></label>
+                                <div class="col-sm-12">
+                                    <input type="tel" pattern="[0-9]{10}" name="con_phone" class="form-control" placeholder="eg. 1234567890">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Customer Name</b></label>
+                                <div class="col-sm-12">
+                                    <input type="text" name="name" class="form-control" placeholder="eg. Adit Chheda">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Income Holder</b></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="incomeHolder">
+                                      <option value="">-- Yes or No --</option>
+                                      <option value="yes">Yes</option>
+                                      <option value="no">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Property Owner</b></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="propertyOwner">
+                                      <option value="">-- Yes or No --</option>
+                                      <option value="yes">Yes</option>
+                                      <option value="no">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Applicant Type</b></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="applicantType">
+                                      <option value="">-- Select Applicant Type --</option>
+                                      <option value="Applicant">Applicant</option>
+                                      <option value="1st Co-Applicant">1st Co-Applicant</option>
+                                      <option value="2nd Co-Applicant">2nd Co-Applicant</option>
+                                      <option value="3rd Co-Applicant">3rd Co-Applicant</option>
+                                      <option value="4th Co-Applicant">4th Co-Applicant</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Relation</b></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="relation">
+                                      <option value="">-- Select Relation --</option>
+                                      <option value="Self">Self</option>
+                                      <option value="Husband">Husband</option>
+                                      <option value="Wife">Wife</option>
+                                      <option value="Daughter">Daughter</option>
+                                      <option value="Son">Son</option>
+                                      <option value="Brother">Brother</option>
+                                      <option value="Sister">Sister</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"><b>Customer Type</b></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="customerType">
+                                      <option value="">-- Select Customer Type --</option>
+                                      <option value="Salaried">Salaried</option>
+                                      <option value="Self Employed">Self Employed</option>
+                                      <option value="Salaried Professional">Salaried Professional</option>
+                                      <option value="Business Professional">Business Professional</option>
+                                      <option value="Housewife">Housewife</option>
+                                      <option value="Student">Student</option>
+                                      <option value="Retired Pensioner">Retired Pensioner</option>
+                                      <option value="Retired">Retired</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary mr-3" name="cancel" type="submit">CANCEL</button>
+                    <button class="btn btn-primary mr-3" name="save" type="submit">SAVE & SUBMIT</button>
+                    <button class="btn btn-primary mr-3" name="next" type="submit">NEXT</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  <!-- End of Content Wrapper -->
+{% endblock other_body %} 
 
 {% block other_js %}
   <script type="text/javascript">
-            var x = 1;
-            $("#addCustomerButton1").click(function () {
-              swal("One More", "Customer Detail is Added", "success");
-              x++; //Increment field counter
-              $('.additionalCustomerDetail1').append(`
-                              <div class="customerDetails1${x}">
-                              <div class="row">
-              <div class="col-md-4">
-                <div class="form-group row">
-                  <label class="col-sm-8 col-form-label"><b>Customer Name</b></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="name_1" placeholder="Enter Full Name">
-              </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group row">
-                  <label><b>Income Holder</b></label>
-              <div class="col-sm-9">
-                <select class="form-control" name="incomeHolder_1">
-                  <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                </select>
-              </div>
-              </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group row">
-                  <label ><b>Property Owner</b></label>
-              <div class="col-sm-9">
-                <select class="form-control" name="propertyOwner_1">
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-              </div>
-              </div>
-              </div><br>
-
-              <div class="row">
+      var x = 1;
+      $("#addCustomerButton1").click(function() {
+          swal("One More", "Customer Detail is Added", "success");
+          x++; //Increment field counter
+          $('.additionalCustomerDetail1').append(`
+                                <div class="customerDetails1${x}">
+                                <div class="row">
                 <div class="col-md-4">
                   <div class="form-group row">
-                    <label class="col-sm-8 col-form-label"><b>Applicant Type</b></label>
+                    <label class="col-sm-8 col-form-label"><b>Customer Name</b></label>
                 <div class="col-sm-9">
-                  <select class="form-control" name="applicantType_1">
-                    <option value="Applicant">Applicant</option>
-                          <option value="1st Co-Applicant">1st Co-Applicant</option>
-                          <option value="2nd Co-Applicant">2nd Co-Applicant</option>
-                          <option value="3rd Co-Applicant">3rd Co-Applicant</option>
-                          <option value="4th Co-Applicant">4th Co-Applicant</option>
-                  </select>
+                  <input type="text" class="form-control" name="name_1" placeholder="Enter Full Name">
                 </div>
                   </div>
                 </div>
-
                 <div class="col-md-4">
                   <div class="form-group row">
-                    <label class="col-sm-4 col-form-label"><b>Relation</b></label>
+                    <label><b>Income Holder</b></label>
                 <div class="col-sm-9">
-                  <select class="form-control" name="relation_1">
-                    <option value="Self">Self</option>
-                          <option value="Husband">Husband</option>
-                          <option value="Wife">Wife</option>
-                          <option value="Daughter">Daughter</option>
-                          <option value="Son">Son</option>
-                          <option value="Brother">Brother</option>
-                          <option value="Sister">Sister</option>
+                  <select class="form-control" name="incomeHolder_1">
+                    <option value="yes">Yes</option>
+                            <option value="no">No</option>
                   </select>
                 </div>
                 </div>
@@ -372,53 +306,94 @@
 
                 <div class="col-md-4">
                   <div class="form-group row">
-                    <label><b>Customer Type</b></label>
+                    <label ><b>Property Owner</b></label>
                 <div class="col-sm-9">
-                  <select class="form-control" name="customerType_1">
-                    <option value="Salaried">Salaried</option>
-                          <option value="Self Employed">Self Employed</option>
-                          <option value="Salaried Professional">Salaried Professional</option>
-                          <option value="Business Professional">Business Professional</option>
-                          <option value="Houewife">Houewife</option>
-                          <option value="Student">Student</option>
-                          <option value="Retired Pensioner">Retired Pensioner</option>
-                          <option value="Retired">Retired</option>
+                  <select class="form-control" name="propertyOwner_1">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                   </select>
                 </div>
                 </div>
                 </div>
                 </div><br>
-                    <div style="text-align:left">
-                    <button class="btn btn-primary mr-3 removeCustomerDetails1${x}Button" onclick="removeCustomerDetail1('customerDetails1${x}')" >
-                        Remove
-                    </button><hr>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label"><b>Applicant Type</b></label>
+                  <div class="col-sm-9">
+                    <select class="form-control" name="applicantType_1">
+                      <option value="Applicant">Applicant</option>
+                            <option value="1st Co-Applicant">1st Co-Applicant</option>
+                            <option value="2nd Co-Applicant">2nd Co-Applicant</option>
+                            <option value="3rd Co-Applicant">3rd Co-Applicant</option>
+                            <option value="4th Co-Applicant">4th Co-Applicant</option>
+                    </select>
+                  </div>
                     </div>
-            </div>
-              <br>
+                  </div>
 
-                        `); //Add field html
-            });
-            function removeCustomerDetail1(parentclass) {
-              swal("Customer Detail", "have been deleted", "warning");
-                $("." + `${parentclass}`).remove();
-            }
-          </script>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label"><b>Relation</b></label>
+                  <div class="col-sm-9">
+                    <select class="form-control" name="relation_1">
+                      <option value="Self">Self</option>
+                            <option value="Husband">Husband</option>
+                            <option value="Wife">Wife</option>
+                            <option value="Daughter">Daughter</option>
+                            <option value="Son">Son</option>
+                            <option value="Brother">Brother</option>
+                            <option value="Sister">Sister</option>
+                    </select>
+                  </div>
+                  </div>
+                  </div>
 
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-  crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-  crossorigin="anonymous"></script>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label><b>Customer Type</b></label>
+                  <div class="col-sm-9">
+                    <select class="form-control" name="customerType_1">
+                      <option value="Salaried">Salaried</option>
+                            <option value="Self Employed">Self Employed</option>
+                            <option value="Salaried Professional">Salaried Professional</option>
+                            <option value="Business Professional">Business Professional</option>
+                            <option value="Houewife">Houewife</option>
+                            <option value="Student">Student</option>
+                            <option value="Retired Pensioner">Retired Pensioner</option>
+                            <option value="Retired">Retired</option>
+                    </select>
+                  </div>
+                  </div>
+                  </div>
+                  </div><br>
+                      <div style="text-align:left">
+                      <button class="btn btn-primary mr-3 removeCustomerDetails1${x}Button" onclick="removeCustomerDetail1('customerDetails1${x}')" >
+                          Remove
+                      </button><hr>
+                      </div>
+              </div>
+                <br>
+
+                          `); //Add field html
+      });
+
+      function removeCustomerDetail1(parentclass) {
+          swal("Customer Detail", "have been deleted", "warning");
+          $("." + `${parentclass}`).remove();
+      }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -478,182 +453,182 @@
   <script src="{% static 'assets/demo/demo.js'%}">
   </script>
   <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
+      $(document).ready(function() {
+          $().ready(function() {
+              $sidebar = $('.sidebar');
 
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
+              $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-        $full_page = $('.full-page');
+              $full_page = $('.full-page');
 
-        $sidebar_responsive = $('body > .navbar-collapse');
+              $sidebar_responsive = $('body > .navbar-collapse');
 
-        window_width = $(window).width();
+              window_width = $(window).width();
 
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+              fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-            $('.fixed-plugin .dropdown').addClass('open');
-          }
+              if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+                  if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+                      $('.fixed-plugin .dropdown').addClass('open');
+                  }
 
-        }
+              }
 
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
+              $('.fixed-plugin a').click(function(event) {
+                  // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+                  if ($(this).hasClass('switch-trigger')) {
+                      if (event.stopPropagation) {
+                          event.stopPropagation();
+                      } else if (window.event) {
+                          window.event.cancelBubble = true;
+                      }
+                  }
+              });
 
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
+              $('.fixed-plugin .active-color span').click(function() {
+                  $full_page_background = $('.full-page-background');
 
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+                  $(this).siblings().removeClass('active');
+                  $(this).addClass('active');
 
-          var new_color = $(this).data('color');
+                  var new_color = $(this).data('color');
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
-          }
+                  if ($sidebar.length != 0) {
+                      $sidebar.attr('data-color', new_color);
+                  }
 
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
+                  if ($full_page.length != 0) {
+                      $full_page.attr('filter-color', new_color);
+                  }
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
+                  if ($sidebar_responsive.length != 0) {
+                      $sidebar_responsive.attr('data-color', new_color);
+                  }
+              });
 
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+              $('.fixed-plugin .background-color .badge').click(function() {
+                  $(this).siblings().removeClass('active');
+                  $(this).addClass('active');
 
-          var new_color = $(this).data('background-color');
+                  var new_color = $(this).data('background-color');
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
+                  if ($sidebar.length != 0) {
+                      $sidebar.attr('data-background-color', new_color);
+                  }
+              });
 
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
+              $('.fixed-plugin .img-holder').click(function() {
+                  $full_page_background = $('.full-page-background');
 
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
+                  $(this).parent('li').siblings().removeClass('active');
+                  $(this).parent('li').addClass('active');
 
 
-          var new_image = $(this).find("img").attr('src');
+                  var new_image = $(this).find("img").attr('src');
 
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
-              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
-            });
-          }
+                  if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                      $sidebar_img_container.fadeOut('fast', function() {
+                          $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                          $sidebar_img_container.fadeIn('fast');
+                      });
+                  }
 
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                  if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $full_page_background.fadeOut('fast', function() {
-              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
-            });
-          }
+                      $full_page_background.fadeOut('fast', function() {
+                          $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                          $full_page_background.fadeIn('fast');
+                      });
+                  }
 
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                  if ($('.switch-sidebar-image input:checked').length == 0) {
+                      var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
+                      $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                      $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                  }
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
+                  if ($sidebar_responsive.length != 0) {
+                      $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+                  }
+              });
 
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
+              $('.switch-sidebar-image input').change(function() {
+                  $full_page_background = $('.full-page-background');
 
-          $input = $(this);
+                  $input = $(this);
 
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
-            }
+                  if ($input.is(':checked')) {
+                      if ($sidebar_img_container.length != 0) {
+                          $sidebar_img_container.fadeIn('fast');
+                          $sidebar.attr('data-image', '#');
+                      }
 
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
-            }
+                      if ($full_page_background.length != 0) {
+                          $full_page_background.fadeIn('fast');
+                          $full_page.attr('data-image', '#');
+                      }
 
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
+                      background_image = true;
+                  } else {
+                      if ($sidebar_img_container.length != 0) {
+                          $sidebar.removeAttr('data-image');
+                          $sidebar_img_container.fadeOut('fast');
+                      }
 
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
+                      if ($full_page_background.length != 0) {
+                          $full_page.removeAttr('data-image', '#');
+                          $full_page_background.fadeOut('fast');
+                      }
 
-            background_image = false;
-          }
-        });
+                      background_image = false;
+                  }
+              });
 
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
+              $('.switch-sidebar-mini input').change(function() {
+                  $body = $('body');
 
-          $input = $(this);
+                  $input = $(this);
 
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
+                  if (md.misc.sidebar_mini_active == true) {
+                      $('body').removeClass('sidebar-mini');
+                      md.misc.sidebar_mini_active = false;
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
-          } else {
+                  } else {
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
-            setTimeout(function() {
-              $('body').addClass('sidebar-mini');
+                      setTimeout(function() {
+                          $('body').addClass('sidebar-mini');
 
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
+                          md.misc.sidebar_mini_active = true;
+                      }, 300);
+                  }
 
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
+                  // we simulate the window Resize so the charts will get updated in realtime.
+                  var simulateWindowResize = setInterval(function() {
+                      window.dispatchEvent(new Event('resize'));
+                  }, 180);
 
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
+                  // we stop the simulation of Window Resize after the animations are completed
+                  setTimeout(function() {
+                      clearInterval(simulateWindowResize);
+                  }, 1000);
 
-        });
+              });
+          });
       });
-    });
   </script>
   <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+      $(document).ready(function() {
+          // Javascript method's body can be found in assets/js/demos.js
+          md.initDashboardPageCharts();
 
-    });
+      });
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>

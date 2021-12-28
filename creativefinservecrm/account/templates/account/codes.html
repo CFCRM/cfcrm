@@ -1,57 +1,36 @@
+{% extends 'base/base.html' %}
 {% load static %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Codes</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+{% block other_css %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+      .form-container{
+        background-color: rgb(245, 245, 245);
+        padding: 30px;
+        margin-right: -20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px #000;
+        /* margin -100px; */
+      }
+      .header{
+        padding: 10px;
 
-    <!-- Core plugin JavaScript-->
-    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+      }
 
-    <!-- Custom scripts for all pages-->
-    <script src="/static/js/sb-admin-2.min.js"></script>
+  </style>
+{% endblock other_css %}
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .form-container{
-          background-color: rgb(245, 245, 245);
-          padding: 30px;
-          margin-right: -20px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 10px 0px #000;
-          /* margin -100px; */
-        }
-        .header{
-          padding: 10px;
+{% block title %}Bank Codes{% endblock title %}
 
-        }
-
-      </style>
-</head>
-<body>
+{% block other_body %}
     <div class ="container-fluid">
-
-        <!-- Sidebar -->
-        {% include 'account/sidebar.html' %}
-
-        <div class="container" style="width:800px; margin:0 auto;" >
-            <h3 class="card-title text-center header"> Bank Codes</h3>
-
+        <div class="container" style="width:800px; margin:20px auto;" >
+        <h1 class="mb-5 mt-3 display-3 text-center">Bank Codes</h1> 
 
             <form class="form-container" method="POST" action={% url 'codes' %} id='addcodes' style="display:none">
                 {% csrf_token %}
                 <div class="form-group row"></div>
-
                 <div class="container" >
                     <div class="row">
                       <div class="col-12 md-6 sm-4">
@@ -110,7 +89,7 @@
           </div>
 
 
-            <div class="container form-container" style="width: 80%; margin:0 auto">
+            <div class="container form-container mb-4" style="width: 80%; margin:0 auto">
 
               <h3 class="card-title text-center header"> List Of Codes</h3>
 
@@ -139,17 +118,28 @@
               <a class="btn btn-info" onclick="showaddform()">Add code</a>
             </div>
     </div>
+{% endblock other_body %}
 
-    <script>
+{% block other_js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-      function hideaddform() {
-        event.preventDefault();
-        document.getElementById('addcodes').style.display = 'none';
-      }
-      function showaddform() {
-        document.getElementById('addcodes').style.display = 'Block';
-      }
-    </script>
+  <!-- Core plugin JavaScript-->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-</body>
-</html>
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/sb-admin-2.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    function hideaddform() {
+      event.preventDefault();
+      document.getElementById('addcodes').style.display = 'none';
+    }
+    function showaddform() {
+      document.getElementById('addcodes').style.display = 'Block';
+    }
+  </script>
+{% endblock other_js %}

@@ -1,31 +1,17 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Email</title>
-  <link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}" >
-  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+{% block other_css %}
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+{% endblock other_css %}
 
-
+{% block title %}Email{% endblock title %}
  
-</head>
+{% block other_body_css %}id="page-top"{% endblock other_body_css %}
 
-<body id="page-top">
-
+{% block other_body %}
   <!-- Page Wrapper -->
   <div class ="container-fluid">
-
-    <!-- Sidebar -->
-    {% include 'account/sidebar.html' %}
-    <!-- End of Sidebar -->
     
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -39,9 +25,7 @@
 
           <!-- Page Heading -->
           <div style="width:800px; margin:0 auto;">
-                      
-                <h1 class="h3 mb-1 text-gray-800">Send Gmail Message</h1>
-                <br><br>
+                <h1 class="mb-5 mt-3 display-3 text-center">Send Gmail Message</h1> 
                 <!-- Content Row -->
                 <div class="row">
 
@@ -49,71 +33,37 @@
                     <div class="col">
 
                     <div class="card position-relative">
-                        <div class="card-header py-3">
-                        <h6 class="m-2 font-weight-bold text-primary ">Message</h6>
-                        </div>
                         <div class="card-body">
                         <form method="POST" class="user" action="wMsg" id="form" >
                             {% csrf_token %}
-                            
-
-                            
-
-                            <!-- <div class="form-group form-inline " > -->
-                            
-                            <label class="col-2" style="color: black "><b>Email Id:</b></label><br>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" name="mobile_no">
-                              </div>
-                            </div><br>
-
-                            <div class="form-group form-inline">
-                            <label class="col-2" style="color: black"><b>Message:</b></label><br>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" style="width:650px" name="message">
+                            <div class="input-group input-group-outline my-3">
+                              <label class="form-label">Email ID</label>
+                              <input type="email" class="form-control" name="mobile_no">
                             </div>
+                            <div class="input-group input-group-dynamic">
+                              <textarea class="form-control" name="message" rows="1" placeholder="Message" spellcheck="false"></textarea>
                             </div>
-                            
-
-                            <div style="text-align:center">
-                            <button class="btn btn-primary mr-3" type="submit">Send</button>
+                            <div class="text-center">
+                              <button class="btn btn-primary mt-4 mb-0 mr-3" type="submit">Send</button>
                             </div>
-                            
-
-
                         </form>
                         </div>
                     </div>
-
                     </div>
-
                 </div>
-
-                </div>
+              </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
-
-
             </div>
             <!-- End of Content Wrapper -->
-
         </div>
     </div>
   </div>
-  
-    
   <!-- End of Page Wrapper -->
+{% endblock other_body %}
 
- 
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
+{% block other_js %}
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -350,6 +300,4 @@
 
     });
   </script>
-</body>
-
-</html>
+{% endblock other_js %}

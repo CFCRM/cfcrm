@@ -1,402 +1,291 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Calculator</title>
-  <link rel="apple-touch-icon" sizes="76x76" href=" {%static 'assets/img/apple-icon.png' %}" >
-  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  
+{% block other_css %}
   <style>
     .form-container{
-      background-color: rgb(245, 245, 245);
       padding: 30px;
       margin-right: -20px;
       border-radius: 10px;
       box-shadow: 0px 0px 10px 0px #000;
       /* margin -100px; */
     }
-    .header{
-      padding: 10px;
-      
-    }
-    /* style="background-color: #0d4f85" */
-    
   </style>
-  
+{% endblock other_css %}
 
+{% block title %}Calculator{% endblock title %}
 
- 
-</head>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-
-<body >
-
+{% block other_body %}
   <!-- Page Wrapper -->
   <div class ="container-fluid">
-
-    <!-- Sidebar -->
-    {% include 'account/sidebar.html' %}
-    <!-- End of Sidebar -->
-    
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-        
       <!-- Main Content -->
       <div id="content">
-
-        
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <div class="card-body ">
-                <h4 class="card-title text-center"> <b>Loan Calculator</b></h4><br>
+                <h1 class="mb-5 mt-3 display-3 text-center">Loan Calculator</h1> 
                 <div class="container">
                   <form class=" form-container"  method="POST">
                     {% csrf_token %}
                     <!-- {% csrf_token %} -->
-                    <!-- <p class="card-description"> Personal info </p> -->
-            
-                    <!-- <div class="container"> -->
-                    <h4><u>Please Select Appropriate Option From The Following</u></h4><br><br>
-            
-                    <select class="form-control" name="calc_type" id='calc_details'>
-                      <option>Select</option>
-                      <option value="Loan Comparison">Loan Comparison</option>
-                      <option value="Stamp Duty And Registration">Stamp Duty And Registration</option>
-                      <option value="Extra Payment">Extra Payment</option>
-                      <option value="EMI Calculator">EMI Calculator</option>
-            
-                    </select>
-
-       
-                        
-                        <div class="container" id="details1" style="display: none">
-                          
-                            <h6 class="m-2 font-weight-bold text-primary ">Loan Comparisom</h6>
-                            
-                            <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Principal Amount</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="text" name="prin_amt" class="form">
-                                  </div>
-                                </div>
+                    <div class="input-group input-group-static mb-4">
+                      <select class="form-control" name="calc_type" id='calc_details'>
+                        <option>-- Select Calculator --</option>
+                        <option value="Loan Comparison">Loan Comparison</option>
+                        <option value="Stamp Duty And Registration">Stamp Duty And Registration</option>
+                        <option value="Extra Payment">Extra Payment</option>
+                        <option value="EMI Calculator">EMI Calculator</option>
+                      </select>
+                    </div>
+                    <div class="container" id="details1" style="display: none">
+                        <h6 class="m-2 font-weight-bold text-primary ">Loan Comparisom</h6>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label><b>Principal Amount</b></label>
+                              <div class="col-sm-9">
+                                <input type="text" name="prin_amt" class="form">
                               </div>
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label  ><b>Applied Rate Of Interest</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="app_roi">
-                                  </div>
-                                </div>
-                              </div>
-                  
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Proposed Rate Of Interest</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="Prop_roi">
-                                  </div>
-                                </div>
-                              </div>
-                            </div><br>
-                  
-                            <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Tenure Of Loan</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="tenure_loan">
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label ><b>Additional Tenure (in months)</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="number" class="form" name="add_tenure">
-                                  </div>
-                                </div>
-                              </div>
-                            </div><br>
-
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Choice Of Calculation</b></label>
-                                  <div class="col-sm-9">
-                                    <select class="form-control" name="choice_calc">
-                                      <option value="Yet To Start">EMI Reduction Calculation</option>
-                                      <option value="Plint">Tenure Reduction Calculation</option>
-                                      <option value="Underconstruction">Both The Calculation</option>
-                                      
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div style="text-align:center">
-                        
-                                <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
-                    
                             </div>
-
-                        </div>
-                    
-
-                            
-                          <div class="container" id="details2" style="display: none">
-                                 
-                                    <h6 class="m-2 font-weight-bold text-primary ">Stamp Duty And Registration</h6>
-                                   
-                                      <div class="col-md-4">
-                                        <div class="form-group row">
-                                          <label><b>Propert Value</b></label>
-                                          <div class="col-sm-9">
-                                            <input type="text" name="property_value" class="form">
-                                          </div>
-                                        </div>
-                                      </div><br>
-                                      <div class="col-md-4">
-                                        <div class="form-group row">
-                                          <label><b>State Of Registration</b></label>
-                                          <div class="col-sm-9">
-                                            <input type="text" class="form" name="state_regi">
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div style="text-align:center">
-                        
-                                        <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
-                            
-                                    </div>
                           </div>
-
-                                <div class="row">
-
-                    <!-- Fade In Utility -->
-                    <div class="col">
-
-                        
-                        <div class="container" id="details3" style="display: none">
-                         
-                            <h6 class="m-2 font-weight-bold text-primary ">Extra Payment</h6>
-                           
-                            <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Enter Loan Amount</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="text" name="loan_amt" class="form">
-                                  </div>
-                                </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label  ><b>Applied Rate Of Interest</b></label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form" name="app_roi">
                               </div>
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Enter Interest</b></label><br>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="interest">
-                                  </div>
-                                </div>
-                              </div>
-                  
-                              <div class="col-md-4">
-                                <div class="form-group ">
-                                  <label ><b>Enter Loan Term</b></label><br>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="Prop_roi">
-                                  </div>
-                                </div>
-                              </div>
-                            </div><br>
-                  
-                            <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label><b>Extra Payment</b></label><br>
-                                  <div class="col-sm-9">
-                                    <input type="text" class="form" name="extra_payment">
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-4">
-                                <div class="form-group row">
-                                  <label ><b>Contibution Start After</b></label>
-                                  <div class="col-sm-9">
-                                    <input type="number" class="form" name="contri_start">
-                                  </div>
-                                </div>
-                              </div>
-                            </div><br>
-
-                              
-
-                              <div style="text-align:center">
-                        
-                                <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
-                    
                             </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label><b>Proposed Rate Of Interest</b></label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form" name="Prop_roi">
+                              </div>
+                            </div>
+                          </div>
+                        </div><br>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label><b>Tenure Of Loan</b></label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form" name="tenure_loan">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label ><b>Additional Tenure (in months)</b></label>
+                              <div class="col-sm-9">
+                                <input type="number" class="form" name="add_tenure">
+                              </div>
+                            </div>
+                          </div>
+                        </div><br>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label><b>Choice Of Calculation</b></label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="choice_calc">
+                                  <option value="Yet To Start">EMI Reduction Calculation</option>
+                                  <option value="Plint">Tenure Reduction Calculation</option>
+                                  <option value="Underconstruction">Both The Calculation</option>
+                                  
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div style="text-align:center">
+                            <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
                         </div>
-                        
-                          <div class="container" id="details4" style="display: none">
-                           
-                              <h6 class="m-2 font-weight-bold text-primary ">EMI Calculator</h6>
-                             
+                    </div>
+                    <div class="container" id="details2" style="display: none">
+                              <h6 class="m-2 font-weight-bold text-primary ">Stamp Duty And Registration</h6>
+                                <div class="col-md-4">
+                                  <div class="form-group row">
+                                    <label><b>Propert Value</b></label>
+                                    <div class="col-sm-9">
+                                      <input type="text" name="property_value" class="form">
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <div class="col-md-4">
+                                  <div class="form-group row">
+                                    <label><b>State Of Registration</b></label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form" name="state_regi">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div style="text-align:center">
+                                  <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
+                              </div>
+                    </div>
+                    <div class="row">
+                      <!-- Fade In Utility -->
+                      <div class="col">
+                          <div class="container" id="details3" style="display: none">
+                              <h6 class="m-2 font-weight-bold text-primary ">Extra Payment</h6>
                               <div class="row">
                                 <div class="col-md-4">
                                   <div class="form-group row">
-                                    <label><b>Enter Amount</b></label>
+                                    <label><b>Enter Loan Amount</b></label>
                                     <div class="col-sm-9">
-                                      <input type="text" name="ent_amt" class="form">
+                                      <input type="text" name="loan_amt" class="form">
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-4">
                                   <div class="form-group row">
-                                    <label  ><b>Enter Interest</b></label>
+                                    <label><b>Enter Interest</b></label><br>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form" name="Ent_roi">
+                                      <input type="text" class="form" name="interest">
                                     </div>
                                   </div>
                                 </div>
-                    
                                 <div class="col-md-4">
-                                  <div class="form-group row">
-                                    <label><b>Enter Period</b></label>
-                                    <div class="col-sm-6">
-                                     <br> <input type="text" class="form" name="Prop_roi">
+                                  <div class="form-group ">
+                                    <label ><b>Enter Loan Term</b></label><br>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form" name="Prop_roi">
                                     </div>
                                   </div>
                                 </div>
                               </div><br>
-                    
-                             
-  
+                              <div class="row">
                                 <div class="col-md-4">
-                                  <div class="form-group ">
-                                    <label><b>Select Tenure</b></label><br>
+                                  <div class="form-group row">
+                                    <label><b>Extra Payment</b></label><br>
                                     <div class="col-sm-9">
-                                      <select class="form-control" name="sel_tenure"><br>
-                                        <option value="Yet To Start">Half Yearly</option>
-                                        <option value="Plint">Quarterly</option>
-                                        <option value="Underconstruction">Monthly</option>
-                                        <option value="Underconstruction">forthly nightly</option>
-                                        <option value="Underconstruction">Weekly</option>
-                                        <option value="Underconstruction">Daily</option>
-
-                                        
-                                      </select><br>
+                                      <input type="text" class="form" name="extra_payment">
                                     </div>
                                   </div>
                                 </div>
-  
+                                <div class="col-md-4">
+                                  <div class="form-group row">
+                                    <label ><b>Contibution Start After</b></label>
+                                    <div class="col-sm-9">
+                                      <input type="number" class="form" name="contri_start">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div><br>
                                 <div style="text-align:center">
-                          
                                   <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
-                      
                               </div>
-  
                           </div>
-                      
-
-                        
-                  
-                              
-                  
-                            
-
-
-                        </div>
+                            <div class="container" id="details4" style="display: none">
+                                <h6 class="m-2 font-weight-bold text-primary ">EMI Calculator</h6>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="form-group row">
+                                      <label><b>Enter Amount</b></label>
+                                      <div class="col-sm-9">
+                                        <input type="text" name="ent_amt" class="form">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group row">
+                                      <label  ><b>Enter Interest</b></label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form" name="Ent_roi">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group row">
+                                      <label><b>Enter Period</b></label>
+                                      <div class="col-sm-6">
+                                      <br> <input type="text" class="form" name="Prop_roi">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                  <div class="col-md-4">
+                                    <div class="form-group ">
+                                      <label><b>Select Tenure</b></label><br>
+                                      <div class="col-sm-9">
+                                        <select class="form-control" name="sel_tenure"><br>
+                                          <option value="Yet To Start">Half Yearly</option>
+                                          <option value="Plint">Quarterly</option>
+                                          <option value="Underconstruction">Monthly</option>
+                                          <option value="Underconstruction">forthly nightly</option>
+                                          <option value="Underconstruction">Weekly</option>
+                                          <option value="Underconstruction">Daily</option>
+                                        </select><br>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div style="text-align:center">
+                                    <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
                     </div>
-
-                    </div>
-
+                  </form>
                 </div>
-
-                </div>
-                <!-- /.container-fluid -->
-              </form>
             </div>
-            <!-- End of Main Content -->
-
-
-
-            </div>
-            <!-- End of Content Wrapper -->
-
         </div>
+      <!-- End of Main Content -->
+      </div>
+      <!-- End of Content Wrapper -->
     </div>
   </div>
-  
-    
   <!-- End of Page Wrapper -->
+{% endblock other_body %}
 
- 
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-<script>
-  $(document).ready(function () {
-    $('#calc_details').on('change', function () {
-     
-      // if (this.value == 'Underconstruction and Buying From Seller') {
-      //   $("#details2").show();
-      // }
-      // else {
-      //   $("#details2").hide();
-      // }
-      // if (this.value == 'Ready Possession and Buying From Builder') {
-      //   $("#details3").show();
-      // }
-      // else {
-      //   $("#details3").hide();
-      // }
-      if (this.value == 'Loan Comparison') {
-        $("#details1").show();
-      }
-      else {
-        $("#details1").hide();
-      }
-      if (this.value == 'Stamp Duty And Registration') {
-        $("#details2").show();
-      }
-      else {
-        $("#details2").hide();
-      }
-      if (this.value == 'Extra Payment') {
-        $("#details3").show();
-      }
-      else {
-        $("#details3").hide();
-      }
-      if (this.value == 'EMI Calculator') {
-        $("#details4").show();
-      }
-      else {
-        $("#details4").hide();
-      }
-     
+{% block other_js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#calc_details').on('change', function () {
+      
+        // if (this.value == 'Underconstruction and Buying From Seller') {
+        //   $("#details2").show();
+        // }
+        // else {
+        //   $("#details2").hide();
+        // }
+        // if (this.value == 'Ready Possession and Buying From Builder') {
+        //   $("#details3").show();
+        // }
+        // else {
+        //   $("#details3").hide();
+        // }
+        if (this.value == 'Loan Comparison') {
+          $("#details1").show();
+        }
+        else {
+          $("#details1").hide();
+        }
+        if (this.value == 'Stamp Duty And Registration') {
+          $("#details2").show();
+        }
+        else {
+          $("#details2").hide();
+        }
+        if (this.value == 'Extra Payment') {
+          $("#details3").show();
+        }
+        else {
+          $("#details3").hide();
+        }
+        if (this.value == 'EMI Calculator') {
+          $("#details4").show();
+        }
+        else {
+          $("#details4").hide();
+        }
+      
+      });
     });
-  });
-</script>
+  </script>
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -633,6 +522,4 @@
 
     });
   </script>
-</body>
-
-</html>
+{% endblock other_js %}
