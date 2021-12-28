@@ -4,6 +4,7 @@
 {% block other_css %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+  <link rel="stylesheet" href="../../static/material_2_pro_assets/css/material-dashboard.min.css">
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <style>
     .form-container{
@@ -16,7 +17,15 @@
     }
     .header{
       padding: 10px;
+    }
 
+    .size{
+      font-size:initial;
+      background-image:none;
+    }
+
+    .button-style{
+      font-size: larger;
     }
   </style>
 {% endblock other_css %}
@@ -28,258 +37,256 @@
 {% block other_body %}
   <!-- Page Wrapper -->
   <div class ="container-fluid">
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div class="container">
-        <h3 class="card-title text-center"> Additional Details</h3><br>
-          <form class=" form-container" action="/account/additionaldetails/{{lead.lead_id}}" method="POST">
-            {% csrf_token %}
-            <div class="alert alert-primary">
-              <label for="customerDetails">
-                <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"  />
-                <b>Additional Details Of Customer</b>
-              </label>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal1" role="dialog">
-              <div class="modal-dialog modal-lg">
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header"style="background-color: #007bff">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Personal details</h4>
-                  </div>
-                  <div class="modal-body">
-                  <hr />
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-8 col-form-label"><b>Customer Name</b></label>
-                        <div class="col-sm-9">
-                          <br> <input type="text" name="name_1" class="form-control" placeholder="Enter Full Name">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label><b>Income Holder</b></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="incomeHolder_1">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label><b>Property Owner</b></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="propertyOwner_1">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-8 col-form-label"><b>Applicant Type</b></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="applicantType_1">
-                            <option value="Applicant">Applicant</option>
-                            <option value="1st Co-Applicant">1st Co-Applicant</option>
-                            <option value="2nd Co-Applicant">2nd Co-Applicant</option>
-                            <option value="3rd Co-Applicant">3rd Co-Applicant</option>
-                            <option value="4th Co-Applicant">4th Co-Applicant</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label"><b>Relation</b></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="relation_1">
-                            <option value="Self">Self</option>
-                            <option value="Husband">Husband</option>
-                            <option value="Wife">Wife</option>
-                            <option value="Daughter">Daughter</option>
-                            <option value="Son">Son</option>
-                            <option value="Brother">Brother</option>
-                            <option value="Sister">Sister</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label ><b>Customer Type</b></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="customerType_1">
-                            <option value="Salaried">Salaried</option>
-                            <option value="Self Employed">Self Employed</option>
-                            <option value="Salaried Professional">Salaried Professional</option>
-                            <option value="Business Professional">Business Professional</option>
-                            <option value="Housewife">Housewife</option>
-                            <option value="Student">Student</option>
-                            <option value="Retired Pensioner">Retired Pensioner</option>
-                            <option value="Retired">Retired</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div><br>
-                  <div>
-                    <button class="btn btn-primary add_button" id="addCustomerButton1" type="button" style="color:white">
-                      + Add </button>
-                    <hr>
-                  </div>
-                </div>
-                <div class="additionalCustomerDetail1"></div>
-                </div>
-                  </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-              </div><br>
-              <div class="alert alert-primary">
-                <label for="contactPerson">
-                  <input type="checkbox" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"  />
-                  <b>Is Customer and Contact Person Different</b>
-                </label>
-              </div>
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header"style="background-color: #007bff">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Is Customer and Contact Person Different</h4>
-                    </div>
-                    <div class="modal-body">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-8 col-form-label"><b>Contact Person </b></label>
-                          <div class="col-sm-9">
-                            <br><input type="text" name="con_person" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label><b>Contact Person Number</b></label>
-                          <div class="col-sm-9">
-                          <br> <input type="tel" pattern="[0-9]{10}" name="con_phone" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-8 col-form-label"><b>Customer Name</b></label>
-                          <div class="col-sm-9">
-                            <br> <input type="text" name="name" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label><b>Income Holder</b></label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="incomeHolder">
-                              <option value="yes">Yes</option>
-                              <option value="no">No</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label><b>Property Owner</b></label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="propertyOwner">
-                              <option value="yes">Yes</option>
-                              <option value="no">No</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div><br>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-8 col-form-label"><b>Applicant Type</b></label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="applicantType">
-                              <option value="Applicant">Applicant</option>
-                              <option value="1st Co-Applicant">1st Co-Applicant</option>
-                              <option value="2nd Co-Applicant">2nd Co-Applicant</option>
-                              <option value="3rd Co-Applicant">3rd Co-Applicant</option>
-                              <option value="4th Co-Applicant">4th Co-Applicant</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label"><b>Relation</b></label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="relation">
-                              <option value="Self">Self</option>
-                              <option value="Husband">Husband</option>
-                              <option value="Wife">Wife</option>
-                              <option value="Daughter">Daughter</option>
-                              <option value="Son">Son</option>
-                              <option value="Brother">Brother</option>
-                              <option value="Sister">Sister</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-10 col-form-label"><b>Customer Type</b></label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="customerType">
-                              <option value="Salaried">Salaried</option>
-                              <option value="Self Employed">Self Employed</option>
-                              <option value="Salaried Professional">Salaried Professional</option>
-                              <option value="Business Professional">Business Professional</option>
-                              <option value="Housewife">Housewife</option>
-                              <option value="Student">Student</option>
-                              <option value="Retired Pensioner">Retired Pensioner</option>
-                              <option value="Retired">Retired</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div><br>
-                  </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                  </div>
-                  </div>
-                </div><br>
-                <div style="text-align:center">
-                  <button class="btn btn-primary mr-3" name="cancel" type="submit">CANCEL</button>
-                  <button class="btn btn-primary mr-3" name="save" type="submit">SAVE & SUBMIT</button>
-                  <button class="btn btn-primary mr-3" name="next" type="submit">NEXT</button>
-                </div>
-            </form>
-            </div>
+        <h3 class="card-title text-center">Additional Details</h3><br>
+        <form class=" form-container" action="/account/additionaldetails/{{lead.lead_id}}" method="POST">
+          {% csrf_token %}
+          <div class="alert size">
+            <label for="customerDetails" style="display:grid; height:50px;">
+              <button type="buttoon" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="font-size: 15px;" />
+              <b>Additional Details Of Customer</b>
+            </label>
           </div>
-        </div>
-        <!-- End of Content Wrapper -->
-      </div>
-    </div>
-  </div>
+          <div class="modal fade" id="myModal1" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #fffff">
+                  {% comment %} <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Personal details</h4> {% endcomment %}
+                  <h6 class="modal-title font-weight-normal" id="modal-title-default" style="font-size: 17px;"><b>Additional Details Of Customer</b></h6>
+                </div> <!--End of Modal Header-1-->
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-outline my-3">
+                        <label class="form-label size"><b>Customer Full Name</b></label>
+                        <input type="text" name="name_1" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size" style="font-size:1.275rem"><b>Income Holder</b></label>
+                          <select class="form-control" name="incomeHolder_1">
+                            <option value="yes" class="size">Yes</option>
+                            <option value="no" class="size">No</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Property Owner</b></label>
+                        <select class="form-control" name="propertyOwner_1">
+                          <option value="yes" class="size">Yes</option>
+                          <option value="no" class="size">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Applicant Type</b></label>
+                        <select class="form-control" name="applicantType_1">
+                          <option value="Applicant">Applicant</option>
+                          <option value="1st Co-Applicant" class="size">1st Co-Applicant</option>
+                          <option value="2nd Co-Applicant" class="size">2nd Co-Applicant</option>
+                          <option value="3rd Co-Applicant" class="size">3rd Co-Applicant</option>
+                          <option value="4th Co-Applicant" class="size">4th Co-Applicant</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Relation</b></label>
+                        <select class="form-control" name="relation_1">
+                          <option value="Self" class="size">Self</option>
+                          <option value="Husband" class="size">Husband</option>
+                          <option value="Wife" class="size">Wife</option>
+                          <option value="Daughter" class="size">Daughter</option>
+                          <option value="Son" class="size">Son</option>
+                          <option value="Brother" class="size">Brother</option>
+                          <option value="Sister" class="size">Sister</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Customer Type</b></label>
+                        <select class="form-control" name="customerType_1">
+                          <option value="Salaried" class="size">Salaried</option>
+                          <option value="Self Employed" class="size">Self Employed</option>
+                          <option value="Salaried Professional" class="size">Salaried Professional</option>
+                          <option value="Business Professional" class="size">Business Professional</option>
+                          <option value="Housewife" class="size">Housewife</option>
+                          <option value="Student" class="size">Student</option>
+                          <option value="Retired Pensioner" class="size">Retired Pensioner</option>
+                          <option value="Retired" class="size">Retired</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <br>
+                  
+                  <div>
+                    <button class="btn btn-primary add_button button-style" id="addCustomerButton1" type="button" style="color:white">
+                    + Add </button>
+                  </div>
+                  <div class="additionalCustomerDetail1"></div>
+                </div> <!--End of Modal Body-1-->
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary button-style">Save changes</button>
+                  <button type="button" class="btn btn-link  ml-auto button-style" data-dismiss="modal">Close</button>
+                  {% comment %} <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> {% endcomment %}
+                </div> <!--End of Modal footer-1-->
+                {% comment %} <div class="additionalCustomerDetail1"></div> {% endcomment %}
+              </div> <!--End of Modal Content-1-->
+            </div> <!--End of modal-dialog modal-lg-1-->
+              {% comment %} <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div> {% endcomment %}
+          </div> <!--End of modal fade-1-->
+
+
+
+          <div class="alert size">
+            <label for="contactPerson" style="display:grid; height:50px;">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="font-size: 15px;"/>
+              <b>Is Customer and Contact Person Different</b>
+            </label>
+          </div>
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header"style="background-color: #fffff">
+                  <h6 class="modal-title font-weight-normal" id="modal-title-default" style="font-size: 17px;"><b>Is Customer and Contact Person Different</b></h6>
+                  {% comment %} <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Is Customer and Contact Person Different</h4> {% endcomment %}
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-outline my-3">
+                        <label class="form-label size"><b>Contact Person </b></label>
+                        <input type="text" name="con_person" class="form-control size">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-outline my-3">
+                        <label class="form-label size"><b>Contact Person Number</b></label>
+                        <input type="tel" pattern="[0-9]{10}" name="con_phone" class="form-control size">
+                      </div>
+                    </div>
+                  </div>
+                      
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-outline my-3">
+                        <label class="form-label size"><b>Customer Name</b></label>
+                        <input type="text" name="name" class="form-control size">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Income Holder</b></label>
+                        <select class="form-control size" name="incomeHolder">
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                      
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Property Owner</b></label>
+                        <select class="form-control size" name="propertyOwner">
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Applicant Type</b></label>
+                        <select class="form-control size" name="applicantType">
+                          <option value="Applicant">Applicant</option>
+                          <option value="1st Co-Applicant">1st Co-Applicant</option>
+                          <option value="2nd Co-Applicant">2nd Co-Applicant</option>
+                          <option value="3rd Co-Applicant">3rd Co-Applicant</option>
+                          <option value="4th Co-Applicant">4th Co-Applicant</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                      
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Relation</b></label>
+                        <select class="form-control size" name="relation">
+                          <option value="Self">Self</option>
+                          <option value="Husband">Husband</option>
+                          <option value="Wife">Wife</option>
+                          <option value="Daughter">Daughter</option>
+                          <option value="Son">Son</option>
+                          <option value="Brother">Brother</option>
+                          <option value="Sister">Sister</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                        <label class="ms-0 size"><b>Customer Type</b></label>
+                        <select class="form-control" name="customerType">
+                          <option value="Salaried">Salaried</option>
+                          <option value="Self Employed">Self Employed</option>
+                          <option value="Salaried Professional">Salaried Professional</option>
+                          <option value="Business Professional">Business Professional</option>
+                          <option value="Housewife">Housewife</option>
+                          <option value="Student">Student</option>
+                          <option value="Retired Pensioner">Retired Pensioner</option>
+                          <option value="Retired">Retired</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                </div> <!--End of Modal Body-2-->
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                </div> <!--End of Modal Footer-2-->
+              </div> <!--End of Modal Content-2-->
+            </div> <!--End of modal-dialog modal-lg-2-->
+          </div> <!--End of modal fade-2-->
+          <div style="text-align:center">
+            <button class="btn btn-primary mr-3 " name="cancel" type="submit" style="font-size: 13px;">CANCEL</button>
+            <button class="btn btn-primary mr-3" name="save" type="submit" style="font-size: 13px;">SAVE & SUBMIT</button>
+            <button class="btn btn-primary mr-3" name="next" type="submit" style="font-size: 13px;">NEXT</button>
+          </div>
+        </form> <!--End of Form-->
+      </div> <!--End of Container-->
+    </div> <!-- End of Content Wrapper -->
+  </div> <!-- End of Content Fluid -->
+      
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->

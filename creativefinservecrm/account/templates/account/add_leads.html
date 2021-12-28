@@ -3,6 +3,7 @@
 
 {% block other_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../static/material_2_pro_assets/css/material-dashboard.min.css">
   <style>
     .form-container {
       background-color: rgb(245, 245, 245);
@@ -35,156 +36,147 @@
                 {% csrf_token %}
                 <!-- <p class="card-description"> Personal info </p> -->
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-9 col-form-label"> <b>Customer Name</b> </label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" required>
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"> <b>Customer Name</b> </label>
+                        <input type="text" class="form-control" name="name">
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-9 col-form-label"> <b>Customer Mobile No</b> </label>
-                      <div class="col-sm-9">
-                        <input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" required>
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"> <b>Customer Mobile No</b> </label>
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" name="phone">
                     </div>
                   </div>
                   <!-- </div> -->
                   <!-- <div class="row"> -->
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-7 col-form-label"> <b>Alter Mobile No</b> </label>
-                      <div class="col-sm-9">
-                        <!-- <select class="form-control">
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select> -->
-                        <input type="tel" pattern="[0-9]{10}" class="form-control" name="alt_phone">
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"> <b>Alter Mobile No</b> </label>
+                      <!-- <select class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select> -->
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" name="alt_phone">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"><b>Email-Id</b></label>
+                      <input class="form-control" name="email" type="email">
                     </div>
                   </div>
                 </div>
+
+                <br>
+
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-6 col-form-label"><b>email-id</b></label>
-                      <div class="col-sm-9">
-                        <input class="form-control" name="email" type="email" required>
-                      </div>
-                    </div>
-                  </div>
                   <!-- </div> -->
                   <!-- <div class="row"> -->
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-9 col-form-label"><b>Use Reference</b></label>
-                      <div class="col-sm-9">
-                        <!-- <select class="form-control">
-                    <option>Category1</option>
-                    <option>Category2</option>
-                    <option>Category3</option>
-                    <option>Category4</option>
-                  </select> -->
-                        <input class="form-control" placeholder="Reference Name" name="ref">
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"><b>Reference Name</b></label>
+                      <!-- <select class="form-control">
+                        <option>Category1</option>
+                        <option>Category2</option>
+                        <option>Category3</option>
+                        <option>Category4</option>
+                      </select> -->
+                      <input class="form-control" name="ref" type="text">
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>Product</b></label>
-                      <div class="col-sm-9">
-                        <select onclick="updatesubproducts()" class="form-control" name="pdt" required>
-                          {% for product in products %}
-                          <option value="{{product.product}}" id={{product.id}}>{{product.product}}</option>
-                          {% endfor %}
-                        </select>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="Product" class="ms-0"><b>Product</b></label>
+                      <select onclick="updatesubproducts()" class="form-control" name="pdt">
+                        {% for product in products %}
+                        <option value="{{product.product}}" id={{product.id}}>{{product.product}}</option>
+                        {% endfor %}
+                      </select>
+                      <!-- <input class="form-control" placeholder="dd/mm/yyyy"> -->
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="SubProduct" class="ms-0"><b>Sub Products</b></label>
+                      <select onclick="updatesubproducts()" class="form-control" name="subpdt">
+                        {% for subproduct in subproducts %}
+                        <option value="{{subproduct.sub_product}}" id={{subproduct.id}}>{{subproduct.product.product}}</option>
+                        {% endfor %}
+                      </select>
                         <!-- <input class="form-control" placeholder="dd/mm/yyyy"> -->
-                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"><b>Loan Amount</b></label>
+                      <input type="text" class="form-control" name="amt">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"><b>Address Location</b></label>
+                      <input type="text" class="form-control" name="address">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label"><b>Pincode</b></label>
+                      <input type="tel" class="form-control" name="pincode">
                     </div>
                   </div>
                 </div>
+
+                <br>
+
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>SubProducts</b></label>
-                      <div class="col-sm-9">
-                        <select class="form-control" name="subpdt" required>
-                          <option value="select-product">select product</option>
-                          <!-- <input class="form-control" placeholder="dd/mm/yyyy"> -->
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-8 col-form-label"><b>Loan Amount</b></label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="amt" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>addressLocation</b></label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="address">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>Pincode</b></label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="pincode">
-                      </div>
-                    </div>
-                  </div>
                   <!--</div>-->
                   <!--<div class="row">-->
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>Country</b></label>
-                      <div class="col-sm-9">
-                        <select class="form-control " name="country">
-                          <option>Select</option>
-                          <option>India</option>
-                          <option>Aus</option>
-                        </select>
-                        <!-- <input type="text" class="form-control" placeholder="Select"> -->
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="Country" class="ms-0"><b>Country</b></label>
+                      <select class="form-control" name="country">
+                        <option>Select</option>
+                        <option>India</option>
+                        <option>Aus</option>
+                      </select>
+                      <!-- <input type="text" class="form-control" placeholder="Select"> -->
                     </div>
                   </div>
                   <!-- </div> -->
                   <!-- <div class="row"> -->
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>State</b></label>
-                      <div class="col-sm-9" aria-placeholder="Slect">
-                        <select class="form-control" name="state">
-                          <option>Select</option>
-                          <option value="MAHARASHTRA">MAHARASHTRA</option>
-                          <option value="Gujarat">Gujarat</option>
-                          <option value="Telangana">Telangana</option>
-                          <option value="Karnataka">Karnataka</option>
-                          <option value="Rajasthan">Rajasthan</option>
-                          <option value="Madhya Pradesh">Madhya Pradesh</option>
-                          <option value="test2">test2</option>
-                          <option value="West Bengal">West Bengal</option>
-                          <option value="Telangana">Telangana</option>
-                        </select>
-                        <!-- <input type="text" class="form-control"> -->
-                      </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="State" class="ms-0"><b>State</b></label>
+                      <select class="form-control" name="state">
+                        <option>Select</option>
+                        <option value="MAHARASHTRA">MAHARASHTRA</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="test2">test2</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Telangana">Telangana</option>
+                      </select>
+                      <!-- <input type="text" class="form-control"> -->
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label"><b>City</b></label>
-                      <div class="col-sm-9">
-                        <select class="form-control" name="city">
+                </div>
+
+                <br>
+
+                <div class="row"> 
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="City" class="ms-0"><b>City</b></label>
+                      <select class="form-control" name="city">
                           <option>Select</option>
                           <option value="Mumbai">Mumbai</option>
                           <option value="Thane">Thane</option>
@@ -351,9 +343,9 @@
                           <option value="Cooch Behar">Cooch Behar</option>
                           <option value="Warangal">Warangal</option>
                         </select>
-                      </div>
                     </div>
                   </div>
+                </div>
                   {% comment %}
                   <div class="col-md-4">
                     <div class="form-group row">
@@ -364,18 +356,22 @@
                     </div>
                   </div>
                   {% endcomment %}
-                </div>
-                <br>
-                <div style="text-align:center">
-                  <button class="btn btn-primary" name="cancel" type="submit">Cancel</button>
-                  <button class="btn btn-primary" name="save" type="submit">Save & Submit</button>
-                  <button class="btn btn-primary" name="next" type="submit">Next</button>
-                </div>
-            </div>
-          </div>
-      </form>
-    </div>
-  </div>
+              </form> <!--End of form-2-->
+              
+              <br>
+                
+              <div style="text-align:center">
+                <button type="submit" class="btn btn-primary" name="cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary" name="save">Save & Submit</button>
+                <button type="submit" class="btn btn-primary" name="next">Next</button>
+              </div>
+
+            </div> <!--End of Container 2-->
+          </div> <!--End of Card-body-->
+        </div> <!--End of Container-1-->
+      </form> <!--End of form-1--> 
+    </div> <!--End of Container-1--> 
+  </div> <!--End of Container-fluid-->
 {% endblock other_body %}
 
 {% block other_js %}
