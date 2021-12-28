@@ -159,36 +159,36 @@ def Profession_form(request):
         professionformvalue = request.POST['Profession'].strip()
         if Profession.objects.filter(profession=professionformvalue).exists():
             messages.info(request, 'Profession already exists')
-            return redirect('Profession_form')
+            return redirect('Master_details')
         else :
             newprofession = Profession.objects.create(profession=professionformvalue)
             newprofession.save()
             return redirect('Master_details')
-    return render(request, 'master/Profession.html')
+    return render(request, 'master/mater_details.html')
 
 def Qualification_form(request):
     if request.method == 'POST':
         qualificationformvalue = request.POST['Qualification'].strip()
         if Qualification.objects.filter(qualification=qualificationformvalue).exists():
             messages.info(request, 'qualification already exists')
-            return redirect('qualification_form')
+            return redirect('Master_details')
         else :
             newqualification = Qualification.objects.create(qualification=qualificationformvalue)
             newqualification.save()
             return redirect('Master_details')
-    return render(request, 'master/Qualification_Details.html')
+    return render(request, 'master/master_details.html')
 
 def Role_form(request):
     if request.method == 'POST':
         roleformvalue = request.POST['Role'].strip()
         if Role.objects.filter(role=roleformvalue).exists():
             messages.info(request, 'Role already exists')
-            return redirect('Role_form')
+            return redirect('Master_details')
         else :
             newrole = Role.objects.create(role=roleformvalue)
             newrole.save()
             return redirect('Master_details')
-    return render(request, 'master/Role.html')
+    return render(request, 'master/mater_details.html')
 
 def BankName_form(request):
     if request.method == 'POST':
