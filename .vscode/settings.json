@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5502,
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "python.formatting.provider": "autopep8",
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
