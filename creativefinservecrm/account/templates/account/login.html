@@ -40,9 +40,9 @@
                                         <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
                                     </div>
                                 </span>
-                                <span class="bmd-form-group">
+                                <span class="bmd-form-group text-danger">
                                     {% for message in messages %}
-                                        <h3>{{message}}</h3>
+                                        {{message}}
                                     {% endfor %}
                                 </span>
                             </div>

@@ -9,7 +9,7 @@
 {% block other_body %}
   <div class="container" style="width:90%; margin:25px auto;">
     <h1 class=" mt-3 mb-4 display-3 text-center">Add Leads</h1> 
-    <form class="form-container bg-white rounded shadow-blur" method="POST">
+    <form class="form-container bg-white rounded shadow-blur pt-3" method="POST">
       {% csrf_token %}
       <div class="form-group row"></div>
       <div class="container">
@@ -19,306 +19,277 @@
               {% csrf_token %}
               <div class="row">
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Customer Name</b> </label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" name="name" placeholder="eg. Adit Chheda" required>
-                    </div>
+                  <div class="input-group input-group-outline mb-4">
+                      <label  for="name" class="form-label text-primary fw-bold">Customer Name</label>
+                      <input type="text" name="name" id="name" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Customer Mobile No</b> </label>
-                    <div class="col-sm-12">
-                      <input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" placeholder="eg. 1234567890" required>
-                    </div>
+                  <div class="input-group input-group-outline mb-4">
+                      <label  for="phone" class="form-label text-primary fw-bold">Customer Mobile No</label>
+                      <input type="tel" pattern="[1-9]{1}[0-9]{9}" name="phone" id="phone" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Alternate Mobile No</b> </label>
-                    <div class="col-sm-12">
-                      <input type="tel" pattern="[0-9]{10}" class="form-control" name="alt_phone" placeholder="eg. 1234567890">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Email-id</b></label>
-                    <div class="col-sm-12">
-                      <input class="form-control" name="email" type="email" placeholder="eg. abc@gmail.com" required>
-                    </div>
+                  <div class="input-group input-group-outline mb-4">
+                      <label  for="alt_phone" class="form-label text-primary fw-bold">Alternate Mobile No</label>
+                      <input type="tel" pattern="[1-9]{1}[0-9]{9}" name="alt_phone" id="alt_phone" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Reference Name</b></label>
-                    <div class="col-sm-12">
-                      <input class="form-control" placeholder="eg. Adit" name="ref">
-                    </div>
+                  <div class="input-group input-group-outline mb-4">
+                      <label  for="email" class="form-label text-primary fw-bold">Email-id</label>
+                      <input type="email" name="email" id="email" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Product</b></label>
-                    <div class="col-sm-12">
-                      <select onclick="updatesubproducts()" class="form-control" name="pdt" aria-placeholder="-- Select Product --" required>
-                        <option value="">-- Select Product --</option>
-                        {% for product in products %}
-                          <option value="{{product.product}}" id="{{product.id}}">{{product.product}}</option>
-                        {% endfor %}
+                  <div class="input-group input-group-outline mb-4">
+                      <label  for="ref" class="form-label text-primary fw-bold">Reference Name</label>
+                      <input type="text" name="ref" id="ref" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="pdt" class="ms-0 text-primary fw-bold col-12">Product</label>
+                      <select onclick="updatesubproducts()" class="form-control col-12" name="pdt" id="pdt" required>
+                          <option value="">-- Select Product --</option>
+                          {% for product in products %}
+                            <option value="{{product.product}}" id="{{product.id}}">{{product.product}}</option>
+                          {% endfor %}
                       </select>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Sub Products</b></label>
-                    <div class="col-sm-12">
-                      <select class="form-control" name="subpdt" aria-placeholder="-- Select Sub Products --" required>
+                    <div class="input-group input-group-static mb-4">
+                      <label for="subpdt" class="ms-0 text-primary fw-bold col-12">Sub Products</label>
+                      <select class="form-control col-12" name="subpdt" id="subpdt" required>
                         <option value="">-- Select Sub Products --</option>
                         <option value="product_1">Product 1</option>
                       </select>
                     </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group input-group-outline mb-4">
+                      <label for="amt" class="ms-0 form-label text-primary fw-bold">Loan amount</label>
+                      <input type="number" name="amt" id="amt" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Loan Amount</b></label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" name="amt" placeholder="eg. 100000" required>
+                  <label for="address" class="form-label text-primary fw-bold mb-0">Address</label>
+                    <div class="input-group input-group-static mb-4">
+                      <textarea name="address" id="address" class="form-control" rows="1" placeholder="eg. Address" spellcheck="false" required></textarea>
                     </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group input-group-outline mb-4">
+                    <label for="pincode" class="ms-0 form-label text-primary fw-bold">Pincode</label>
+                    <input type="number" name="pincode" id="pincode" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Address Location</b></label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" name="address" placeholder="eg. Address">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Pincode</b></label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" name="pincode" placeholder="eg. 400053">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>Country</b></label>
-                    <div class="col-sm-12">
-                      <select class="form-control" name="country" aria-placeholder="-- Select Country --">
+                    <div class="input-group input-group-static mb-4">
+                      <label for="country" class="ms-0 text-primary fw-bold col-12">Country</label>
+                      <select class="form-control col-12" name="country" id="country" required>
                         <option value="">-- Select Country --</option>
                         <option>India</option>
                         <option>Aus</option>
                       </select>
                     </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                      <div class="input-group input-group-static mb-4">
+                        <label for="state" class="ms-0 text-primary fw-bold col-12">State</label>
+                        <select class="form-control col-12" name="state" id="state" required>
+                          <option value="">-- Select State --</option>
+                          <option value="MAHARASHTRA">MAHARASHTRA</option>
+                          <option value="Gujarat">Gujarat</option>
+                          <option value="Telangana">Telangana</option>
+                          <option value="Karnataka">Karnataka</option>
+                          <option value="Rajasthan">Rajasthan</option>
+                          <option value="Madhya Pradesh">Madhya Pradesh</option>
+                          <option value="test2">test2</option>
+                          <option value="West Bengal">West Bengal</option>
+                          <option value="Telangana">Telangana</option>
+                        </select>
+                      </div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>State</b></label>
-                    <div class="col-sm-12" aria-placeholder="-- Select State --">
-                      <select class="form-control" name="state">
-                        <option value="">-- Select State --</option>
-                        <option value="MAHARASHTRA">MAHARASHTRA</option>
-                        <option value="Gujarat">Gujarat</option>
-                        <option value="Telangana">Telangana</option>
-                        <option value="Karnataka">Karnataka</option>
-                        <option value="Rajasthan">Rajasthan</option>
-                        <option value="Madhya Pradesh">Madhya Pradesh</option>
-                        <option value="test2">test2</option>
-                        <option value="West Bengal">West Bengal</option>
-                        <option value="Telangana">Telangana</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label text-primary"><b>City</b></label>
-                    <div class="col-sm-12">
-                      <select class="form-control" name="city" aria-placeholder="-- Select City --">
-                        <option value="">-- Select City --</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Thane">Thane</option>
-                        <option value="Palghar">Palghar</option>
-                        <option value="Surat">Surat</option>
-                        <option value="Ahmedabad">Ahmedabad</option>
-                        <option value="Vadodara">Vadodara</option>
-                        <option value="Rajkot">Rajkot</option>
-                        <option value="Pune">Pune</option>
-                        <option value="Nagpur">Nagpur</option>
-                        <option value="Nashik">Nashik</option>
-                        <option value="Aurangabad">Aurangabad</option>
-                        <option value="Solapur">Solapur</option>
-                        <option value="Amravati">Amravati</option>
-                        <option value="Solapur">Solapur</option>
-                        <option value="Ahmednagar">Ahmednagar</option>
-                        <option value="Akola">Akola</option>
-                        <option value="Beed">Beed</option>
-                        <option value="Chandrapur">Chandrapur</option>
-                        <option value="Dhule">Dhule</option>
-                        <option value="Gondia">Gondia</option>
-                        <option value="Jalgaon">Jalgaon</option>
-                        <option value="Jalgaon">Jalgaon</option>
-                        <option value="Jalna">Jalna</option>
-                        <option value="Kolhapur">Kolhapur</option>
-                        <option value="Kolhapur">Kolhapur</option>
-                        <option value="Latur">Latur</option>
-                        <option value="Latur">Latur</option>
-                        <option value="Nanded">Nanded</option>
-                        <option value="Nandurbar">Nandurbar</option>
-                        <option value="Osmanabad">Osmanabad</option>
-                        <option value="Panvel">Panvel</option>
-                        <option value="Panvel">Panvel</option>
-                        <option value="Parbhani">Parbhani</option>
-                        <option value="Sangli">Sangli</option>
-                        <option value="Satara">Satara</option>
-                        <option value="Wardha">Wardha</option>
-                        <option value="Wardha">Wardha</option>
-                        <option value="Yavatmal">Yavatmal</option>
-                        <option value="Hyderabad">Hyderabad</option>
-                        <option value="Warangal">Warangal</option>
-                        <option value="Khammam">Khammam</option>
-                        <option value="Nalgonda">Nalgonda</option>
-                        <option value="Mahabubnagar">Mahabubnagar</option>
-                        <option value="Ramagundam">Ramagundam</option>
-                        <option value="Nizamabad">Nizamabad</option>
-                        <option value="Suryapet">Suryapet</option>
-                        <option value="Miryalaguda">Miryalaguda</option>
-                        <option value="Karimnagar">Karimnagar</option>
-                        <option value="Mancherial">Mancherial</option>
-                        <option value="Amreli">Amreli</option>
-                        <option value="Bharuch">Bharuch</option>
-                        <option value="Bhavnagar">Bhavnagar</option>
-                        <option value="Bhuj">Bhuj</option>
-                        <option value="Botad">Botad</option>
-                        <option value="Dahod">Dahod</option>
-                        <option value="Deesa">Deesa</option>
-                        <option value="Gandhidham">Gandhidham</option>
-                        <option value="Gandhinagar">Gandhinagar</option>
-                        <option value="Godhra">Godhra</option>
-                        <option value="Gondal">Gondal</option>
-                        <option value="Jamnagar">Jamnagar</option>
-                        <option value="Jetpur, Navagadh">Jetpur, Navagadh</option>
-                        <option value="Junagadh">Junagadh</option>
-                        <option value="Kalol">Kalol</option>
-                        <option value="Mehsana">Mehsana</option>
-                        <option value="Morbi">Morbi</option>
-                        <option value="Nadiad">Nadiad</option>
-                        <option value="Navsari">Navsari</option>
-                        <option value="Palanpur">Palanpur</option>
-                        <option value="Patan">Patan</option>
-                        <option value="Porbandar">Porbandar</option>
-                        <option value="Surendranagar Dudhrej">Surendranagar Dudhrej</option>
-                        <option value="Valsad">Valsad</option>
-                        <option value="Vapi">Vapi</option>
-                        <option value="Veraval">Veraval</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Jaipur">Jaipur</option>
-                        <option value="Jodhpur">Jodhpur</option>
-                        <option value="Kota">Kota</option>
-                        <option value="Bikaner">Bikaner</option>
-                        <option value="Ajmer">Ajmer</option>
-                        <option value="Udaipur">Udaipur</option>
-                        <option value="Bhilwara">Bhilwara</option>
-                        <option value="Alwar">Alwar</option>
-                        <option value="Bharatpur">Bharatpur</option>
-                        <option value="Sikar">Sikar</option>
-                        <option value="Sri Ganganagar">Sri Ganganagar</option>
-                        <option value="Pali">Pali</option>
-                        <option value="Chittorgarh">Chittorgarh</option>
-                        <option value="Tonk">Tonk</option>
-                        <option value="Kishangarh">Kishangarh</option>
-                        <option value="Beawar">Beawar</option>
-                        <option value="Hanumangarh">Hanumangarh</option>
-                        <option value="Dholpur">Dholpur</option>
-                        <option value="Gangapur city">Gangapur city</option>
-                        <option value="Sawai Madhopur">Sawai Madhopur</option>
-                        <option value="Churu">Churu</option>
-                        <option value="Jaisalmer">Jaisalmer</option>
-                        <option value="Baran">Baran</option>
-                        <option value="test">test</option>
-                        <option value="Indore">Indore</option>
-                        <option value="Betul">Betul</option>
-                        <option value="Bhind">Bhind</option>
-                        <option value="Bhopal">Bhopal</option>
-                        <option value="Burhanpur">Burhanpur</option>
-                        <option value="Chhatarpur">Chhatarpur</option>
-                        <option value="Chhindwara">Chhindwara</option>
-                        <option value="Damoh">Damoh</option>
-                        <option value="Datia">Datia</option>
-                        <option value="Dewas">Dewas</option>
-                        <option value="Guna">Guna</option>
-                        <option value="Gwalior">Gwalior</option>
-                        <option value="Hoshangabad">Hoshangabad</option>
-                        <option value="Jabalpur">Jabalpur</option>
-                        <option value="Jhansi">Jhansi</option>
-                        <option value="Katni">Katni</option>
-                        <option value="Khandwa">Khandwa</option>
-                        <option value="Khargone">Khargone</option>
-                        <option value="Mandsaur">Mandsaur</option>
-                        <option value="Morena">Morena</option>
-                        <option value="Nagda">Nagda</option>
-                        <option value="Neemuch">Neemuch</option>
-                        <option value="Pithampur">Pithampur</option>
-                        <option value="Ratlam">Ratlam</option>
-                        <option value="Rewa">Rewa</option>
-                        <option value="Sagar">Sagar</option>
-                        <option value="Satna">Satna</option>
-                        <option value="Sehore">Sehore</option>
-                        <option value="Seoni">Seoni</option>
-                        <option value="Shivpuri">Shivpuri</option>
-                        <option value="Singrauli">Singrauli</option>
-                        <option value="Ujjain">Ujjain</option>
-                        <option value="Vidisha">Vidisha</option>
-                        <option value="gygyyyu">gygyyyu</option>
-                        <option value="Kolkata">Kolkata</option>
-                        <option value="Asansol">Asansol</option>
-                        <option value="Siliguri">Siliguri</option>
-                        <option value="Durgapur">Durgapur</option>
-                        <option value="Durgapur">Durgapur</option>
-                        <option value="English Bazar">English Bazar</option>
-                        <option value="Baharampur">Baharampur</option>
-                        <option value="Habra">Habra</option>
-                        <option value="Kharagpur">Kharagpur</option>
-                        <option value="Shantipur">Shantipur</option>
-                        <option value="Dankuni">Dankuni</option>
-                        <option value="Dhulian">Dhulian</option>
-                        <option value="Ranaghat">Ranaghat</option>
-                        <option value="Haldia">Haldia</option>
-                        <option value="Raiganj">Raiganj</option>
-                        <option value="Krishnanagar">Krishnanagar</option>
-                        <option value="Nabadwip">Nabadwip</option>
-                        <option value="Medinipur">Medinipur</option>
-                        <option value="Jalpaiguri">Jalpaiguri</option>
-                        <option value="Balurghat">Balurghat</option>
-                        <option value="Basirhat">Basirhat</option>
-                        <option value="Bankura">Bankura</option>
-                        <option value="Chakdaha">Chakdaha</option>
-                        <option value="Darjeeling">Darjeeling</option>
-                        <option value="Alipurduar">Alipurduar</option>
-                        <option value="Purulia">Purulia</option>
-                        <option value="Jangipur">Jangipur</option>
-                        <option value="Bangaon">Bangaon</option>
-                        <option value="Cooch Behar">Cooch Behar</option>
-                        <option value="Warangal">Warangal</option>
-                      </select>
-                    </div>
+                      <div class="input-group input-group-static mb-4">
+                        <label for="city" class="ms-0 text-primary fw-bold col-12">City</label>
+                        <select class="form-control col-12" name="city" id="city" required>
+                          <option value="">-- Select City --</option>
+                          <option value="Mumbai">Mumbai</option>
+                          <option value="Thane">Thane</option>
+                          <option value="Palghar">Palghar</option>
+                          <option value="Surat">Surat</option>
+                          <option value="Ahmedabad">Ahmedabad</option>
+                          <option value="Vadodara">Vadodara</option>
+                          <option value="Rajkot">Rajkot</option>
+                          <option value="Pune">Pune</option>
+                          <option value="Nagpur">Nagpur</option>
+                          <option value="Nashik">Nashik</option>
+                          <option value="Aurangabad">Aurangabad</option>
+                          <option value="Solapur">Solapur</option>
+                          <option value="Amravati">Amravati</option>
+                          <option value="Solapur">Solapur</option>
+                          <option value="Ahmednagar">Ahmednagar</option>
+                          <option value="Akola">Akola</option>
+                          <option value="Beed">Beed</option>
+                          <option value="Chandrapur">Chandrapur</option>
+                          <option value="Dhule">Dhule</option>
+                          <option value="Gondia">Gondia</option>
+                          <option value="Jalgaon">Jalgaon</option>
+                          <option value="Jalgaon">Jalgaon</option>
+                          <option value="Jalna">Jalna</option>
+                          <option value="Kolhapur">Kolhapur</option>
+                          <option value="Kolhapur">Kolhapur</option>
+                          <option value="Latur">Latur</option>
+                          <option value="Latur">Latur</option>
+                          <option value="Nanded">Nanded</option>
+                          <option value="Nandurbar">Nandurbar</option>
+                          <option value="Osmanabad">Osmanabad</option>
+                          <option value="Panvel">Panvel</option>
+                          <option value="Panvel">Panvel</option>
+                          <option value="Parbhani">Parbhani</option>
+                          <option value="Sangli">Sangli</option>
+                          <option value="Satara">Satara</option>
+                          <option value="Wardha">Wardha</option>
+                          <option value="Wardha">Wardha</option>
+                          <option value="Yavatmal">Yavatmal</option>
+                          <option value="Hyderabad">Hyderabad</option>
+                          <option value="Warangal">Warangal</option>
+                          <option value="Khammam">Khammam</option>
+                          <option value="Nalgonda">Nalgonda</option>
+                          <option value="Mahabubnagar">Mahabubnagar</option>
+                          <option value="Ramagundam">Ramagundam</option>
+                          <option value="Nizamabad">Nizamabad</option>
+                          <option value="Suryapet">Suryapet</option>
+                          <option value="Miryalaguda">Miryalaguda</option>
+                          <option value="Karimnagar">Karimnagar</option>
+                          <option value="Mancherial">Mancherial</option>
+                          <option value="Amreli">Amreli</option>
+                          <option value="Bharuch">Bharuch</option>
+                          <option value="Bhavnagar">Bhavnagar</option>
+                          <option value="Bhuj">Bhuj</option>
+                          <option value="Botad">Botad</option>
+                          <option value="Dahod">Dahod</option>
+                          <option value="Deesa">Deesa</option>
+                          <option value="Gandhidham">Gandhidham</option>
+                          <option value="Gandhinagar">Gandhinagar</option>
+                          <option value="Godhra">Godhra</option>
+                          <option value="Gondal">Gondal</option>
+                          <option value="Jamnagar">Jamnagar</option>
+                          <option value="Jetpur, Navagadh">Jetpur, Navagadh</option>
+                          <option value="Junagadh">Junagadh</option>
+                          <option value="Kalol">Kalol</option>
+                          <option value="Mehsana">Mehsana</option>
+                          <option value="Morbi">Morbi</option>
+                          <option value="Nadiad">Nadiad</option>
+                          <option value="Navsari">Navsari</option>
+                          <option value="Palanpur">Palanpur</option>
+                          <option value="Patan">Patan</option>
+                          <option value="Porbandar">Porbandar</option>
+                          <option value="Surendranagar Dudhrej">Surendranagar Dudhrej</option>
+                          <option value="Valsad">Valsad</option>
+                          <option value="Vapi">Vapi</option>
+                          <option value="Veraval">Veraval</option>
+                          <option value="Bangalore">Bangalore</option>
+                          <option value="Jaipur">Jaipur</option>
+                          <option value="Jodhpur">Jodhpur</option>
+                          <option value="Kota">Kota</option>
+                          <option value="Bikaner">Bikaner</option>
+                          <option value="Ajmer">Ajmer</option>
+                          <option value="Udaipur">Udaipur</option>
+                          <option value="Bhilwara">Bhilwara</option>
+                          <option value="Alwar">Alwar</option>
+                          <option value="Bharatpur">Bharatpur</option>
+                          <option value="Sikar">Sikar</option>
+                          <option value="Sri Ganganagar">Sri Ganganagar</option>
+                          <option value="Pali">Pali</option>
+                          <option value="Chittorgarh">Chittorgarh</option>
+                          <option value="Tonk">Tonk</option>
+                          <option value="Kishangarh">Kishangarh</option>
+                          <option value="Beawar">Beawar</option>
+                          <option value="Hanumangarh">Hanumangarh</option>
+                          <option value="Dholpur">Dholpur</option>
+                          <option value="Gangapur city">Gangapur city</option>
+                          <option value="Sawai Madhopur">Sawai Madhopur</option>
+                          <option value="Churu">Churu</option>
+                          <option value="Jaisalmer">Jaisalmer</option>
+                          <option value="Baran">Baran</option>
+                          <option value="test">test</option>
+                          <option value="Indore">Indore</option>
+                          <option value="Betul">Betul</option>
+                          <option value="Bhind">Bhind</option>
+                          <option value="Bhopal">Bhopal</option>
+                          <option value="Burhanpur">Burhanpur</option>
+                          <option value="Chhatarpur">Chhatarpur</option>
+                          <option value="Chhindwara">Chhindwara</option>
+                          <option value="Damoh">Damoh</option>
+                          <option value="Datia">Datia</option>
+                          <option value="Dewas">Dewas</option>
+                          <option value="Guna">Guna</option>
+                          <option value="Gwalior">Gwalior</option>
+                          <option value="Hoshangabad">Hoshangabad</option>
+                          <option value="Jabalpur">Jabalpur</option>
+                          <option value="Jhansi">Jhansi</option>
+                          <option value="Katni">Katni</option>
+                          <option value="Khandwa">Khandwa</option>
+                          <option value="Khargone">Khargone</option>
+                          <option value="Mandsaur">Mandsaur</option>
+                          <option value="Morena">Morena</option>
+                          <option value="Nagda">Nagda</option>
+                          <option value="Neemuch">Neemuch</option>
+                          <option value="Pithampur">Pithampur</option>
+                          <option value="Ratlam">Ratlam</option>
+                          <option value="Rewa">Rewa</option>
+                          <option value="Sagar">Sagar</option>
+                          <option value="Satna">Satna</option>
+                          <option value="Sehore">Sehore</option>
+                          <option value="Seoni">Seoni</option>
+                          <option value="Shivpuri">Shivpuri</option>
+                          <option value="Singrauli">Singrauli</option>
+                          <option value="Ujjain">Ujjain</option>
+                          <option value="Vidisha">Vidisha</option>
+                          <option value="gygyyyu">gygyyyu</option>
+                          <option value="Kolkata">Kolkata</option>
+                          <option value="Asansol">Asansol</option>
+                          <option value="Siliguri">Siliguri</option>
+                          <option value="Durgapur">Durgapur</option>
+                          <option value="Durgapur">Durgapur</option>
+                          <option value="English Bazar">English Bazar</option>
+                          <option value="Baharampur">Baharampur</option>
+                          <option value="Habra">Habra</option>
+                          <option value="Kharagpur">Kharagpur</option>
+                          <option value="Shantipur">Shantipur</option>
+                          <option value="Dankuni">Dankuni</option>
+                          <option value="Dhulian">Dhulian</option>
+                          <option value="Ranaghat">Ranaghat</option>
+                          <option value="Haldia">Haldia</option>
+                          <option value="Raiganj">Raiganj</option>
+                          <option value="Krishnanagar">Krishnanagar</option>
+                          <option value="Nabadwip">Nabadwip</option>
+                          <option value="Medinipur">Medinipur</option>
+                          <option value="Jalpaiguri">Jalpaiguri</option>
+                          <option value="Balurghat">Balurghat</option>
+                          <option value="Basirhat">Basirhat</option>
+                          <option value="Bankura">Bankura</option>
+                          <option value="Chakdaha">Chakdaha</option>
+                          <option value="Darjeeling">Darjeeling</option>
+                          <option value="Alipurduar">Alipurduar</option>
+                          <option value="Purulia">Purulia</option>
+                          <option value="Jangipur">Jangipur</option>
+                          <option value="Bangaon">Bangaon</option>
+                          <option value="Cooch Behar">Cooch Behar</option>
+                          <option value="Warangal">Warangal</option>
+                        </select>
+                      </div>
                   </div>
                 </div>
               </div>
-              <br>
               <div style="text-align:center">
                 {% comment %} <button class="btn btn-primary" name="cancel" type="submit">Cancel</button> {% endcomment %}
                 <button class="btn btn-primary" name="save" type="submit">Save & Submit</button>
