@@ -69,87 +69,94 @@
 {% block title %}Registration Form{% endblock title %}
 
 {% block other_body %}
-    <form action="register" method = "post" > 
-        {% csrf_token %}
-        <h2 align="center">New Partner Registration</h2>
-        <p>Please fill out this form to create an account</p>
-        <hr>
-        
-        
-
-        <div class="row">
-            <b>Full Name</b>
-            <input type = "text" name = "fname"  placeholder="Full Name" required>
+  <h1 class="mb-5 mt-3 display-3 text-center bg-transparent text-dark">New Partner Registration</h1>
+  <form action="register" method="POST" class="bg-white rounded p-5 shadow-blur border-0" style="width: 95%; margin: 25px auto;"> 
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group input-group-outline mb-4">
+            <label for="fname" class="form-label text-primary fw-bold">Full Name</label>
+            <input type="text" name="fname" id="fname" class="form-control" required>
         </div>
-
-        
-
-        <div class="row">
-            <b>E-mail</b>
-            <input type = "text" name = "email" placeholder="Email address" required>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group input-group-outline mb-4">
+            <label for="email" class="form-label text-primary fw-bold">E-mail</label>
+            <input type="email" name="email" id="email" class="form-control" required>
         </div>
-
-        <div class="row">
-            <b>Mobile Number</b>
-            <input type = "int" name = 'phone' placeholder="Mobile number" required maxlength="10">
+      </div>
+      <div class="col-md-4">
+        <div class="input-group input-group-outline mb-4">
+            <label for="phone" class="form-label text-primary fw-bold">Mobile Number</label>
+            <input type="tel" pattern="[1-9]{1}[0-9]{9}" name="phone" id="phone" class="form-control" required>
         </div>
-        
-        <div class="row">
-            <b>Alternate Mobile Number</b>
-            <input type = "int" name = 'alt_phone' placeholder="Alternate mobile number" maxlength="10">
+      </div>
+      <div class="col-md-4">
+        <div class="input-group input-group-outline mb-4">
+            <label for="alt_phone" class="form-label text-primary fw-bold">Alternate Mobile Number</label>
+            <input type="tel" pattern="[1-9]{1}[0-9]{9}" name="alt_phone" id="alt_phone" class="form-control" required>
         </div>
-            
-        <div class="row">
-            <b>Address</b>
-            <textarea name = 'address' rows = "4" cols = "40" placeholder="Address"></textarea>
+      </div>
+      <div class="col-md-4">
+        <label for="address" class="form-label text-primary fw-bold mb-0">Address</label>
+        <div class="input-group input-group-dynamic mb-4">
+          <textarea name="address" id="address" class="form-control" rows="1" placeholder="eg. Address" spellcheck="false" required></textarea>
         </div>
-
-        <div class="row">
-            <b>Designation</b>
-            <select name="designation" id="select_opt" class="form-control" onchange="showfield(this.options[this.selectedIndex].value)" required>
-                <option>Select</option>                              
-                <option>Salaried</option>
-                <option>Self Employed</option>
-                <option>Freelancer</option>
-                <option> Student</option>
-                <option>Home Maker</option>
-                <option>DSA</option>
-                <option> Insurance Agent</option>
-                <option> Chartered Accountant</option>
-                <option> Tax Consultants</option>
-                <option>Banker</option>
-                <option> Company Secretary</option>
-                <option> Real Estate Agent</option>
-                <option>Builder</option>
-                <option>Other</option>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group row">
+          <div class="input-group input-group-static mb-4">
+            <label for="designation" class="ms-0 text-primary fw-bold col-12">Designation</label>
+            <select class="form-control col-12" name="designation" id="select_opt" onchange="showfield(this.options[this.selectedIndex].value)" required>
+              <option value="">-- Select Designation --</option>
+              <option>Salaried</option>
+              <option>Self Employed</option>
+              <option>Freelancer</option>
+              <option> Student</option>
+              <option>Home Maker</option>
+              <option>DSA</option>
+              <option> Insurance Agent</option>
+              <option> Chartered Accountant</option>
+              <option> Tax Consultants</option>
+              <option>Banker</option>
+              <option> Company Secretary</option>
+              <option> Real Estate Agent</option>
+              <option>Builder</option>
+              <option>Other</option>
             </select>
-            <div id="div1"></div>
-            <script>
-                function showfield(name)
-                {
-                    if(name=='Other')
-                        document.getElementById('div1').innerHTML = 'Other: <input type="text" name="other" />';
-                    else 
-                        document.getElementById('div1').innerHTML='';
-                }
-            </script>
+          </div>
         </div>
-
-        
-        <div class="container">
-            {% for message in messages %}
-            <h3>{{message}}</h3>
-            {% endfor %}
-            
-        </div>
-
-        <p>By clicking register you agree to our <a href="#">terms & conditions</a>.</p>
-        <div class="row">
-            <input type="submit" value="Register">
-        </div>
-        <div class="container signin">
-            <p>Already have an account? <a href="login">Login</a>.</p>
-        </div>
-
-    </form>
+      </div>
+      <div class="col-md-4" id="div1">
+      </div>
+    </div>
+    <div class="container text-danger">
+      {% for message in messages %}
+        {{message}}
+      {% endfor %}
+    </div>
+    <p class="text-center">By clicking "Register", you agree to our <a href="#">Terms & Conditions</a>.</p>
+    <div class="row justify-content-center">
+      <button type="submit" class="col-3 btn bg-gradient-primary">Register</button>
+    </div>
+    <div class="container text-center">
+      <p>Already have an account? <a href="login">Login</a>.</p>
+    </div>
+  </form>
 {% endblock other_body %}
+
+{% block other_js %}
+  <script>
+    function showfield(name)
+    {
+        if(name=='Other')
+            document.getElementById('div1').innerHTML =
+            '  <label  for="other" class="form-label text-primary fw-bold">Other</label>' +
+            '  <div class="input-group input-group-outline mb-4">' +
+            '      <input type="text" name="other" id="other" class="form-control" placeholder="eg. Other Designation">' +
+            '  </div>';
+        else 
+            document.getElementById('div1').innerHTML='';
+    }
+  </script>
+{% endblock other_js %}
