@@ -1,95 +1,69 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Products And Policy</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="/static/js/sb-admin-2.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .form-container{
-          background-color: rgb(245, 245, 245);
-          padding: 30px;
-          margin-right: -20px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 10px 0px #000;
-          /* margin -100px; */
-        }
-        .header{
-          padding: 10px;
-
-        }
-
-      </style>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{%block title%}Add Products And Policy{% endblock title %}
+{%block other_body%}
     <div class ="container-fluid">
 
         <!-- Sidebar -->
-        {% include 'account/sidebar.html' %}
 
 
         
         <div class="container" style="width:80%; margin:0 auto;">
-            <h3 class="card-title text-center header"> Add Products And Policy</h3>
+            <h3 class="card-title text-center header"> </h3>
 
 
             <form class="form-container" action={% url 'AddProductsAndPolicy' %} method="POST">
                 {% csrf_token %}
                 <h3 align="center">Product & Policy Details</h3><br>
-                <div class="form-row">
-                    <div class='form-group col'>
-                        <label for="productname"><b>Product Name</b></label>
-                        <input type="text" class="form-control" id="productname" name="productname" placeholder="Product Name">
+                <div class="row">
+                    <div class='col-md-6'>
+                        <div class= "input-group input-group-outline my-3">
+                            <label for="productname" class = 'form-label'><b>Product Name</b></label>
+                            <input type="text" class="form-control" id="productname" name="productname">
+                        </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <select class="form-control" id="bank" name="bank">
-                        {% for bank in banks %}
-                            <option value={{ bank.bank_id }}>{{ bank.bank_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <a class="btn btn-primary" href="{% url 'PPbank' %}">Add Bank</a>
-
+                <div class="row">
+                    <div class='col-md-6'>
+                        <div class = "input-group input-group-static mb-3">
+                            <label class = "ms-0">Select Bank </label>
+                            <select class="form-control" id="bank" name="bank">
+                                {% for bank in banks %}
+                                    <option value={{ bank.bank_id }}>{{ bank.bank_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <a class="btn btn-primary" href="{% url 'PPbank' %}">Add Bank</a>
+                    </div>
                 </div>
 
                 <br>
 
                 <h3 align="center">Age</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_age"><b>Minimum age</b></label>
-                            <input type="text" class="form-control" id="min_age" name="min_age" placeholder="Minimum age">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_age" class ="form-label">Enter Minimum age</label>
+                                <input type="text" class="form-control" id="min_age" name="min_age">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="retire_age"><b>Retirement age</b></label>
-                            <input type="text" class="form-control" id="retire_age" name="retire_age" placeholder="Retirement age">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="retire_age" class ="form-label">Retirement age</label>
+                                <input type="text" class="form-control" id="retire_age" name="retire_age">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="Max_age_consi_others"><b>Maximum Age consideration Others</b></label>
-                            <input type="text" class="form-control" id="Max_age_consi_others" name="Max_age_consi_others" placeholder="Maximum Age consideration Others">
+                    <div class="row">
+                      
+                        
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="Max_age_consi_others" class = "form-label"><b>Maximum Age consideration Others</b></label>
+                                <input type="text" class="form-control" id="Max_age_consi_others" name="Max_age_consi_others" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="Max_age_consi_others"><b>Maximum Age consideration Others</b></label>
-                            <input type="text" class="form-control" id="Max_age_consi_others" name="Max_age_consi_others" placeholder="Maximum Age consideration Others">
-                        </div>
+                      
                     </div>
                 </div>
 
@@ -97,14 +71,18 @@
 
                 <h3 align="center">Cibil</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="cibil_range_min"><b>Cibil Range Minimum</b></label>
-                            <input type="text" class="form-control" id="cibil_range_min" name="cibil_range_min" placeholder="Cibil Range Minimum">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="cibil_range_min" class = 'form-label'><b>Cibil Range Minimum</b></label>
+                                <input type="text" class="form-control" id="cibil_range_min" name="cibil_range_min" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="cibil_range_max"><b>Cibil Range Maximum</b></label>
-                            <input type="text" class="form-control" id="cibil_range_max" name="cibil_range_max" placeholder="Cibil Range Maximum">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="cibil_range_max" class ="form-label"><b>Cibil Range Maximum</b></label>
+                                <input type="text" class="form-control" id="cibil_range_max" name="cibil_range_max">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,10 +91,12 @@
 
                 <h3 align="center">Company</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="comp_type"><b>Company Type</b></label>
-                            <input type="text" class="form-control" id="comp_type" name="comp_type" placeholder="CiCompany Type">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="comp_type" class ="form-label">Company Type</label>
+                                <input type="text" class="form-control" id="comp_type" name="comp_type">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,8 +105,8 @@
 
                 <h3 align="center">Cost Sheet</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
+                    <div class="row">
+                        <div class='col-md-6'>
                             <label for="particulars"><b>Particulars</b></label>
                             <input type="text" class="form-control" id="particulars" name="particulars" placeholder="Particulars">
                         </div>
@@ -137,24 +117,33 @@
 
                 <h3 align="center">Customer</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_age"><b>Minimum Age</b></label>
-                            <input type="text" class="form-control" id="min_age" name="min_age" placeholder="Minimum Age">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_age" class = "form-label"><b>Minimum Age</b></label>
+                                <input type="text" class="form-control" id="min_age" name="min_age">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="total_exp"><b>Total Experience</b></label>
-                            <input type="text" class="form-control" id="total_exp" name="total_exp" placeholder="Total Experience">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="total_exp" class = "form-label"><b>Total Experience</b></label>
+                                <input type="text" class="form-control" id="total_exp" name="total_exp">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="form16"><b>form16</b></label>
-                            <input type="text" class="form-control" id="form16" name="form16" placeholder="form16">
+                    <div class="row">
+
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="form16" class ="form-label"><b>form16</b></label>
+                                <input type="text" class="form-control" id="form16" name="form16">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="salary_type"><b>Salary Type</b></label>
-                            <input type="text" class="form-control" id="salary_type" name="salary_type" placeholder="Salary Type</b>">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="salary_type" class ="form-label"><b>Salary Type</b></label>
+                                <input type="text" class="form-control" id="salary_type" name="salary_type">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,10 +152,12 @@
 
                 <h3 align="center">Customer Designation</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="cust_desig"><b>Customer Designation</b></label>
-                            <input type="text" class="form-control" id="cust_desig" name="cust_desig" placeholder="Customer Designation">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="cust_desig" class="form-label"><b>Customer Designation</b></label>
+                                <input type="text" class="form-control" id="cust_desig" name="cust_desig">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,10 +166,12 @@
 
                 <h3 align="center">Customer Nationality</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="cust_nat"><b>Customer Nationality</b></label>
-                            <input type="text" class="form-control" id="cust_nat" name="cust_nat" placeholder="Customer Nationality">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="cust_nat" class ="form-label"><b>Customer Nationality</b></label>
+                                <input type="text" class="form-control" id="cust_nat" name="cust_nat">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,38 +180,52 @@
 
                 <h3 align="center">Fees</h3><br>
                 <div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="loginfees"><b>Login Fee</b></label>
-                            <input type="text" class="form-control" id="loginfees" name="loginfees" placeholder="Login Fee">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="loginfees" class="form-label"><b>Login Fee</b></label>
+                                <input type="text" class="form-control" id="loginfees" name="loginfees" >
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="procfeeapp"><b>processing fee application</b></label>
-                            <input type="text" class="form-control" id="procfeeapp" name="procfeeapp" placeholder="processing fee application">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="procfeeapp"><b>processing fee application</b></label>
+                                <input type="text" class="form-control" id="procfeeapp" name="procfeeapp" placeholder="processing fee application">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="procfeetype"><b>processing fee type</b></label>
-                            <input type="text" class="form-control" id="procfeetype" name="procfeetype" placeholder="processing fee type">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="procfeeflatloanamtwise"><b>processing fee flat loan amountwise</b></label>
-                            <input type="text" class="form-control" id="procfeeflatloanamtwise" name="procfeeflatloanamtwise" placeholder="processing fee flat loan amountwise">
-                        </div>
-                        <div class="form-group col">
-                            <label for="procfeepercentloanamtwise"><b>processing fee percentage loan amountwise</b></label>
-                            <input type="text" class="form-control" id="procfeepercentloanamtwise" name="procfeepercentloanamtwise" placeholder="processing fee percentage loan amountwise">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="procfeetype" class ="form-label"><b>processing fee type</b></label>
+                                <input type="text" class="form-control" id="procfeetype" name="procfeetype" >
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="offers"><b>Offers</b></label>
-                            <input type="text" class="form-control" id="offers" name="offers" placeholder="Offers">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="procfeeflatloanamtwise" class = "form-control"><b>processing fee flat loan amountwise</b></label>
+                                <input type="text" class="form-control" id="procfeeflatloanamtwise" name="procfeeflatloanamtwise" >
+                             </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="offlineonline"><b>Offline or Online</b></label>
-                            <input type="text" class="form-control" id="offlineonline" name="offlineonline" placeholder="Offline or Online">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="procfeepercentloanamtwise" class ="form-label"><b>processing fee percentage loan amountwise</b></label>
+                                <input type="text" class="form-control" id="procfeepercentloanamtwise" name="procfeepercentloanamtwise">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="offers" class ="form-control"><b>Offers</b></label>
+                                <input type="text" class="form-control" id="offers" name="offers">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="offlineonline" class = "form-control"><b>Offline or Online</b></label>
+                                <input type="text" class="form-control" id="offlineonline" name="offlineonline">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -227,102 +234,142 @@
 
                 <h3 align="center">Income</h3>
                 <div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="grosssal"><b>Gross salary</b></label>
-                            <input type="text" class="form-control" id="grosssal" name="grosssal" placeholder="Gross salary">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="grosssal" class = "form-control"><b>Gross salary</b></label>
+                                <input type="text" class="form-control" id="grosssal" name="grosssal">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="netsal"><b>Net Salary</b></label>
-                            <input type="text" class="form-control" id="netsal" name="netsal" placeholder="Net Salary">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="bonus"><b>Bonus</b></label>
-                            <input type="text" class="form-control" id="bonus" name="bonus" placeholder="Bonus">
-                        </div>
-                        <div class="form-group col">
-                            <label for="bonus_avg_yearly"><b>Bonus Average yearly</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_yearly" name="bonus_avg_yearly" placeholder="Bonus Average yearly">
-                        </div>
-                        <div class="form-group col">
-                            <label for="bonus_avg_yearly_percent"><b>Bonus Average yearly percentage</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_yearly_percent" name="bonus_avg_yearly_percent" placeholder="Bonus Average yearly percentage">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="netsal" class = "form-control"><b>Net Salary</b></label>
+                                <input type="text" class="form-control" id="netsal" name="netsal">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="bonus_avg_qtr"><b>Bonus Average Quaterly</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_qtr" name="bonus_avg_qtr" placeholder="Bonus Average Quaterly">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus" class ="form-label"><b>Bonus</b></label>
+                                <input type="text" class="form-control" id="bonus" name="bonus" >
+                             </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="bonus_avg_qtr_percent"><b>Bonus Average Quaterly percentage</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_qtr_percent" name="bonus_avg_qtr_percent" placeholder="Bonus Average Quaterly percentage">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_yearly" class ="form-label"><b>Bonus Average yearly</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_yearly" name="bonus_avg_yearly" >
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="bonus_avg_half_yearly"><b>Bonus Average half</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_half_yearly" name="bonus_avg_half_yearly" placeholder="Bonus Average half">
-                        </div>
-                        <div class="form-group col">
-                            <label for="bonus_avg_half_yearly_percent"><b>Bonus Average half-yearly percentage</b></label>
-                            <input type="text" class="form-control" id="bonus_avg_half_yearly_percent" name="bonus_avg_half_yearly_percent" placeholder="Bonus Average half-yearly percentage">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="rent_income"><b>Rent Income</b></label>
-                            <input type="text" class="form-control" id="rent_income" name="rent_income" placeholder="Rent Income">
-                        </div>
-                        <div class="form-group col">
-                            <label for="rentagreementtype"><b>Rent Agreement Type</b></label>
-                            <input type="text" class="form-control" id="rentagreementtype" name="rentagreementtype" placeholder="Rent Agreement Type">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_yearly_percent" class ="form-label"><b>Bonus Average yearly percentage</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_yearly_percent" name="bonus_avg_yearly_percent" >
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="bank_ref"><b>bank Reflection</b></label>
-                            <input type="text" class="form-control" id="bank_ref" name="bank_ref" placeholder="bank Reflection">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_qtr" class ="form-label"><b>Bonus Average Quaterly</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_qtr" name="bonus_avg_qtr">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="rent_ref_in_bank"><b>bank Reflection in bank</b></label>
-                            <input type="text" class="form-control" id="rent_ref_in_bank" name="rent_ref_in_bank" placeholder="bank Reflection in bank">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="rent_inc_percent"><b>Rent Increment Percentage</b></label>
-                            <input type="text" class="form-control" id="rent_inc_percent" name="rent_inc_percent" placeholder="Rent Increment Percentage">
-                        </div>
-                        <div class="form-group col">
-                            <label for="fut_rent"><b>Future Rent</b></label>
-                            <input type="text" class="form-control" id="fut_rent" name="fut_rent" placeholder="Future Rent">
-                        </div>
-                        <div class="form-group col">
-                            <label for="fut_rent_percent"><b>Future Rent percent</b></label>
-                            <input type="text" class="form-control" id="fut_rent_percent" name="fut_rent_percent" placeholder="Future Rent percent">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_qtr_percent" class ="form-label"><b>Bonus Average Quaterly percentage</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_qtr_percent" name="bonus_avg_qtr_percent" >
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="incentive"><b>Incentive</b></label>
-                            <input type="text" class="form-control" id="incentive" name="incentive" placeholder="Incentive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_half_yearly" class ="form-label"><b>Bonus Average half</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_half_yearly" name="bonus_avg_half_yearly">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="incen_avg_months"><b>Incentive Average Per Month</b></label>
-                            <input type="text" class="form-control" id="incen_avg_months" name="incen_avg_months" placeholder="Incentive Average Per Month">
-                        </div>
-                        <div class="form-group col">
-                            <label for="incen_percent"><b>Incentive Percentage</b></label>
-                            <input type="text" class="form-control" id="incen_percent" name="incen_percent" placeholder="Incentive Percentage">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bonus_avg_half_yearly_percent" class ="form-label"><b>Bonus Average half-yearly percentage</b></label>
+                                <input type="text" class="form-control" id="bonus_avg_half_yearly_percent" name="bonus_avg_half_yearly_percent">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="coApplicant_No_Income_only_Rent_income"><b>Co-Applicant-No Income only Rent Income</b></label>
-                            <input type="text" class="form-control" id="coApplicant_No_Income_only_Rent_income" name="coApplicant_No_Income_only_Rent_income" placeholder="Co-Applicant-No Income only Rent Income">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="rent_income" class ="form-label"><b>Rent Income</b></label>
+                                <input type="text" class="form-control" id="rent_income" name="rent_income" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="rentagreementtype" class ="form-label"><b>Rent Agreement Type</b></label>
+                                <input type="text" class="form-control" id="rentagreementtype" name="rentagreementtype">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="bank_ref" class ="form-label"><b>bank Reflection</b></label>
+                                <input type="text" class="form-control" id="bank_ref" name="bank_ref" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="rent_ref_in_bank"  class ="form-label"><b>bank Reflection in bank</b></label>
+                                <input type="text" class="form-control" id="rent_ref_in_bank" name="rent_ref_in_bank">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="rent_inc_percent" class ="form-label"><b>Rent Increment Percentage</b></label>
+                                <input type="text" class="form-control" id="rent_inc_percent" name="rent_inc_percent" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="fut_rent" class ="form-label"><b>Future Rent</b></label>
+                                <input type="text" class="form-control" id="fut_rent" name="fut_rent" ">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="fut_rent_percent" class ="form-label"><b>Future Rent percent</b></label>
+                                <input type="text" class="form-control" id="fut_rent_percent" name="fut_rent_percent" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="incentive" class ="form-label"><b>Incentive</b></label>
+                                <input type="text" class="form-control" id="incentive" name="incentive">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="incen_avg_months"  class ="form-label"><b>Incentive Average Per Month</b></label>
+                                <input type="text" class="form-control" id="incen_avg_months" name="incen_avg_months">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="incen_percent" class ="form-label"><b>Incentive Percentage</b></label>
+                                <input type="text" class="form-control" id="incen_percent" name="incen_percent" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="coApplicant_No_Income_only_Rent_income" class ="form-label"><b>Co-Applicant-No Income only Rent Income</b></label>
+                                <input type="text" class="form-control" id="coApplicant_No_Income_only_Rent_income" name="coApplicant_No_Income_only_Rent_income">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -331,18 +378,24 @@
 
                 <h3 align="center">Income Foir</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_amt"><b>Minimum Amount</b></label>
-                            <input type="number" class="form-control" id="min_amt" name="min_amt" placeholder="Minimum Amount">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_amt" class ="form-label"><b>Minimum Amount</b></label>
+                                <input type="number" class="form-control" id="min_amt" name="min_amt">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="max_amt"><b>Maximum Amount</b></label>
-                            <input type="number" class="form-control" id="max_amt" name="max_amt" placeholder="Maximum Amount">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="max_amt" class ="form-label"><b>Maximum Amount</b></label>
+                                <input type="number" class="form-control" id="max_amt" name="max_amt" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="percent"><b>Percent</b></label>
-                            <input type="number" class="form-control" id="percent" name="percent" placeholder="Percent">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="percent" class ="form-label"><b>Percent</b></label>
+                                <input type="number" class="form-control" id="percent" name="percent" >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -351,18 +404,24 @@
 
                 <h3 align="center">Loan Amount</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_loan_amt"><b>Minimum Loan Amount</b></label>
-                            <input type="text" class="form-control" id="min_loan_amt" name="min_loan_amt" placeholder="Minimum Loan Amount">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_loan_amt" class ="form-label"><b>Minimum Loan Amount</b></label>
+                                <input type="text" class="form-control" id="min_loan_amt" name="min_loan_amt" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="max_loan_amt"><b>Maximum Loan Amount</b></label>
-                            <input type="text" class="form-control" id="max_loan_amt" name="max_loan_amt" placeholder="Maximum Loan Amount">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="max_loan_amt" class ="form-label"><b>Maximum Loan Amount</b></label>
+                                <input type="text" class="form-control" id="max_loan_amt" name="max_loan_amt" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="total_exp"><b>Total Experience</b></label>
-                            <input type="text" class="form-control" id="total_exp" name="total_exp" placeholder="Total Experience</b>">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="total_exp" class ="form-label"><b>Total Experience</b></label>
+                                <input type="text" class="form-control" id="total_exp" name="total_exp">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -371,42 +430,58 @@
 
                 <h3 align="center">Loan Towards Evalution</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="cost_sheet"><b>Cost Sheet</b></label>
-                            <input type="text" class="form-control" id="cost_sheet" name="cost_sheet" placeholder="Cost Sheet">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="cost_sheet" class ="form-label"><b>Cost Sheet</b></label>
+                                <input type="text" class="form-control" id="cost_sheet" name="cost_sheet">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="min_amount"><b>Minimium Amount</b></label>
-                            <input type="text" class="form-control" id="min_amount" name="min_amount" placeholder="Minimium Amount">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_amount" class ="form-label"><b>Minimium Amount</b></label>
+                                <input type="text" class="form-control" id="min_amount" name="min_amount" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="max_amount"><b>Maximum Amount</b></label>
-                            <input type="text" class="form-control" id="max_amount" name="max_amount" placeholder="Maximum Amount">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="rbi_guideline"><b>RBI Guidelines</b></label>
-                            <input type="text" class="form-control" id="rbi_guideline" name="rbi_guideline" placeholder="RBI Guidelines">
-                        </div>
-                        <div class='form-group col'>
-                            <label for="ammenity"><b>Ammenity</b></label>
-                            <input type="text" class="form-control" id="ammenity" name="ammenity" placeholder="Ammenity">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="max_amount" class ="form-label"><b>Maximum Amount</b></label>
+                                <input type="text" class="form-control" id="max_amount" name="max_amount" >
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="additional"><b>Additional</b></label>
-                            <input type="text" class="form-control" id="additional" name="additional" placeholder="Additional</b></label>">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="rbi_guideline" class ="form-label"><b>RBI Guidelines</b></label>
+                                <input type="text" class="form-control" id="rbi_guideline" name="rbi_guideline">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="car_parking"><b>Car Parking</b></label>
-                            <input type="text" class="form-control" id="car_parking" name="car_parking" placeholder="Car Parking">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="ammenity" class ="form-label"><b>Ammenity</b></label>
+                                <input type="text" class="form-control" id="ammenity" name="ammenity" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="car_parking_parcent"><b>Car Parking Percent</b></label>
-                            <input type="text" class="form-control" id="car_parking_parcent" name="car_parking_parcent" placeholder="Car Parking Percent">
+                    </div>
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="additional" class ="form-label"><b>Additional</b></label>
+                                <input type="text" class="form-control" id="additional" name="additional" >
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="car_parking" class ="form-label"><b>Car Parking</b></label>
+                                <input type="text" class="form-control" id="car_parking" name="car_parking" >
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="car_parking_parcent" class ="form-label"><b>Car Parking Percent</b></label>
+                                <input type="text" class="form-control" id="car_parking_parcent" name="car_parking_parcent" >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -415,46 +490,64 @@
 
                 <h3 align="center">LTV Resale</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_amount"><b>Minimium Amount</b></label>
-                            <input type="text" class="form-control" id="min_amount" name="min_amount" placeholder="Minimium Amount">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="min_amount" class ="form-label"><b>Minimium Amount</b></label>
+                                <input type="text" class="form-control" id="min_amount" name="min_amount">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="max_amount"><b>Maximum Amount</b></label>
-                            <input type="text" class="form-control" id="max_amount" name="max_amount" placeholder="Maximum Amount">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="max_amount" class ="form-label"><b>Maximum Amount</b></label>
+                                <input type="text" class="form-control" id="max_amount" name="max_amount" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="ltvrbi_guideline"><b>RBI Guidelines</b></label>
-                            <input type="text" class="form-control" id="ltvrbi_guideline" name="ltvrbi_guideline" placeholder="RBI Guidelines">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="doccument_cost"><b>Document Cost</b></label>
-                            <input type="text" class="form-control" id="doccument_cost" name="doccument_cost" placeholder="Document Cost">
-                        </div>
-                        <div class='form-group col'>
-                            <label for="additional"><b>Additional</b></label>
-                            <input type="text" class="form-control" id="additional" name="additional" placeholder="Additional">
-                        </div>
-                        <div class='form-group col'>
-                            <label for="car_parking"><b>Car Parking</b></label>
-                            <input type="text" class="form-control" id="car_parking" name="car_parking" placeholder="Car Parking">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="ltvrbi_guideline" class ="form-label"><b>RBI Guidelines</b></label>
+                                <input type="text" class="form-control" id="ltvrbi_guideline" name="ltvrbi_guideline" >
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="total"><b>Total</b></label>
-                            <input type="text" class="form-control" id="total" name="total" placeholder="Total">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="doccument_cost" class ="form-label"><b>Document Cost</b></label>
+                                <input type="text" class="form-control" id="doccument_cost" name="doccument_cost" >
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="market_value"><b>Market Value</b></label>
-                            <input type="text" class="form-control" id="market_value" name="market_value" placeholder="Market Value">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="additional" class ="form-label"><b>Additional</b></label>
+                                <input type="text" class="form-control" id="additional" name="additional">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="av_capping"><b>AV Capping</b></label>
-                            <input type="text" class="form-control" id="av_capping" name="av_capping" placeholder="AV Capping">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="car_parking" class ="form-label"><b>Car Parking</b></label>
+                                <input type="text" class="form-control" id="car_parking" name="car_parking">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="total" class ="form-label"><b>Total</b></label>
+                                <input type="text" class="form-control" id="total" name="total" >
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="market_value" class ="form-label"><b>Market Value</b></label>
+                                <input type="text" class="form-control" id="market_value" name="market_value">
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class = "input-group input-group-outline my-3">
+                                <label for="av_capping" class ="form-label"><b>AV Capping</b></label>
+                                <input type="text" class="form-control" id="av_capping" name="av_capping">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -463,10 +556,12 @@
 
                 <h3 align="center">Negative Employer Profile</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="neg_emp_pro"><b>Negative Employer Profile</b></label>
-                            <input type="text" class="form-control" id="neg_emp_pro" name="neg_emp_pro" placeholder="Negative Employer Profile">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="neg_emp_pro" class="form-label"><b>Negative Employer Profile</b></label>
+                                <input type="text" class="form-control" id="neg_emp_pro" name="neg_emp_pro">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -475,10 +570,12 @@
 
                 <h3 align="center">Negative Area</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="neg_area"><b>Negative Area</b></label>
-                            <input type="text" class="form-control" id="neg_area" name="neg_area" placeholder="Negative Area">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="neg_area" class="form-label"><b>Negative Area</b></label>
+                                <input type="text" class="form-control" id="neg_area" name="neg_area">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -487,35 +584,47 @@
 
                 <h3 align="center">Obligations</h3>
                 <div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="emioblig"><b>emi Obligation</b></label>
-                            <input type="text" class="form-control" id="emioblig" name="emioblig" placeholder="emi Obligation">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="emioblig" class="form-label"><b>>Emi Obligation</b></label>
+                                <input type="text" class="form-control" id="emioblig" name="emioblig">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="emioblignotconsidered"><b>emi obligation not considered</b></label>
-                            <input type="text" class="form-control" id="emioblignotconsidered" name="emioblignotconsidered" placeholder="emi obligation not considered">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="emioblignotconsidered" class="form-label"><b>>Emi obligation not considered</b></label>
+                                <input type="text" class="form-control" id="emioblignotconsidered" name="emioblignotconsidered">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="creditcard"><b>Credit Card</b></label>
-                            <input type="text" class="form-control" id="creditcard" name="creditcard" placeholder="Credit Card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="creditcard" class="form-label"><b>Credit Card</b></label>
+                                <input type="text" class="form-control" id="creditcard" name="creditcard">
+                            </div>
                         </div>
 
-                        <div class="form-group col">
-                            <label for="creditcardobligperc"><b>credit card obligation percentage</b></label>
-                            <input type="text" class="form-control" id="creditcardobligperc" name="creditcardobligperc" placeholder="credit card obligation percentage">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="creditcardobligperc" class="form-label"><b>Credit Card obligation percentage</b></label>
+                                <input type="text" class="form-control" id="creditcardobligperc" name="creditcardobligperc">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="goldloan"><b>Gold Loan</b></label>
-                            <input type="text" class="form-control" id="goldloan" name="goldloan" placeholder="Gold Loan">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="goldloan" class="form-label"><b>Gold Loan</b></label>
+                                <input type="text" class="form-control" id="goldloan" name="goldloan">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="goldloanpercent"><b>Gold Loan Percent</b></label>
-                            <input type="text" class="form-control" id="goldloanpercent" name="goldloanpercent" placeholder="Gold Loan Percent">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="goldloanpercent" class="form-label"><b>Gold Loan Percent</b></label>
+                                <input type="text" class="form-control" id="goldloanpercent" name="goldloanpercent">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -524,24 +633,32 @@
 
                 <h3 align="center">Other Details</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="prevailingrate"><b>Prevailing Rate</b></label>
-                            <input type="text" class="form-control" id="prevailingrate" name="prevailingrate" placeholder="Prevailing Rate">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="prevailingrate" class="form-label"><b>Prevailing Rate</b></label>
+                                <input type="text" class="form-control" id="prevailingrate" name="prevailingrate">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="tenure"><b>Tenure</b></label>
-                            <input type="number" class="form-control" id="tenur" name="tenur" placeholder="Tenure">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="tenure" class="form-label"><b>Tenure</b></label>
+                                <input type="number" class="form-control" id="tenure" name="tenure">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="inwardchequereturn"><b>Inward Cheque return</b></label>
-                            <input type="text" class="form-control" id="inwardchequereturn" name="inwardchequereturn" placeholder="Inward Cheque return">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="inwardchequereturn" class="form-label"><b>Inward Cheque return</b></label>
+                                <input type="text" class="form-control" id="inwardchequereturn" name="inwardchequereturn">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="multipleinquiry"><b>Multiple Inquiry</b></label>
-                            <input type="text" class="form-control" id="multipleinquiry" name="multipleinquiry" placeholder="Multiple Inquiry">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="multipleinquiry" class="form-label"><b>Multiple Inquiry</b></label>
+                                <input type="text" class="form-control" id="multipleinquiry" name="multipleinquiry">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -550,34 +667,46 @@
 
                 <h3 align="center">Other Details ROI</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_loan_amt"><b>Minimum mLoan Amount</b></label>
-                            <input type="text" class="form-control" id="min_loan_amt" name="min_loan_amt" placeholder="Minimum mLoan Amount">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="min_loan_amt" class="form-label"><b>Minimum mLoan Amount</b></label>
+                                <input type="text" class="form-control" id="min_loan_amt" name="min_loan_amt">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="max_loan_amt"><b>Maximum Loan Amount</b></label>
-                            <input type="text" class="form-control" id="max_loan_amt" name="max_loan_amt" placeholder="Maximum Loan Amount">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="min_val"><b>Minimum Value</b></label>
-                            <input type="text" class="form-control" id="min_val" name="min_val" placeholder="Minimum Value">
-                        </div>
-                        <div class='form-group col'>
-                            <label for="max_val"><b>Maximum Value</b></label>
-                            <input type="text" class="form-control" id="max_val" name="max_val" placeholder="Maximum Value">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="max_loan_amt" class="form-label"><b>Maximum Loan Amount</b></label>
+                                <input type="text" class="form-control" id="max_loan_amt" name="max_loan_amt">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="roi_women"><b>ROI Women</b></label>
-                            <input type="text" class="form-control" id="roi_women" name="roi_women" placeholder="ROI Women">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="min_val" class="form-label"><b>Minimum Value</b></label>
+                                <input type="text" class="form-control" id="min_val" name="min_val">
+                            </div>
                         </div>
-                        <div class='form-group col'>
-                            <label for="roi_men"><b>ROI Men</b></label>
-                            <input type="text" class="form-control" id="roi_men" name="roi_men" placeholder="ROI Men">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="max_val" class="form-label"><b>Maximum Value</b></label>
+                                <input type="text" class="form-control" id="max_val" name="max_val">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="roi_women" class="form-label"><b>ROI Women</b></label>
+                                <input type="text" class="form-control" id="roi_women" name="roi_women">
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="roi_men" class="form-label"><b>ROI Men</b></label>
+                                <input type="text" class="form-control" id="roi_men" name="roi_men">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -586,28 +715,37 @@
 
                 <h3 align="center">Property</h3>
                 <div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="buildercategory"><b>Builder Category</b></label>
-                            <input type="text" class="form-control" id="buildercategory" name="buildercategory" placeholder="Builder Category">
-                        </div>
-                        <div class="form-group col">
-                            <label for="occupationcerti"><b>Occupation Certificate</b></label>
-                            <input type="text" class="form-control" id="occupationcerti" name="occupationcerti" placeholder="Occupation Certificate">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="buildercategory" class="form-label"><b>Builder Category</b></label>
+                                <input type="text" class="form-control" id="buildercategory" name="buildercategory">
+                            </div>
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="occupationcerti" class="form-label"><b>Occupation Certificate</b></label>
+                                <input type="text" class="form-control" id="occupationcerti" name="occupationcerti">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="previousagreement"><b>Previous Agreement</b></label>
-                            <input type="text" class="form-control" id="previousagreement" name="previousagreement" placeholder="Previous Agreement">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="previousagreement" class="form-label"><b>Previous Agreement</b></label>
+                                <input type="text" class="form-control" id="previousagreement" name="previousagreement">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="subscheme"><b>Subvention Scheme</b></label>
-                            <input type="text" class="form-control" id="subscheme" name="subscheme" placeholder="Subvention Scheme">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="subscheme" class="form-label"><b>Subvention Scheme</b></label>
+                                <input type="text" class="form-control" id="subscheme" name="subscheme">
+                            </div>
                         </div>
-                        <div class="form-group col">
-                            <label for="perccompletion"><b>Percentage Completion</b></label>
-                            <input type="number" class="form-control" id="perccompletion" name="perccompletion" placeholder="Percentage Completion">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-outline my-3">
+                                <label for="perccompletion" class="form-label"><b>Percentage Completion</b></label>
+                                <input type="number" class="form-control" id="perccompletion" name="perccompletion">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -616,10 +754,12 @@
 
                 <h3 align="center">Property Type</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="prop_type"><b>Property Type</b></label>
-                            <input type="text" class="form-control" id="prop_type" name="prop_type" placeholder="Cost Sheet">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="prop_type" class="form-label"><b>Property Type</b></label>
+                                <input type="text" class="form-control" id="prop_type" name="prop_type">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -628,10 +768,12 @@
 
                 <h3 align="center">Room Type</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="room_type"><b>Room Type</b></label>
-                            <input type="text" class="form-control" id="room_type" name="room_type" placeholder="Room Type">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="room _type" class="form-label"><b>Room Type</b></label>
+                                <input type="text" class="form-control" id="room _type" name="room _type">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -640,10 +782,12 @@
 
                 <h3 align="center">Stage Of Construction</h3>
                 <div>
-                    <div class="form-row">
-                        <div class='form-group col'>
-                            <label for="stage"><b>Stage Of constrcition</b></label>
-                            <input type="text" class="form-control" id="stage" name="stage" placeholder="Stage Of constrcition">
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="stage" class="form-label"><b>Stage Of constrcition</b></label>
+                                <input type="text" class="form-control" id="stage" name="stage">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -661,6 +805,4 @@
             </form>
         </div>
     </div>
-
-</body>
-</html>
+{%endblock other_body%}
