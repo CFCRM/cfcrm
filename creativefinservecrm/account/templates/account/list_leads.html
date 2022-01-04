@@ -10,21 +10,13 @@
 {% block other_body_css %}id="page-top"{% endblock other_body_css %}
 
 {% block other_body %}
-  <!-- Page Wrapper -->
   <div class ="container-fluid">
-
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
-    <!-- Begin Page Content -->
       <div class="container-fluid" style="padding-top:50px">
-
-        <!-- Page Heading -->
         <h1 class="mb-5 mt-3 display-3 text-center">List Lead</h1> 
-        <!-- DataTales Example -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <a href="add_customer" class="btn btn-primary btn-icon-split">
+            <a href="{% url 'add_leads' %}" class="btn btn-primary btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
               </span>
@@ -37,7 +29,7 @@
                 <thead>
                   <tr>
                     <th>Lead ID</th>
-                    <th>Check Eligibility</th>
+                    <th>Check <br>Eligibility</th>
                     <th>View Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -60,34 +52,32 @@
                   {% for lead in listleads %}
                     <tr>
                       <td><center>{{ lead.lead_id }}.</center></td>
-                      <td>
+                      <td class="text-center">
                         <a href={% url 'eligibility' id=lead.lead_id %} title="Check Eligibility">
-                              <span class="icon text-black-50">
+                              <span class="text-warning">
                                 <i class="fa fa-check-circle"></i>
                               </span>
                         </a>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <a href={% url 'list_lead_view' id=lead.lead_id %} title="View Details">
-                          <span class="icon text-black-50">
+                          <span class="text-info">
                             <i class="fa fa-eye"></i>
                           </span>
                         </a>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <a href={% url 'list_lead_edit' id=lead.lead_id %} title="Edit Details">
-                          <span class="icon text-black-50">
+                          <span class="text-dark">
                             <i class="fa fa-edit"></i>
                           </span>
                         </a>
                       </td>
                       <td>
-                        <form action="#" method="POST" onsubmit="return confirm('Are You Sure You Want To Delete ?')">
+                        <form action="#" method="POST" onsubmit="return confirm('Are You Sure You Want To Delete ?')" class="text-center">
                             {% csrf_token %}
-                            <button class="button button5" type="submit" title="Delete Entry">
-                              <span class="icon text-black-50">
-                                <i class="fa fa-trash"></i>
-                              </span>
+                            <button type="submit" title="Delete Entry" class="bg-white border-0 text-danger">
+                                <i class="fas fa-trash"></i>
                             </button>
                         </form>
                       </td>

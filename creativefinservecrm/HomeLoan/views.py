@@ -290,12 +290,9 @@ def PPbank(request):
     if request.method == 'POST':
         bank_name = request.POST['bank_name']
         cust_type = request.POST['cust_type']
-
         bank = Bank(bank_name=bank_name, cust_type=cust_type)
         bank.save()
         return redirect('AddProductsAndPolicy')
-    context={}
-    return render(request, 'HomeLoan/bank.html', context=context)
 
 def PPnegativeemployerprofile(request, ppid):
     if request.method == 'POST':
