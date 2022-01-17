@@ -26,13 +26,13 @@
 							<div class="col">
 								<a data-bs-toggle="collapse" href="#Qualification" role="button" aria-expanded="false" aria-controls="Qualification">
 									<h4 class="card-title fw-bold text-light">Qualification</h4>
-									<p class="card-category fw-bold text-light mb-0"> Here is a subtitle for this table
+									<p class="card-category fw-bold text-light mb-0"> 
+										Here is a subtitle for this table
 									</p>
 								</a>
 							</div>
 							<div class="col-auto d-flex align-items-center ">
-								{% comment %} <a href="{% url 'Qualification_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a> {% endcomment %}
-								<a  class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addQualification"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addQualification"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -54,8 +54,11 @@
 									<td>{{ qualification.qualification }}</td>
 									<td>{{ qualification.effective_date }}</td>
 									<td>{{ qualification.ineffective_date }}</td>
-									<td><a href={% url 'editqualification' id=qualification.id %}><span
-												class="icon text-black-50"><i class="fa fa-edit"></i></span>
+									<td>
+										<a href={% url 'editqualification' id=qualification.id %}>
+											<span class="icon text-black-50">
+												<i class="fa fa-edit"></i>
+											</span>
 										</a>
 									</td>
 								</tr>
@@ -81,14 +84,10 @@
 									<label class="form-label">Qualification</label>
 									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div>  {% endcomment %}
+									<input type="date" name="QualificationIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -98,7 +97,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -162,14 +160,10 @@
 									<label class="form-label">Profession</label>
 									<input type="text" name="Profession" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="ProfessionIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -179,7 +173,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -243,14 +236,10 @@
 									<label class="form-label">Role</label>
 									<input type="text" name="Role" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="RoleIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -260,7 +249,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -273,7 +261,7 @@
 								</a>
 							</div>
 							<div class="col-auto d-flex align-items-center  ">
-								<a href="{% url 'Product_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addProduct"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -306,30 +294,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="addProduct" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addProduct"><i class="fab fa-product-hunt"></i> Add Product</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Product_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Product</label>
+									<input type="text" name="Product" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="ProductIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -339,7 +323,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -351,7 +334,7 @@
 								</a>
 							</div>
 							<div class="col-auto d-flex align-items-center">
-								<a href="{% url 'SubProduct_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addSubProduct"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -381,30 +364,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addSubProduct" tabindex="-1" role="dialog" aria-labelledby="addSubProduct" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addSubProduct"><i class="fab fa-product-hunt"></i> Add SubProduct</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'SubProduct_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label"> Sub Product</label>
+									<input type="text" name="SubProduct" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="SubProductIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -414,7 +393,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -427,8 +405,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'CustomerType_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span>
-									Add</a>
+								<a  class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addCustomerType"><span class="material-icons">add</span>Add</a>
 							</div>
 						</div>
 					</div>
@@ -459,30 +436,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addCustomerType" tabindex="-1" role="dialog" aria-labelledby="addCustomerType" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addCustomerType"><i class="fas fa-user-tag"></i> Add CustomerType</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'CustomerType_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">CustomerType</label>
+									<input type="text" name="CustomerType" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="CustomerTypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -492,7 +465,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -505,7 +477,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'DesignationType_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span>Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addDesignationType"><span class="material-icons">add</span>Add</a>
 							</div>
 						</div>
 					</div>
@@ -536,30 +508,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addDesignationType" tabindex="-1" role="dialog" aria-labelledby="addDesignationType" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addDesignationType">Add DesignationType</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'DesignationType_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">DesignationType</label>
+									<input type="text" name="DesignationType" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="DesignationTypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -569,7 +537,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -581,7 +548,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'SalaryType_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addSalaryType"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -614,30 +581,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addSalaryType" tabindex="-1" role="dialog" aria-labelledby="addSalaryType" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addSalaryType">Add SalaryType</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'SalaryType_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">SalaryType</label>
+									<input type="text" name="SalaryType" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="SalaryTypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -647,7 +610,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="card z-index-2 pb-3 mb-5">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
 					<div class="bg-gradient-primary shadow-primary border-radius-lg p-3 ">
@@ -660,7 +622,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'ResidenceType_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a  class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addResidenceType"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -691,30 +653,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addResidenceType" tabindex="-1" role="dialog" aria-labelledby="addResidenceType" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addResidenceType">Add ResidenceType</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'ResidenceType_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">ResidenceType</label>
+									<input type="text" name="ResidenceType" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="ResidenceTypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -736,7 +694,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'BankName_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addBankName"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -767,30 +725,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addBankName" tabindex="-1" role="dialog" aria-labelledby="addBankName" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addBankName">Add BankName</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'BankName_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">BankName</label>
+									<input type="text" name="BankName" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="BankNameIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -812,7 +766,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'LeadSource_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a  class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addLeadSource"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div >
 					</div>
@@ -843,30 +797,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addLeadSource" tabindex="-1" role="dialog" aria-labelledby="addLeadSource" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addLeadSource">Add LeadSource</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'LeadSource_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">LeadSource</label>
+									<input type="text" name="LeadSource" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="LeadSourceIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -888,7 +838,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'Degree_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addDegree"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -919,30 +869,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addDegree" tabindex="-1" role="dialog" aria-labelledby="addDegree" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addDegree">Add Degree</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Degree_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Degree</label>
+									<input type="text" name="Degree" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="DegreeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -965,7 +911,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'Nationality_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addNationality"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -996,30 +942,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addNationality" tabindex="-1" role="dialog" aria-labelledby="addNationality" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addNationality">Add Nationality</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Nationality_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Nationality</label>
+									<input type="text" name="Nationality" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="NationalityIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1041,7 +983,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'State_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addState"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1072,30 +1014,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addState" tabindex="-1" role="dialog" aria-labelledby="addState" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addState">Add State</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'State_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">State</label>
+									<input type="text" name="State" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="StateIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1117,7 +1055,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'City_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addCity"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1146,30 +1084,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addCity" tabindex="-1" role="dialog" aria-labelledby="addCity" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addCity">Add City</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'City_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">City</label>
+									<input type="text" name="City" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="CityIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1192,7 +1126,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'Applicanttype_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addApplicanttype"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1223,30 +1157,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addApplicanttype" tabindex="-1" role="dialog" aria-labelledby="addApplicanttype" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addApplicanttype">Add Applicanttype</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Applicanttype_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Applicanttype</label>
+									<input type="text" name="Applicanttype" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="ApplicanttypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1268,7 +1198,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'PropertyIn_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addPropertyIn"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1299,30 +1229,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addPropertyIn" tabindex="-1" role="dialog" aria-labelledby="addPropertyIn" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addPropertyIn">Add PropertyIn</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'PropertyIn_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">PropertyIn</label>
+									<input type="text" name="PropertyIn" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="PropertyInIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1344,7 +1270,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'Status_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addStatus"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1374,30 +1300,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addStatus" tabindex="-1" role="dialog" aria-labelledby="addStatus" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addStatus">Add Status</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Status_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Status</label>
+									<input type="text" name="Status" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="StatusIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1420,7 +1342,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'NatureOfBusiness_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addNatureOfBusiness"><span class="material-icons">add</span>
 									Add</a>
 							</div>
 						</div>
@@ -1452,30 +1374,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addNatureOfBusiness" tabindex="-1" role="dialog" aria-labelledby="addNatureOfBusiness" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addNatureOfBusiness">Add NatureOfBusiness</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'NatureOfBusiness_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">NatureOfBusiness</label>
+									<input type="text" name="NatureOfBusiness" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="NatureOfBusinessIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1497,7 +1415,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'AYyear_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addAYyear"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1528,30 +1446,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addAYyear" tabindex="-1" role="dialog" aria-labelledby="addAYyear" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addAYyear">Add AYyear</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'AYyear_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">AYyear</label>
+									<input type="text" name="AYyear" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="AYyearIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1574,7 +1488,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'Agreementtype_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addAgreementtype"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1605,30 +1519,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addAgreementtype" tabindex="-1" role="dialog" aria-labelledby="addAgreementtype" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addAgreementtype">Add Agreementtype</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'Agreementtype_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">Agreementtype</label>
+									<input type="text" name="Agreementtype" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="AgreementtypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1651,7 +1561,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'StageOfConstruction_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span>Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addStageOfConstruction"><span class="material-icons">add</span>Add</a>
 							</div>
 						</div>
 					</div>
@@ -1682,30 +1592,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addStageOfConstruction" tabindex="-1" role="dialog" aria-labelledby="addStageOfConstruction" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addStageOfConstruction">Add StageOfConstruction</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'StageOfConstruction_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">StageOfConstruction</label>
+									<input type="text" name="StageOfConstruction" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="StageOfConstructionIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
@@ -1728,7 +1634,7 @@
 								</a>
 							</div>
 							<div class="col-auto  d-flex align-items-center">
-								<a href="{% url 'RejectionType_form' %}" class="btn btn-info mb-0"><span class="material-icons">add</span> Add</a>
+								<a class="btn btn-info mb-0" data-bs-toggle="modal" data-bs-target="#addRejectionType"><span class="material-icons">add</span> Add</a>
 							</div>
 						</div>
 					</div>
@@ -1764,30 +1670,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="addQualification" tabindex="-1" role="dialog" aria-labelledby="addQualification" aria-hidden="true">
+			<div class="modal fade" id="addRejectionType" tabindex="-1" role="dialog" aria-labelledby="addRejectionType" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title font-weight-normal" id="addQualification">Add Qualification</h5>
+							<h5 class="modal-title font-weight-normal" id="addRejectionType">Add RejectionType</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class=" form text-left" action={% url 'Qualification_form' %} method="POST">
+						<form class=" form text-left" action={% url 'RejectionType_form' %} method="POST">
 							<div class="modal-body">
 								{% csrf_token %}
 								<div class="input-group input-group-outline my-3">
-									<label class="form-label">Qualification</label>
-									<input type="text" name="Qualification" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
-								</div>
-								{% comment %} <div class="input-group input-group-static my-3">
-									<label>Effective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
+									<label class="form-label">RejectionType</label>
+									<input type="text" name="RejectionType" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
 								</div>
 								<div class="input-group input-group-static my-3">
 									<label>Ineffective Date</label>
-									<input type="datetime-local" name="Qualification" class="form-control">
-								</div> {% endcomment %}
+									<input type="date" name="RejectionTypeIdate" class="form-control">
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>

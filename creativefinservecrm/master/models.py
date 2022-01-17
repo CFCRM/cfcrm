@@ -23,6 +23,7 @@ class Qualification(models.Model):
     qualification = models.CharField(max_length=25)
     effective_date = models.DateField(null = True)
     ineffective_date = models.DateField(null = True)
+    
 
 class Profession(models.Model):
     profession = models.CharField(max_length=25)
