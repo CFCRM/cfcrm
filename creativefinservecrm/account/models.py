@@ -6,11 +6,50 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields.related import ForeignKey
 from master.models import *
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
 
-CHOICES_BOOLEAN = (
+YES_NO_CHOICES = (
     (True, ('Yes')),
     (False, ('No'))
 )
+
+GOOD_BAD_CHOICES = (
+  ('1', '-- Good or Bad --'),
+  ('2', 'Good'),
+  ('3', 'Bad')
+)
+
+KNOWN_UNKNOWN_CHOICES = (
+  ('1', '-- Select Cibil Type --'),
+  ('2', 'Known'),
+  ('3', 'Unknown')
+)
+
+DEFAULT_YEAR_CHOICES = (
+    ('1', '-- Select --'),
+    ('2', 'Last 12 Months'),
+    ('3', 'Past')
+)
+
+MARITAL_STATUS_CHOICES = (
+    ('1', '-- Select MARITAL STATUS --'),
+    ('2', 'Single'),
+    ('3', 'Married'),
+    ('4', 'Divorced')
+)
+
+GENDER_CHOICES = (
+  ('1', '-- Select Gender --'),
+  ('2', 'Male'),
+  ('3', 'Female'),
+  ('4', 'Others')
+)
+
+def year_choices():
+    return [(r,r) for r in range(1984, datetime.date.today().year+1)]
+
+def current_year():
+    return datetime.date.today().year
 # Create your models here.
 class CustomUser(AbstractUser): 
     role            = models.CharField(max_length=20)
@@ -48,8 +87,8 @@ class AdditionalDetails(models.Model):
     cust_name        = models.CharField(max_length=25)
     is_diff          = models.BooleanField(blank = True)
     cust_type        = models.ForeignKey(CustomerType, on_delete=models.CASCADE)
-    inc_holder       = models.BooleanField(null=False,choices=CHOICES_BOOLEAN)
-    prop_owner       = models.BooleanField(null = False,choices=CHOICES_BOOLEAN)
+    inc_holder       = models.BooleanField(null=False,choices=YES_NO_CHOICES)
+    prop_owner       = models.BooleanField(null = False,choices=YES_NO_CHOICES)
     applicant_type   = models.ForeignKey(ApplicantType, on_delete=models.CASCADE)
     relation         = models.ForeignKey(Relation, on_delete=models.CASCADE)
     lead_id          = models.ForeignKey(Leads, on_delete=models.CASCADE)
@@ -217,24 +256,24 @@ class PropType1(models.Model): #Underconstruction buying from builder
     prop_city           = models.ForeignKey(City,on_delete=models.CASCADE)
     prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in             = models.ForeignKey(PropertyIn,on_delete=CASCADE)
-    cc_rec              = models.BooleanField( choices = CHOICES_BOOLEAN )
+    cc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
     cc_rec_upto         = models.IntegerField()
-    municipal_approved  = models.BooleanField( choices = CHOICES_BOOLEAN )
+    municipal_approved  = models.BooleanField( choices = YES_NO_CHOICES )
     area_size           = models.IntegerField()
     area_in             = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
     area_type           = models.ForeignKey(AreaType,on_delete=models.CASCADE)
     room_type           = models.ForeignKey(RoomType,on_delete= models.CASCADE)
     agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
     pay_till_date       = models.CharField(max_length=10)
-    stamp_duty          = models.BooleanField( choices = CHOICES_BOOLEAN )
+    stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
     stamp_duty_amt      = models.CharField(max_length=10)
     cost_sheet          = models.CharField(max_length=3)
     cost_sheet_amt      = models.CharField(max_length=7)
     lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
     future_rent         = models.IntegerField()
     car_parking_amt     = models.IntegerField()
-    subvention_scheme   = models.BooleanField(choices = CHOICES_BOOLEAN)
-    car_parking         = models.BooleanField(choices = CHOICES_BOOLEAN)
+    subvention_scheme   = models.BooleanField(choices = YES_NO_CHOICES)
+    car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 class PropType2(models.Model):# Underconstruction buying from seller
     seller_status       = models.ForeignKey(Status,on_delete=models.CASCADE)
@@ -254,23 +293,23 @@ class PropType2(models.Model):# Underconstruction buying from seller
     prop_city           = models.ForeignKey(City,on_delete=models.CASCADE)
     prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in             = models.ForeignKey(PropertyIn,on_delete=CASCADE)
-    cc_rec              = models.BooleanField( choices = CHOICES_BOOLEAN )
+    cc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
     cc_rec_upto         = models.IntegerField()
-    municipal_approved  = models.BooleanField( choices = CHOICES_BOOLEAN )
+    municipal_approved  = models.BooleanField( choices = YES_NO_CHOICES )
     area_size           = models.IntegerField()
     area_in             = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
     area_type           = models.ForeignKey(AreaType,on_delete=models.CASCADE)
     room_type           = models.ForeignKey(RoomType,on_delete= models.CASCADE)
     agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
     pay_till_date       = models.CharField(max_length=10)
-    stamp_duty          = models.BooleanField( choices = CHOICES_BOOLEAN )
+    stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
     stamp_duty_amt      = models.CharField(max_length=10)
     cost_sheet          = models.CharField(max_length=3)
     cost_sheet_amt      = models.CharField(max_length=7)
     lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
     future_rent         = models.IntegerField()
     car_parking_amt     = models.IntegerField()
-    car_parking         = models.BooleanField(choices = CHOICES_BOOLEAN)
+    car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 
 class PropType3(models.Model):
@@ -287,22 +326,22 @@ class PropType3(models.Model):
    prop_city           = models.ForeignKey(City,on_delete=models.CASCADE)
    prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
    prop_in             = models.ForeignKey(PropertyIn,on_delete=CASCADE)
-   cc_rec              = models.BooleanField( choices = CHOICES_BOOLEAN )
-   oc_rec              = models.BooleanField( choices = CHOICES_BOOLEAN )
-   municipal_approved  = models.BooleanField( choices = CHOICES_BOOLEAN )
+   cc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
+   oc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
+   municipal_approved  = models.BooleanField( choices = YES_NO_CHOICES )
    area_size           = models.IntegerField()
    area_in             = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
    area_type           = models.ForeignKey(AreaType,on_delete=models.CASCADE)
    room_type           = models.ForeignKey(RoomType,on_delete= models.CASCADE)
    agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
    pay_till_date       = models.CharField(max_length=10)
-   stamp_duty          = models.BooleanField( choices = CHOICES_BOOLEAN )
+   stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
    stamp_duty_amt      = models.CharField(max_length=10)
    cost_sheet          = models.CharField(max_length=3)
    cost_sheet_amt      = models.CharField(max_length=7)
    lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
    car_parking_amt     = models.IntegerField()
-   car_parking         = models.BooleanField(choices = CHOICES_BOOLEAN)
+   car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 
 # #  Ready possession buying from seller
@@ -321,25 +360,25 @@ class PropType4(models.Model):
     prop_city           = models.ForeignKey(City,on_delete=models.CASCADE)
     prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in                              = models.ForeignKey(PropertyIn,on_delete=CASCADE)
-    cc_available                         = models.BooleanField( choices = CHOICES_BOOLEAN )
-    oc_rec                               = models.BooleanField( choices = CHOICES_BOOLEAN )
+    cc_available                         = models.BooleanField( choices = YES_NO_CHOICES )
+    oc_rec                               = models.BooleanField( choices = YES_NO_CHOICES )
     oc_rec_floor                         = models.IntegerField()
-    municipal_approved                   = models.BooleanField( choices = CHOICES_BOOLEAN )
+    municipal_approved                   = models.BooleanField( choices = YES_NO_CHOICES )
     area_size                            = models.IntegerField()
     area_in                              = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
     area_type                            = models.ForeignKey(AreaType,on_delete=models.CASCADE)
     room_type                            = models.ForeignKey(RoomType,on_delete= models.CASCADE)
     agreement_type                       = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
     pay_till_date                        = models.CharField(max_length=10)
-    previous_aggrement_available         = models.BooleanField(null=True ,blank=True, choices=CHOICES_BOOLEAN)
+    previous_aggrement_available         = models.BooleanField(null=True ,blank=True, choices=YES_NO_CHOICES)
     registration_done_previous_aggremnet = models.CharField(max_length=100)
     concern_area                         = models.CharField(max_length=100)
-    stamp_duty_registration_paid         = models.BooleanField(choices=CHOICES_BOOLEAN)
+    stamp_duty_registration_paid         = models.BooleanField(choices=YES_NO_CHOICES)
     stamp_duty_amt                       = models.IntegerField()
-    property_tax_paid                    = models.BooleanField(null=True,blank=True,choices = CHOICES_BOOLEAN)
-    society_informed                     = models.BooleanField(null=True,blank=True,choices = CHOICES_BOOLEAN)
+    property_tax_paid                    = models.BooleanField(null=True,blank=True,choices = YES_NO_CHOICES)
+    society_informed                     = models.BooleanField(null=True,blank=True,choices = YES_NO_CHOICES)
     car_parking_amt                      = models.IntegerField()
-    car_parking                          = models.BooleanField(choices = CHOICES_BOOLEAN)
+    car_parking                          = models.BooleanField(choices = YES_NO_CHOICES)
     lead_id                              = models.ForeignKey(Leads,on_delete=models.CASCADE)
 
 

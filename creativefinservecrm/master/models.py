@@ -117,12 +117,33 @@ class Degree(models.Model):
     def __str__(self):
         return self.degree
 
+class LawyerType(models.Model): 
+    lawyer_type      = models.CharField(max_length=25)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.lawyer_type
+
 class Nationality(models.Model):
     nationality = models.CharField(max_length=25)
     effective_date = models.DateField(null = True)
     ineffective_date = models.DateField(null = True)
     def __str__(self):
         return self.nationality
+
+class Country(models.Model): 
+    country          = models.CharField(max_length=25)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.country
+
+class CibilType(models.Model): 
+    cibil_type       = models.CharField(max_length=25)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.cibil_type
 
 class State(models.Model):
     state = models.CharField(max_length=25)
@@ -211,3 +232,38 @@ class RoomType(models.Model):
 
     def __str__(self):
         return self.room_type
+
+class RepaymentHistory(models.Model): 
+    repayment_history = models.CharField(max_length = 30)
+    effective_date    = models.DateField(null = True)
+    ineffective_date  = models.DateField(null = True)
+    def __str__(self): 
+        return self.repayment_history
+
+class DefaultYear(models.Model): 
+    default_year     = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.default_year
+
+class BonusType(models.Model): 
+    bonus_type       = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.bonus_type
+
+class IncentivesType(models.Model): 
+    incentives_type  = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.incentives_type
+
+class DeductionType(models.Model): 
+    deduction_type   = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.deduction_type
