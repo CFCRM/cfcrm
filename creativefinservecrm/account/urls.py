@@ -7,12 +7,16 @@ from django.conf import settings
 
 
 urlpatterns = [
-
+    path('ajax/cities/',views.load_cities,name = "ajax_load_cities"),
+    path('ajax/addapplicant',views.add_applicants,name = "ajax_add_applicant"),
+    path('ajax/subproducts/',views.load_subproducts,name = "ajax_load_subproducts"),
     path('', views.base_dashboard, name="base_dashboard"),
     path('homeloan/',include('HomeLoan.urls')),
     path('register', views.register, name="register"),
     path('login', views.login, name="login"),
     path('logout', views.logout, name="logout"),
+    path('deleteapplicant/<int:id>',views.delapplicant,name = "deleteapplicant"),
+    path('editapplicant',views.editapplicant,name = "edit_applicant"),
 
      path('reset_password/',
      auth_views.PasswordResetView.as_view(template_name="account/password_reset.html"),
@@ -44,6 +48,12 @@ urlpatterns = [
     path('additionaldetails/<int:id>', views.additionaldetails, name="additionaldetails"),
     path('housewife/<int:id>', views.housewife, name="housewife"),
     path('property_details/<int:id>', views.property_details, name="property_details"),
+    path('property_type_1/<int:id>', views.property_type_1, name="property_type_1"),
+    path('property_type_2/<int:id>', views.property_type_2, name="property_type_2"),
+    path('property_type_3/<int:id>', views.property_type_3, name="property_type_3"),
+    path('property_type_4/<int:id>', views.property_type_4, name="property_type_4"),
+    path('add_applicant_additional_details/<int:id>',views.add_applicant_additional_details,name="add_applicant_additional_details"),
+    path('add_individual_details/<int:id>',views.add_individual_details,name="individual_details"),
     path('retired/<int:id>', views.retired, name="retired"),
     path('salaried/<int:id>', views.salaried, name="salaried"),
     path('selfemployed', views.selfemployed, name="selfemployed"),

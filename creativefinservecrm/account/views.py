@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from .forms import *
+from django.db.models import Q
 from django.contrib.auth.models import auth
-from .models import CustomUser, Leads, AdditionalDetails, ContactPerson, PersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditonalOtherIncome, SalCompanyDetails, SalExistingLoanDetails, SalExistingCardDetails, SalAdditionalDetails, Investments
-from .models import PropertyDetails, PropType1, PropType2, PropType3
-from .models import StudentDetails,StudentExistingCardDetails, StudentExistingLoanDetails
-from .models import HousewifeDetails, HousewifePersonalDetails, HousewifeExistingLoanDetails, HousewifeExistingCardDetails, HousewifeInvestmentDetails
-from .models import RetiredDetails, RetiredPensionDetails, RetiredResidenceDetails, RetiredExistingLoanDetails, RetiredExistingCardDetails, RetiredInvestmentDetails, RetiredOtherDetails
+from .models import *
 from master.models import *
 from django.contrib import messages
 from django.conf import settings
@@ -262,61 +260,36 @@ def add_leads(request):
                 return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
-        name = request.POST['name']
-        ref = request.POST['ref']
-        #username = request.POST['username']
-        email = request.POST['email']
-        #password1 = request.POST['password1']
-        #password2 = request.POST['password2']
-        product = request.POST['pdt']
-        sub_product = request.POST['subpdt']
-        loan_amt = request.POST['amt']
-        address = request.POST['address']
-        phone = request.POST['phone']
-        alt_phone = request.POST['alt_phone']
-        city = request.POST['city']
-        state = request.POST['state']
-        pincode = request.POST['pincode']
-        country = request.POST['country']
-        added_by = request.user.id
-        lead = Leads(name = name, phone = phone, alt_phone = alt_phone, email = email, 
-        reference = ref, product = product, sub_product = sub_product, loan_amt = loan_amt, 
-        address = address, pincode = pincode, country = country, state = state, city= city, added_by = added_by )
-        lead.save()
         if 'save' in request.POST:
             if user.role == "Admin":
+                form = LeadsForm(request.POST)
+                if form.is_valid():
+                    instance = form.save(commit = False)
+                    print(instance)
+                else:
+                    print(form.errors)
                 return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
         if 'next' in request.POST:
-            return redirect(f"additionaldetails/{lead.lead_id}") # additionaldetails/20
-
-    products = Product.objects.all()
-    subproducts = SubProduct.objects.all()
-    subproductdict = dict()
-    for subproduct in subproducts:
-        if subproduct.product.id in subproductdict:
-            subproductdict[subproduct.product.id].append({
-                'id':subproduct.id,
-                'sub_product':subproduct.sub_product,
-                'effective_date': subproduct.effective_date,
-                'ineffective_date': subproduct.ineffective_date
-            })
-        else :
-            subproductdict[subproduct.product.id] = []
-            subproductdict[subproduct.product.id].append({
-                'id':subproduct.id,
-                'sub_product':subproduct.sub_product,
-                'effective_date': subproduct.effective_date,
-                'ineffective_date': subproduct.ineffective_date
-            })
-    # print(json.dumps(subproductdict))
+            form = LeadsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit = False)
+                instance.added_by = request.user.username
+                instance.save()
+                return redirect(f"additionaldetails/{instance.pk}") # additionaldetails/20
+    
+    form  = LeadsForm()
     context = {
-        'products': products,
-        'subproducts': json.dumps(subproductdict)
+        'form':form
     }
     return render(request, 'account/add_leads.html', context=context)
 
+def getcities(request):
+    id = request.GET.id
+    cities = City.objects.filter(state_id = id)
+    context = {"cities" : cities}
+    return 
 
 def create_mem(request):
 
@@ -569,65 +542,74 @@ def terms(request):
         raise Http404()
 
 def additionaldetails(request,id):
-    if request.method == 'POST':
-        user = request.user
-        lead = Leads.objects.filter(lead_id=id).first()
+    lead = Leads.objects.get(pk=id)
+    applicant_type_form = TempForm()
+    current_additional_details = AdditionalDetails.objects.filter(lead_id = lead)
+    if request.method == 'POST' and request.is_ajax:
+        add_form = AdditionalDetailsForm(request.POST)
+        if add_form.is_valid():
+            add_instance = add_form.save(commit = False)
+            add_instance.lead_id = lead
+            if current_additional_details.filter(applicant_type = add_instance.applicant_type).first():
+                add_instance.pk = current_additional_details.filter(applicant_type = add_instance.applicant_type).first().pk
+                messages.success(request, f"Additional Details of {add_instance.applicant_type}  updated successfully ")
+                add_instance.save()
+                if 'next' in request.POST:
+                    return redirect('base_dashboard')
+                else:
+                    return redirect(f"/account/additionaldetails/{id}")
+            else:
+                messages.success(request,f"Additional Details of {add_instance.applicant_type} added successfully ")
+                add_instance.save()
+                if 'next' in request.POST:
+                    return redirect('base_dashboard')
+                else:
+                    return redirect(f"/account/additionaldetails/{id}")
+        else:
+            messages.error(request,add_form.errors)
+    else:
+        add_form = AdditionalDetailsForm()
+                
+    # return redirect(f"additionaldetails/{lead.pk}") # additionaldetails/20
+    return render(request, 'account/Additional_Details.html',context = {'applicant_type_form':applicant_type_form,'lead_id':id,"applicants":current_additional_details})
 
-        if 'cancel' in request.POST:
-            if user.role == "Admin":
-                return redirect('base_dashboard')
-            elif user.role == "Referral Partner":
-                return redirect('base')
+def delapplicant(request,id):
+    instance = AdditionalDetails.objects.get(pk = id)
+    lead_id = instance.lead_id
+    instance.delete()
+    messages.success(request,"Record Deleted Successfully ! ")
+    return redirect(f"/account/additionaldetails/{lead_id.pk}")
 
-        con_person = request.POST['con_person']
-        con_phone = request.POST['con_phone']
-        name = request.POST['name']
-        incomeHolder = request.POST['incomeHolder']
-        propertyOwner = request.POST['propertyOwner']
-        applicantType = request.POST['applicantType']
-        relation = request.POST['relation']
-        customerType = request.POST['customerType']
-
-        if con_person != "":
-            add1 = AdditionalDetails(is_diff="Y", cust_name = name, inc_holder = incomeHolder, prop_owner = propertyOwner,
-                                     applicant_type = applicantType, relation = relation, cust_type = customerType, lead_id = lead)
-            add1.save()
-
-            con = ContactPerson(con_person = con_person, con_phone = con_phone, add_det_id = add1)
-            con.save()
-
-
-        name_1 = request.POST.getlist('name_1')
-        incomeHolder_1 = request.POST.getlist('incomeHolder_1')
-        propertyOwner_1 = request.POST.getlist('propertyOwner_1')
-        applicantType_1 = request.POST.getlist('applicantType_1')
-        relation_1 = request.POST.getlist('relation_1')
-        customerType_1 = request.POST.getlist('customerType_1')
-
-        if name_1 != []:
-            for (a,b,c,d,e,f) in zip(name_1, incomeHolder_1, propertyOwner_1, applicantType_1, relation_1, customerType_1):
-                add2 = AdditionalDetails(is_diff="N", cust_name = a,
-                                     inc_holder = b, prop_owner = c, applicant_type = d,
-                                     relation = e, cust_type = f, lead_id = lead)
-                add2.save()
-
-        if 'save' in request.POST:
-            if user.role == "Admin":
-                return redirect('base_dashboard')
-
-            elif user.role == "Referral Partner":
-                return redirect('base')
-
-        if 'next' in request.POST:
-            nxt = AdditionalDetails.objects.filter(lead_id = lead.lead_id, applicant_type = "Applicant").first()
-            cust_type = nxt.cust_type.lower()
-            return redirect(f"/account/{cust_type}/{nxt.add_det_id}")
+def editapplicant(request):
+    id = int(request.GET.get('id'))
+    instance_current = AdditionalDetails.objects.get(pk=id)
+    form = AdditionalDetailsForm(instance = instance_current)
+    return render(request,'account/add_applicant.html',context ={'form':form,'lead_id':instance_current.lead_id.pk})
 
 
-    lead = Leads.objects.filter(lead_id=id) # list of objects
-    customertypes = CustomerType.objects.all()
-    applicanttypes =  ApplicantType.objects.all()
-    return render(request, 'account/Additional_Details.html', {'customertypes': customertypes, 'applicanttypes':applicanttypes, 'lead':lead[0]})
+def add_applicants(request):
+    id = int(request.GET.get('id'))
+    if id>0:
+        id = id - 1
+    lead_id = int(request.GET.get('lead_id'))
+    applicant_type = ApplicantType.objects.all()[id]
+    lead_name = Leads.objects.get(pk = lead_id).name
+    lead_phone = Leads.objects.get(pk = lead_id).phone
+    if id == 0 :
+        form = AdditionalDetailsForm(initial = {"applicant_type":applicant_type,"cust_name":lead_name,"con_phone":lead_phone})
+    else:
+        form = AdditionalDetailsForm(initial = {"applicant_type":applicant_type})
+    return render(request,'account/add_applicant.html',context = {'form':form,'lead_id':lead_id})
+
+def load_cities(request):
+    state_id = request.GET.get('state_id')
+    cities = City.objects.filter(state = state_id)
+    return render(request,'account/city_dropdown_list_options.html',{'cities':cities})
+
+def load_subproducts(request):
+    product_id = request.GET.get('product_id')
+    subproducts = SubProduct.objects.filter(product=product_id)
+    return render(request,'account/subproducts_dropdown_list_options.html',{'subproducts':subproducts})
 
 def housewife(request, id):
 
@@ -775,178 +757,207 @@ def housewife(request, id):
     applicanttypes =  ApplicantType.objects.all()
     return render(request, 'account/Housewife.html', {'applicanttypes':applicanttypes, 'products':products, 'nationalities':nationalities, 'cust':cust})
 
+def property_type_1(request,id):
+    form = PropertyDetailsType1Form() 
+    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
 
+def property_type_2(request,id):
+    form = PropertyType2Form()
+    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+
+def property_type_3(request,id):
+    form = PropType3Form()
+    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+
+def property_type_4(request,id):
+    form =  PropType4Form()
+    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+
+def add_applicant_additional_details(request,id):
+    additional_details_instances = AdditionalDetails.objects.filter(lead_id = id)
+    if additional_details_instances is not None:
+        return render(request,"account/add_applicant_additional_details.html",context = {"additional_details_instances":additional_details_instances})
+    else:
+        return redirect(request,f"additionaldetails/{id}")
+
+def add_individual_details(request,id):
+    add_instance = AdditionalDetails.objects.get(pk = id)
+    return render(request,'account/base.html')
 
 def property_details(request,id):
+    additional_details_instance = AdditionalDetails.objects.filter(lead_id = id)
+    if additional_details_instance is None:
+        return redirect(f"additionaldetails/{id}")
+    else:
+        return render(request,"account/add_property_details.html",context = {"lead_id":id})
+    # if request.method == 'POST':
+    #     user = request.user
+    #     lead = Leads.objects.filter(lead_id = id).first()
 
-    if request.method == 'POST':
-        user = request.user
-        lead = Leads.objects.filter(lead_id = id).first()
+    #     if 'cancel' in request.POST:
+    #         if user.role == "Admin":
+    #             return redirect('dashboard')
+    #         elif user.role == "Referral Partner":
+    #             return redirect('base')
 
-        if 'cancel' in request.POST:
-            if user.role == "Admin":
-                return redirect('dashboard')
-            elif user.role == "Referral Partner":
-                return redirect('base')
-
-        prop_type = request.POST['prop_type']
-        prop_det = PropertyDetails(prop_type = prop_type, lead_id = lead)
-        prop_det.save()
-
-
-
-        if prop_type == "Underconstruction and Buying From Builder" or prop_type == "Underconstruction and Buying From Seller" or prop_type == "Ready Possession and Buying From Builder":
-            builder_name = request.POST['builder_name']
-            proj_name = request.POST['proj_name']
-            apf_num = request.POST['apf_num']
-            apf_approved_lender = request.POST['apf_approved_lender']
-            const_stage = request.POST['const_stage']
-            per_complete = request.POST['per_complete']
-            possession_date = request.POST['possession_date']
-            total_floors = request.POST['total_floors']
-            buy_floor = request.POST['buy_floor']
-            slabs_done = request.POST['slabs_done']
-            agreement_val = request.POST['agreement_val']
-            market_val = request.POST['market_val']
-            prop_loc = request.POST['prop_loc']
-            prop_city = request.POST['prop_city']
-            prop_state = request.POST['prop_state']
-            prop_in = request.POST['prop_in']
-            cc_rec = request.POST['cc_rec']
-            cc_rec_upto = request.POST['cc_rec_upto']
-            municipal_approved = request.POST['municipal_approved']
-            area_size = request.POST['area_size']
-            area_in = request.POST['area_in']
-            area_type = request.POST['area_type']
-            room_type = request.POST['room_type']
-            agreement_type = request.POST['agreement_type']
-            pay_till_date = request.POST['pay_till_date']
-            stamp_duty = request.POST['stamp_duty']
-            stamp_duty_amt = request.POST['stamp_duty_amt']
-            cost_sheet = request.POST['cost_sheet']
-            cost_sheet_amt = request.POST['cost_sheet_amt']
-
-            prop_det_1 = PropType1(
-                builder_name = builder_name,
-                proj_name = proj_name,
-                apf_num = apf_num,
-                apf_approved_lender = apf_approved_lender,
-                const_stage = const_stage,
-                per_complete = per_complete,
-                possession_date = possession_date,
-                total_floors = total_floors,
-                buy_floor = buy_floor,
-                slabs_done = slabs_done,
-                agreement_val = agreement_val,
-                market_val = market_val,
-                prop_loc = prop_loc,
-                prop_city = prop_city,
-                prop_state = prop_state,
-                prop_in = prop_in,
-                cc_rec = cc_rec,
-                cc_rec_upto = cc_rec_upto,
-                municipal_approved = municipal_approved,
-                area_size = area_size,
-                area_in = area_in,
-                area_type = area_type,
-                room_type = room_type,
-                agreement_type = agreement_type,
-                pay_till_date = pay_till_date,
-                stamp_duty = stamp_duty,
-                stamp_duty_amt = stamp_duty_amt,
-                cost_sheet = cost_sheet,
-                cost_sheet_amt = cost_sheet_amt,
-                prop_det_id = prop_det
-            )
-            prop_det_1.save()
-
-        if prop_type == "Resale and Buying From Seller":
-            project_name = request.POST['project_name']
-            finance_approved_by = request.POST['finance_approved_by']
-            building_age = request.POST['building_age']
-            agree_val = request.POST['agree_val']
-            mkt_val = request.POST['mkt_val']
-            property_loc = request.POST['property_loc']
-            property_city = request.POST['property_city']
-            property_state = request.POST['property_state']
-            cc_available = request.POST['cc_available']
-            oc_available = request.POST['oc_available']
-            mun_approved = request.POST['mun_approved']
-            areasize = request.POST['areasize']
-            areain = request.POST['areain']
-            areatype = request.POST['areatype']
-            property_type = request.POST['property_type']
-            agree_type = request.POST['agree_type']
-            stp_duty = request.POST['stp_duty']
-            stp_amt = request.POST['stp_amt']
-            reg_amt = request.POST['reg_amt']
-            prev_agree_available = request.POST['prev_agree_available']
-            dup_available_or_notice = request.POST['dup_available_or_notice']
-            reg_prev_agreement = request.POST['reg_prev_agreement']
-            con_area = request.POST['con_area']
-            payment_till_date = request.POST['payment_till_date']
-
-            prop_det_2 = PropType2(
-                project_name = project_name,
-                finance_approved_by = finance_approved_by,
-                building_age = building_age,
-                agreement_val = agree_val,
-                market_val = mkt_val,
-                prop_loc = property_loc,
-                property_city = property_city,
-                property_state = property_state,
-                cc_available = cc_available,
-                oc_available = oc_available,
-                mun_approved = mun_approved,
-                areasize = areasize,
-                areain = areain,
-                areatype = areatype,
-                room_type = property_type,
-                agree_type = agree_type,
-                stp_duty = stp_duty,
-                stp_amt = stp_amt,
-                reg_amt = reg_amt,
-                prev_agree_available = prev_agree_available,
-                dup_available_or_notice = dup_available_or_notice,
-                reg_prev_agreement = reg_prev_agreement,
-                con_area = con_area,
-                payment_till_date = payment_till_date,
-                prop_det_id = prop_det
-            )
-            prop_det_2.save()
-
-
-        if prop_type == "Balance Transfer" or prop_type == "Balance Transfer Top Up":
-            bnk_name = request.POST['bnk_name']
-            prod_services = request.POST['prod_services']
-            loan_amt = request.POST['loan_amt']
-            emi = request.POST['emi']
-            outstanding_amt = request.POST['outstanding_amt']
-            tenure = request.POST['tenure']
-            foreclosure = request.POST['foreclosure']
-            lod = request.POST['lod']
-
-            prop_det3 = PropType3(bnk_name=bnk_name,prod_services=prod_services,loan_amt=loan_amt,emi=emi,outstanding_amt=outstanding_amt,
-                                  tenure=tenure,foreclosure=foreclosure,lod=lod,prop_det_id=prop_det)
-            prop_det3.save()
-
-
-        if 'save' in request.POST:
-            if user.role == "Admin":
-                return redirect('/account/dashboard')
-
-            elif user.role == "Referral Partner":
-                return redirect('/account/base')
-
-        if 'next' in request.POST:
-            return redirect(f"/account/homeloan/eligibility/{lead.lead_id}")
+    #     prop_type = request.POST['prop_type']
+    #     prop_det = PropertyDetails(prop_type = prop_type, lead_id = lead)
+    #     prop_det.save()
 
 
 
-    lead = Leads.objects.filter(lead_id = id).first()
-    propertyins = PropertyIn.objects.all()
-    agreementtypes = AgreementType.objects.all()
-    return render(request, 'account/Property Details.html', {'propertyins':propertyins, 'agreementtypes':agreementtypes, 'lead':lead})
+    #     if prop_type == "Underconstruction and Buying From Builder" or prop_type == "Underconstruction and Buying From Seller" or prop_type == "Ready Possession and Buying From Builder":
+    #         builder_name = request.POST['builder_name']
+    #         proj_name = request.POST['proj_name']
+    #         apf_num = request.POST['apf_num']
+    #         apf_approved_lender = request.POST['apf_approved_lender']
+    #         const_stage = request.POST['const_stage']
+    #         per_complete = request.POST['per_complete']
+    #         possession_date = request.POST['possession_date']
+    #         total_floors = request.POST['total_floors']
+    #         buy_floor = request.POST['buy_floor']
+    #         slabs_done = request.POST['slabs_done']
+    #         agreement_val = request.POST['agreement_val']
+    #         market_val = request.POST['market_val']
+    #         prop_loc = request.POST['prop_loc']
+    #         prop_city = request.POST['prop_city']
+    #         prop_state = request.POST['prop_state']
+    #         prop_in = request.POST['prop_in']
+    #         cc_rec = request.POST['cc_rec']
+    #         cc_rec_upto = request.POST['cc_rec_upto']
+    #         municipal_approved = request.POST['municipal_approved']
+    #         area_size = request.POST['area_size']
+    #         area_in = request.POST['area_in']
+    #         area_type = request.POST['area_type']
+    #         room_type = request.POST['room_type']
+    #         agreement_type = request.POST['agreement_type']
+    #         pay_till_date = request.POST['pay_till_date']
+    #         stamp_duty = request.POST['stamp_duty']
+    #         stamp_duty_amt = request.POST['stamp_duty_amt']
+    #         cost_sheet = request.POST['cost_sheet']
+    #         cost_sheet_amt = request.POST['cost_sheet_amt']
+
+    #         prop_det_1 = PropType1(
+    #             builder_name = builder_name,
+    #             proj_name = proj_name,
+    #             apf_num = apf_num,
+    #             apf_approved_lender = apf_approved_lender,
+    #             const_stage = const_stage,
+    #             per_complete = per_complete,
+    #             possession_date = possession_date,
+    #             total_floors = total_floors,
+    #             buy_floor = buy_floor,
+    #             slabs_done = slabs_done,
+    #             agreement_val = agreement_val,
+    #             market_val = market_val,
+    #             prop_loc = prop_loc,
+    #             prop_city = prop_city,
+    #             prop_state = prop_state,
+    #             prop_in = prop_in,
+    #             cc_rec = cc_rec,
+    #             cc_rec_upto = cc_rec_upto,
+    #             municipal_approved = municipal_approved,
+    #             area_size = area_size,
+    #             area_in = area_in,
+    #             area_type = area_type,
+    #             room_type = room_type,
+    #             agreement_type = agreement_type,
+    #             pay_till_date = pay_till_date,
+    #             stamp_duty = stamp_duty,
+    #             stamp_duty_amt = stamp_duty_amt,
+    #             cost_sheet = cost_sheet,
+    #             cost_sheet_amt = cost_sheet_amt,
+    #             prop_det_id = prop_det
+    #         )
+    #         prop_det_1.save()
+
+    #     if prop_type == "Resale and Buying From Seller":
+    #         project_name = request.POST['project_name']
+    #         finance_approved_by = request.POST['finance_approved_by']
+    #         building_age = request.POST['building_age']
+    #         agree_val = request.POST['agree_val']
+    #         mkt_val = request.POST['mkt_val']
+    #         property_loc = request.POST['property_loc']
+    #         property_city = request.POST['property_city']
+    #         property_state = request.POST['property_state']
+    #         cc_available = request.POST['cc_available']
+    #         oc_available = request.POST['oc_available']
+    #         mun_approved = request.POST['mun_approved']
+    #         areasize = request.POST['areasize']
+    #         areain = request.POST['areain']
+    #         areatype = request.POST['areatype']
+    #         property_type = request.POST['property_type']
+    #         agree_type = request.POST['agree_type']
+    #         stp_duty = request.POST['stp_duty']
+    #         stp_amt = request.POST['stp_amt']
+    #         reg_amt = request.POST['reg_amt']
+    #         prev_agree_available = request.POST['prev_agree_available']
+    #         dup_available_or_notice = request.POST['dup_available_or_notice']
+    #         reg_prev_agreement = request.POST['reg_prev_agreement']
+    #         con_area = request.POST['con_area']
+    #         payment_till_date = request.POST['payment_till_date']
+
+    #         prop_det_2 = PropType2(
+    #             project_name = project_name,
+    #             finance_approved_by = finance_approved_by,
+    #             building_age = building_age,
+    #             agreement_val = agree_val,
+    #             market_val = mkt_val,
+    #             prop_loc = property_loc,
+    #             property_city = property_city,
+    #             property_state = property_state,
+    #             cc_available = cc_available,
+    #             oc_available = oc_available,
+    #             mun_approved = mun_approved,
+    #             areasize = areasize,
+    #             areain = areain,
+    #             areatype = areatype,
+    #             room_type = property_type,
+    #             agree_type = agree_type,
+    #             stp_duty = stp_duty,
+    #             stp_amt = stp_amt,
+    #             reg_amt = reg_amt,
+    #             prev_agree_available = prev_agree_available,
+    #             dup_available_or_notice = dup_available_or_notice,
+    #             reg_prev_agreement = reg_prev_agreement,
+    #             con_area = con_area,
+    #             payment_till_date = payment_till_date,
+    #             prop_det_id = prop_det
+    #         )
+    #         prop_det_2.save()
+
+
+    #     if prop_type == "Balance Transfer" or prop_type == "Balance Transfer Top Up":
+    #         bnk_name = request.POST['bnk_name']
+    #         prod_services = request.POST['prod_services']
+    #         loan_amt = request.POST['loan_amt']
+    #         emi = request.POST['emi']
+    #         outstanding_amt = request.POST['outstanding_amt']
+    #         tenure = request.POST['tenure']
+    #         foreclosure = request.POST['foreclosure']
+    #         lod = request.POST['lod']
+
+    #         prop_det3 = PropType3(bnk_name=bnk_name,prod_services=prod_services,loan_amt=loan_amt,emi=emi,outstanding_amt=outstanding_amt,
+    #                               tenure=tenure,foreclosure=foreclosure,lod=lod,prop_det_id=prop_det)
+    #         prop_det3.save()
+
+
+    #     if 'save' in request.POST:
+    #         if user.role == "Admin":
+    #             return redirect('/account/dashboard')
+
+    #         elif user.role == "Referral Partner":
+    #             return redirect('/account/base')
+
+    #     if 'next' in request.POST:
+    #         return redirect(f"/account/homeloan/eligibility/{lead.lead_id}")
+
+
+
+    # lead = Leads.objects.filter(lead_id = id).first()
+    # propertyins = PropertyIn.objects.all()
+    # agreementtypes = AgreementType.objects.all()
+    # return render(request, 'account/Property Details.html', {'propertyins':propertyins, 'agreementtypes':agreementtypes, 'lead':lead})
 
 
 

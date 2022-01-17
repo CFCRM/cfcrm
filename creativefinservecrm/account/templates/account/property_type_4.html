@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{%block title%}Underconstruction Buying from Builder {% endblock title %}
+{% block other_body_css %}id="page-top"{% endblock other_body_css %} 
+{% block other_body %}
+<div class="container mb-0">
+    <div class="mb-3 card-body bg-white rounded shadow-blur">
+        <div class="row justify-content-center mb-5 mt-3">
+            <div class="col-auto">
+                <h1 class="display-6 text-gray-800">ReadyPossession Buying from Seller</h1>
+            </div>
+        </div>
+        <form class ="form-container" action = "{% url 'property_type_1' id=lead_id %}" method = "POST">
+            <div class = "row">
+                {% for field in form %}
+                    <div class="col-md-auto">
+                        <div class="input-group input-group-static mb-8 ml-8 mr-8 ">
+                            <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="text-align:center">
+                {% comment %} <button class="btn btn-primary" name="cancel" type="submit">Cancel</button> {% endcomment %}
+                <button class="btn btn-primary" name="next" type = "submit">Next</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock other_body %}

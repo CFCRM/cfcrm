@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import django_heroku
+from django.contrib.messages import constants as messages
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,7 +85,8 @@ DATABASES = {
         'init_command': "SET sql_mode=STRICT_TRANS_TABLES",
     },
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'creativefinserve$leadgen',
+        #'NAME': 'creativefinserve$leadgen',
+        'NAME': 'django-test',
         # 'USER': 'creativefinserve',
         'USER': 'root',
         # 'PASSWORD': '_HP@B99_',
@@ -154,3 +156,7 @@ EMAIL_HOST_USER = 'creative.finserve05@gmail.com'
 EMAIL_HOST_PASSWORD = 'CFPL@2019'
 
 django_heroku.settings(locals())
+
+MESSAGE_TAGS = {
+    messages.ERROR :'danger'
+}
