@@ -782,7 +782,10 @@ def add_applicant_additional_details(request,id):
 
 def add_individual_details(request,id):
     add_instance = AdditionalDetails.objects.get(pk = id)
-    return render(request,'account/base.html')
+    customer_type = add_instance.cust_type 
+    if customer_type == CustomerType.objects.filter(cust_type='Salaried').first():
+        return redirect(f"/account/salaried/{id}")
+    return render(request,'base/base.html')
 
 def property_details(request,id):
     additional_details_instance = AdditionalDetails.objects.filter(lead_id = id)
@@ -1119,279 +1122,291 @@ def retired(request,id):
     return render(request, 'account/retired.html', {'applicanttypes':applicanttypes, 'products':products, 'nationalities':nationalities, 'cust':cust})
 
 def salaried(request,id):
-
     if request.method == 'POST':
-        user = request.user
-        add = AdditionalDetails.objects.filter(add_det_id=id).first()
-
-        if 'cancel' in request.POST:
-            if user.role == "Admin":
-                return redirect('dashboard')
-            elif user.role == "Referral Partner":
-                return redirect('base')
-
-        loan_amt = request.POST['loan_amt']
-        # print("--------------------------------11111----------------------------------")
-        # print(request.POST['loan_amt'])
-        # print("------------------------------------------------------------------")
-
-        # print("-------------------------------22222-----------------------------------")
-        # print(loan_amt)
-        # print("------------------------------------------------------------------")
-        cibil_type = request.POST['cibil_type']
-        cibil_score = request.POST['cibil_score']
-        loanTaken = request.POST['loanTaken']
-        repaymentHistory = request.POST['repaymentHistory']
-        defaultYear = request.POST['defaultYear']
-        details_bout_default = request.POST['details_bout_default']
-        gender = request.POST['gender']
-        dob = request.POST['dob']
-        age = request.POST['age']
-        retire_age = request.POST['retire_age']
-        proof = request.POST['proof']
-        consi_age = request.POST['consi_age']
-        maritalStatus = request.POST['maritalStatus']
-        qualification = request.POST['qualification']
-        # degree_others = request.POST['degree_others']
-        profession = request.POST['profession']
-        # degree = request.POST['degree']
-        # lawyerType = request.POST['lawyerType']
-        nationality = request.POST['nationality']
-        # country = request.POST['country']
-        enduse = request.POST['enduse']
-
-        sal_personal_det = PersonalDetails(loan_amt=loan_amt, cibil_type=cibil_type, cibil_score=cibil_score,
-                                            loanTaken= loanTaken, repaymentHistory=repaymentHistory, defaultYear=defaultYear,
-                                            details_bout_default=details_bout_default, gender=gender, dob=dob, age=age,
-                                            retire_age=retire_age, proof=proof, consi_age=consi_age, maritalStatus=maritalStatus, qualification=qualification,
-                                            profession=profession, nationality=nationality, enduse=enduse, addi_details_id=add)
+        if 'personal_details' in request.POST:
+            form = PersonalDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.additional_details_id = id
+                instance.save()
+                messages.success(request, 'Personal Details Saved Successfully')
+                return redirect('account:salaried', id)
+        
 
 
-        sal_personal_det.save()
-
-        salary_type = request.POST['salary_type']
-        bank_name = request.POST['bank_name']
-        gross_sal = request.POST['gross_sal']
-        net_sal = request.POST['net_sal']
-        bonusType = request.POST['bonusType']
-        bonus_amt = request.POST['bonus_amt']
-        bonus_tenure = request.POST['bonus_tenure']
-        incentivesType = request.POST['incentivesType']
-        incentive_amt = request.POST['incentive_amt']
-
-        if bank_name != "":
-            sal_inc_det = SalIncomeDetails(salaryType=salary_type, bank_name=bank_name, gross_sal=gross_sal, net_sal=net_sal,
-                                        bonusType=bonusType, bonus_tenure=bonus_tenure, bonus_amt=bonus_amt, incentivesType=incentivesType,
-                                        incentive_amt=incentive_amt, addi_details_id_inc=add )
-            sal_inc_det.save()
-
-        rent_inc = request.POST.getlist('rent_inc')
-        Lessee_type = request.POST.getlist('Lessee_type')
-        Lessee_name = request.POST.getlist('Lessee_name')
-        rent_amt = request.POST.getlist('rent_amt')
-        ten_of_agmnt = request.POST.getlist('ten_of_agmnt')
-        ten_pending = request.POST.getlist('ten_pending')
-        validRentAgreement = request.POST.getlist('validRentAgreement')
-        make_agreement = request.POST.getlist('make_agreement')
-        old_agreement = request.POST.getlist('old_agreement')
-        agreementType = request.POST.getlist('agreementType')
-        reflectionInAccount = request.POST.getlist('reflectionInAccount')
-        reflectionInItr = request.POST.getlist('reflectionInItr')
-        ext_exp_in_years = request.POST.getlist('ext_exp_in_years')
-
-        if rent_inc != [""]:
-            for (a,b,c,d,e,f,g,h,i,j,k,l,m) in zip(rent_inc,Lessee_type,Lessee_name,rent_amt,ten_of_agmnt,ten_pending,validRentAgreement,
-            make_agreement,old_agreement,agreementType,reflectionInAccount,reflectionInItr,ext_exp_in_years):
-
-                sal_other_inc = SalOtherIncomes(rental_income=a, Lessee_Type=b, Lessee_Name=c,
-                rent_amount=d, tenure_of_arguement=e, tenure_pending=f,
-                valid_rent_agreement=g, Will_u_make_agreement=h, How_old_is_agreement=i,
-                agreement_Type=j, reflection_in_bank_acc=k, reflection_in_ITR_acc=l,
-                extension_expected_in_years=m, addi_details_id_other_inc=add)
-
-                sal_other_inc.save()
-
-        other_income = request.POST.getlist('other_income')
-        income_amount = request.POST.getlist('income_amount')
-
-        if other_income != [""]:
-            for (a,b) in zip (other_income, income_amount):
-                sal_additional_inc = SalAdditonalOtherIncome(other_income = a, income_amount = b, add_det_id=add)
-                sal_additional_inc.save()
-
-        comp_type = request.POST['comp_type']
-        comp_name = request.POST['comp_name']
-        location = request.POST['location']
-        paid_up_cap = request.POST['paid_up_cap']
-        comp_age = request.POST['comp_age']
-        nature_business = request.POST['nature_business']
-        designation = request.POST['designation']
-        des_type = request.POST['des_type']
-        curr_exp = request.POST['curr_exp']
-        total_exp = request.POST['total_exp']
-        emp_type = request.POST['emp_type']
-        form16 = request.POST['form16']
-        office_phone = request.POST['office_phone']
-        office_email = request.POST['office_email']
-
-        if comp_name != "":
-            comp_det = SalCompanyDetails(
-            comp_type = comp_type,comp_name = comp_name,location = location,paid_up_cap = paid_up_cap,comp_age = comp_age,
-            nature_business = nature_business,designation = designation,des_type = des_type,curr_exp = curr_exp,
-            total_exp = total_exp,emp_type = emp_type,form16 = form16,office_phone = office_phone,office_email = office_email,
-            add_det_id=add)
-
-            comp_det.save()
-
-        bank_name = request.POST.getlist('bank_names')
-        products = request.POST.getlist('products')
-        loan_amount = request.POST.getlist('loan_amts')
-        emi = request.POST.getlist('emi')
-        rate_of_int = request.POST.getlist('rate_of_int')
-        tenure = request.POST.getlist('tenure')
-        outstanding = request.POST.getlist('outstanding')
-        out_amt = request.POST.getlist('out_amt')
-        bounces = request.POST.getlist('bounces')
-        mor_taken = request.POST.getlist('mor_taken')
-        app_type = request.POST.getlist('app_type')
-
-        if loan_amount != [""]:
-            #-> Dates had been put inside if because agar kisiko existing loan naa daalna ho to use date format ka error naa aaye
-            emi_start_date = request.POST.getlist('emi_start_date')
-            emi_end_date = request.POST.getlist('emi_end_date')
-
-
-            for(a,b,c,d,e,f,g,h,i,j,k,l,m) in zip(bank_name, products, loan_amount, emi, rate_of_int, tenure, emi_start_date, emi_end_date,
-                outstanding, out_amt, bounces, mor_taken, app_type):
-
-                sal_exist_loan_det = SalExistingLoanDetails(bank_name=a, products=b, loan_amount=c, emi=d, rate_of_interest=e,
-                tenure=f, emi_start_date=g, emi_end_date=h, outstan_paid_by_customer=i, outstanding_amount=j, any_bounces=k,
-                moratorium_taken=l, application_type=m, add_det_id=add)
-
-                sal_exist_loan_det.save()
-
-
-        card_bank_name = request.POST.getlist('card_bank_name')
-        credit_limit = request.POST.getlist('credit_limit')
-        limit_utilized = request.POST.getlist('limit_utilized')
-        min_due = request.POST.getlist('min_due')
-        credit_card_age = request.POST.getlist('credit_card_age')
-        payment_delay = request.POST.getlist('payment_delay')
-        payment_delay_year = request.POST.getlist('payment_delay_year')
-        mor_taken = request.POST.getlist('mor_taken')
-
-        # print("--------------------------------11111----------------------------------")
-        # print(request.POST.getlist('card_bank_name'))
-        # print("------------------------------------------------------------------")
-
-        # print("-------------------------------22222-----------------------------------")
-        # print(card_bank_name)
-        # print("------------------------------------------------------------------")
-
-        if card_bank_name != [""]:
-            for(a,b,c,d,e,f,g,h) in zip(card_bank_name, credit_limit, limit_utilized, min_due,
-            credit_card_age, payment_delay, payment_delay_year, mor_taken):
-
-                sal_exist_card_det = SalExistingCardDetails(card_bank_name=a, credit_limit=b, limit_utilized=c,
-                min_due=d, credit_card_age=e, payment_delay=f, payment_delay_year=g, mor_taken=h, add_det_id=add)
-
-                sal_exist_card_det.save()
-
-        inw_cheque_return = request.POST['inw_cheque_return']
-        loanInquiry = request.POST['loanInquiry']
-        loan_enq_det = request.POST['loan_enq_det']
-
-        if inw_cheque_return != "":
-            sal_additional_det = SalAdditionalDetails(inw_cheque_return=inw_cheque_return, loan_enq_disburse=loanInquiry, loan_enq_det=loan_enq_det, add_det_id=add)
-            sal_additional_det.save()
-
-
-        investments_u_have = request.POST['investments_u_have']
-
-        if investments_u_have != "":
-            sal_inv_u_have = Investments(investments_u_have=investments_u_have,add_det_id=add)
-            sal_inv_u_have.save()
-
-
-        if 'save' in request.POST:
-            if user.role == "Admin":
-                return redirect('dashboard')
-            elif user.role == "Referral Partner":
-                return redirect('base')
-
-        if 'next' in request.POST:
-            # cust_type = nxt.cust_type.lower()
-            # return redirect(f"/account/{cust_type}/{nxt.add_det_id}")
-            if add.applicant_type == "Applicant":
-                add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "1st Co-Applicant").first()
-
-                if add1 == None:
-                    return redirect(f"/account/property_details/{add.lead_id.lead_id}")
-                else:
-                    cust_type = add1.cust_type.lower()
-                    return redirect(f"/account/{cust_type}/{add1.add_det_id}")
-
-            elif add.applicant_type == "1st Co-Applicant":
-                add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "2nd Co-Applicant").first()
-
-                if add1 == None:
-                    return redirect(f"/account/property_details/{add.lead_id.lead_id}")
-                else:
-                    cust_type = add1.cust_type.lower()
-                    return redirect(f"/account/{cust_type}/{add1.add_det_id}")
-
-            elif add.applicant_type == "2nd Co-Applicant":
-                add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "3rd Co-Applicant").first()
-
-                if add1 == None:
-                    return redirect(f"/account/property_details/{add.lead_id.lead_id}")
-                else:
-                    cust_type = add1.cust_type.lower()
-                    return redirect(f"/account/{cust_type}/{add1.add_det_id}")
-
-            elif add.applicant_type == "3rd Co-Applicant":
-                add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "4th Co-Applicant").first()
-
-                if add1 == None:
-                    return redirect(f"/account/property_details/{add.lead_id.lead_id}")
-                else:
-                    cust_type = add1.cust_type.lower()
-                    return redirect(f"/account/{cust_type}/{add1.add_det_id}")
-
-            else:
-                return redirect(f"/account/property_details/{add.lead_id.lead_id}")
-
-
-
-    cust = AdditionalDetails.objects.filter(add_det_id=id).first()
-    genders = Gender.objects.all()
-    qualifications = Qualification.objects.all()
-    degrees = Degree.objects.all()
-    professions = Profession.objects.all()
-    nationalities = Nationality.objects.all()
-    maritalstatues = MaritalStatus.objects.all()
-    salarytypes = SalaryType.objects.all()
-    agreementtypes = AgreementType.objects.all()
-    companytypes = CompanyType.objects.all()
-    designationtypes = DesignationType.objects.all()
-    products = Product.objects.all()
+    # cust = AdditionalDetails.objects.filter(add_det_id=id).first()
+    # genders = Gender.objects.all()
+    # qualifications = Qualification.objects.all()
+    # degrees = Degree.objects.all()
+    # professions = Profession.objects.all()
+    # nationalities = Nationality.objects.all()
+    # maritalstatues = MaritalStatus.objects.all()
+    # salarytypes = SalaryType.objects.all()
+    # agreementtypes = AgreementType.objects.all()
+    # companytypes = CompanyType.objects.all()
+    # designationtypes = DesignationType.objects.all()
+    # products = Product.objects.all()
+    # context = {
+    #     'genders': genders,
+    #     'qualifications': qualifications,
+    #     'degrees': degrees,
+    #     'professions': professions,
+    #     'nationalities': nationalities,
+    #     'maritalstatues': maritalstatues,
+    #     'salarytypes': salarytypes,
+    #     'agreementtypes': agreementtypes,
+    #     'companytypes': companytypes,
+    #     'designationtypes': designationtypes,
+    #     'products': products,
+    #     'additional_details_id': id,
+    #     'cust':cust
+    # }
     context = {
-        'genders': genders,
-        'qualifications': qualifications,
-        'degrees': degrees,
-        'professions': professions,
-        'nationalities': nationalities,
-        'maritalstatues': maritalstatues,
-        'salarytypes': salarytypes,
-        'agreementtypes': agreementtypes,
-        'companytypes': companytypes,
-        'designationtypes': designationtypes,
-        'products': products,
-
-        'cust':cust
+        "id" : id,
+        "personal_details_form": PersonalDetailsForm()
     }
+    return render(request, 'account/salaried.html', context)
 
-    return render(request, 'account/salaried.html', context=context)
+    # if request.method == 'POST':
+    #     user = request.user
+    #     add = AdditionalDetails.objects.filter(add_det_id=id).first()
+
+    #     if 'cancel' in request.POST:
+    #         if user.role == "Admin":
+    #             return redirect('dashboard')
+    #         elif user.role == "Referral Partner":
+    #             return redirect('base')
+
+    #     loan_amt = request.POST['loan_amt']
+    #     # print("--------------------------------11111----------------------------------")
+    #     # print(request.POST['loan_amt'])
+    #     # print("------------------------------------------------------------------")
+
+    #     # print("-------------------------------22222-----------------------------------")
+    #     # print(loan_amt)
+    #     # print("------------------------------------------------------------------")
+    #     cibil_type = request.POST['cibil_type']
+    #     cibil_score = request.POST['cibil_score']
+    #     loanTaken = request.POST['loanTaken']
+    #     repaymentHistory = request.POST['repaymentHistory']
+    #     defaultYear = request.POST['defaultYear']
+    #     details_bout_default = request.POST['details_bout_default']
+    #     gender = request.POST['gender']
+    #     dob = request.POST['dob']
+    #     age = request.POST['age']
+    #     retire_age = request.POST['retire_age']
+    #     proof = request.POST['proof']
+    #     consi_age = request.POST['consi_age']
+    #     maritalStatus = request.POST['maritalStatus']
+    #     qualification = request.POST['qualification']
+    #     # degree_others = request.POST['degree_others']
+    #     profession = request.POST['profession']
+    #     # degree = request.POST['degree']
+    #     # lawyerType = request.POST['lawyerType']
+    #     nationality = request.POST['nationality']
+    #     # country = request.POST['country']
+    #     enduse = request.POST['enduse']
+
+    #     sal_personal_det = PersonalDetails(loan_amt=loan_amt, cibil_type=cibil_type, cibil_score=cibil_score,
+    #                                         loanTaken= loanTaken, repaymentHistory=repaymentHistory, defaultYear=defaultYear,
+    #                                         details_bout_default=details_bout_default, gender=gender, dob=dob, age=age,
+    #                                         retire_age=retire_age, proof=proof, consi_age=consi_age, maritalStatus=maritalStatus, qualification=qualification,
+    #                                         profession=profession, nationality=nationality, enduse=enduse, addi_details_id=add)
+
+
+    #     sal_personal_det.save()
+
+    #     salary_type = request.POST['salary_type']
+    #     bank_name = request.POST['bank_name']
+    #     gross_sal = request.POST['gross_sal']
+    #     net_sal = request.POST['net_sal']
+    #     bonusType = request.POST['bonusType']
+    #     bonus_amt = request.POST['bonus_amt']
+    #     bonus_tenure = request.POST['bonus_tenure']
+    #     incentivesType = request.POST['incentivesType']
+    #     incentive_amt = request.POST['incentive_amt']
+
+    #     if bank_name != "":
+    #         sal_inc_det = SalIncomeDetails(salaryType=salary_type, bank_name=bank_name, gross_sal=gross_sal, net_sal=net_sal,
+    #                                     bonusType=bonusType, bonus_tenure=bonus_tenure, bonus_amt=bonus_amt, incentivesType=incentivesType,
+    #                                     incentive_amt=incentive_amt, addi_details_id_inc=add )
+    #         sal_inc_det.save()
+
+    #     rent_inc = request.POST.getlist('rent_inc')
+    #     Lessee_type = request.POST.getlist('Lessee_type')
+    #     Lessee_name = request.POST.getlist('Lessee_name')
+    #     rent_amt = request.POST.getlist('rent_amt')
+    #     ten_of_agmnt = request.POST.getlist('ten_of_agmnt')
+    #     ten_pending = request.POST.getlist('ten_pending')
+    #     validRentAgreement = request.POST.getlist('validRentAgreement')
+    #     make_agreement = request.POST.getlist('make_agreement')
+    #     old_agreement = request.POST.getlist('old_agreement')
+    #     agreementType = request.POST.getlist('agreementType')
+    #     reflectionInAccount = request.POST.getlist('reflectionInAccount')
+    #     reflectionInItr = request.POST.getlist('reflectionInItr')
+    #     ext_exp_in_years = request.POST.getlist('ext_exp_in_years')
+
+    #     if rent_inc != [""]:
+    #         for (a,b,c,d,e,f,g,h,i,j,k,l,m) in zip(rent_inc,Lessee_type,Lessee_name,rent_amt,ten_of_agmnt,ten_pending,validRentAgreement,
+    #         make_agreement,old_agreement,agreementType,reflectionInAccount,reflectionInItr,ext_exp_in_years):
+
+    #             sal_other_inc = SalOtherIncomes(rental_income=a, Lessee_Type=b, Lessee_Name=c,
+    #             rent_amount=d, tenure_of_arguement=e, tenure_pending=f,
+    #             valid_rent_agreement=g, Will_u_make_agreement=h, How_old_is_agreement=i,
+    #             agreement_Type=j, reflection_in_bank_acc=k, reflection_in_ITR_acc=l,
+    #             extension_expected_in_years=m, addi_details_id_other_inc=add)
+
+    #             sal_other_inc.save()
+
+    #     other_income = request.POST.getlist('other_income')
+    #     income_amount = request.POST.getlist('income_amount')
+
+    #     if other_income != [""]:
+    #         for (a,b) in zip (other_income, income_amount):
+    #             sal_additional_inc = SalAdditionalOtherIncomes(other_income = a, income_amount = b, add_det_id=add)
+    #             sal_additional_inc.save()
+
+    #     comp_type = request.POST['comp_type']
+    #     comp_name = request.POST['comp_name']
+    #     location = request.POST['location']
+    #     paid_up_cap = request.POST['paid_up_cap']
+    #     comp_age = request.POST['comp_age']
+    #     nature_business = request.POST['nature_business']
+    #     designation = request.POST['designation']
+    #     des_type = request.POST['des_type']
+    #     curr_exp = request.POST['curr_exp']
+    #     total_exp = request.POST['total_exp']
+    #     emp_type = request.POST['emp_type']
+    #     form16 = request.POST['form16']
+    #     office_phone = request.POST['office_phone']
+    #     office_email = request.POST['office_email']
+
+    #     if comp_name != "":
+    #         comp_det = SalCompanyDetails(
+    #         comp_type = comp_type,comp_name = comp_name,location = location,paid_up_cap = paid_up_cap,comp_age = comp_age,
+    #         nature_business = nature_business,designation = designation,des_type = des_type,curr_exp = curr_exp,
+    #         total_exp = total_exp,emp_type = emp_type,form16 = form16,office_phone = office_phone,office_email = office_email,
+    #         add_det_id=add)
+
+    #         comp_det.save()
+
+    #     bank_name = request.POST.getlist('bank_names')
+    #     products = request.POST.getlist('products')
+    #     loan_amount = request.POST.getlist('loan_amts')
+    #     emi = request.POST.getlist('emi')
+    #     rate_of_int = request.POST.getlist('rate_of_int')
+    #     tenure = request.POST.getlist('tenure')
+    #     outstanding = request.POST.getlist('outstanding')
+    #     out_amt = request.POST.getlist('out_amt')
+    #     bounces = request.POST.getlist('bounces')
+    #     mor_taken = request.POST.getlist('mor_taken')
+    #     app_type = request.POST.getlist('app_type')
+
+    #     if loan_amount != [""]:
+    #         #-> Dates had been put inside if because agar kisiko existing loan naa daalna ho to use date format ka error naa aaye
+    #         emi_start_date = request.POST.getlist('emi_start_date')
+    #         emi_end_date = request.POST.getlist('emi_end_date')
+
+
+    #         for(a,b,c,d,e,f,g,h,i,j,k,l,m) in zip(bank_name, products, loan_amount, emi, rate_of_int, tenure, emi_start_date, emi_end_date,
+    #             outstanding, out_amt, bounces, mor_taken, app_type):
+
+    #             sal_exist_loan_det = SalExistingLoanDetails(bank_name=a, products=b, loan_amount=c, emi=d, rate_of_interest=e,
+    #             tenure=f, emi_start_date=g, emi_end_date=h, outstan_paid_by_customer=i, outstanding_amount=j, any_bounces=k,
+    #             moratorium_taken=l, application_type=m, add_det_id=add)
+
+    #             sal_exist_loan_det.save()
+
+
+    #     card_bank_name = request.POST.getlist('card_bank_name')
+    #     credit_limit = request.POST.getlist('credit_limit')
+    #     limit_utilized = request.POST.getlist('limit_utilized')
+    #     min_due = request.POST.getlist('min_due')
+    #     credit_card_age = request.POST.getlist('credit_card_age')
+    #     payment_delay = request.POST.getlist('payment_delay')
+    #     payment_delay_year = request.POST.getlist('payment_delay_year')
+    #     mor_taken = request.POST.getlist('mor_taken')
+
+    #     # print("--------------------------------11111----------------------------------")
+    #     # print(request.POST.getlist('card_bank_name'))
+    #     # print("------------------------------------------------------------------")
+
+    #     # print("-------------------------------22222-----------------------------------")
+    #     # print(card_bank_name)
+    #     # print("------------------------------------------------------------------")
+
+    #     if card_bank_name != [""]:
+    #         for(a,b,c,d,e,f,g,h) in zip(card_bank_name, credit_limit, limit_utilized, min_due,
+    #         credit_card_age, payment_delay, payment_delay_year, mor_taken):
+
+    #             sal_exist_card_det = SalExistingCreditCard(card_bank_name=a, credit_limit=b, limit_utilized=c,
+    #             min_due=d, credit_card_age=e, payment_delay=f, payment_delay_year=g, mor_taken=h, add_det_id=add)
+
+    #             sal_exist_card_det.save()
+
+    #     inw_cheque_return = request.POST['inw_cheque_return']
+    #     loanInquiry = request.POST['loanInquiry']
+    #     loan_enq_det = request.POST['loan_enq_det']
+
+    #     if inw_cheque_return != "":
+    #         sal_additional_det = SalAdditionalDetails(inw_cheque_return=inw_cheque_return, loan_enq_disburse=loanInquiry, loan_enq_det=loan_enq_det, add_det_id=add)
+    #         sal_additional_det.save()
+
+
+    #     investments_u_have = request.POST['investments_u_have']
+
+    #     if investments_u_have != "":
+    #         sal_inv_u_have = Investments(investments_u_have=investments_u_have,add_det_id=add)
+    #         sal_inv_u_have.save()
+
+
+    #     if 'save' in request.POST:
+    #         if user.role == "Admin":
+    #             return redirect('dashboard')
+    #         elif user.role == "Referral Partner":
+    #             return redirect('base')
+
+    #     if 'next' in request.POST:
+    #         # cust_type = nxt.cust_type.lower()
+    #         # return redirect(f"/account/{cust_type}/{nxt.add_det_id}")
+    #         if add.applicant_type == "Applicant":
+    #             add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "1st Co-Applicant").first()
+
+    #             if add1 == None:
+    #                 return redirect(f"/account/property_details/{add.lead_id.lead_id}")
+    #             else:
+    #                 cust_type = add1.cust_type.lower()
+    #                 return redirect(f"/account/{cust_type}/{add1.add_det_id}")
+
+    #         elif add.applicant_type == "1st Co-Applicant":
+    #             add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "2nd Co-Applicant").first()
+
+    #             if add1 == None:
+    #                 return redirect(f"/account/property_details/{add.lead_id.lead_id}")
+    #             else:
+    #                 cust_type = add1.cust_type.lower()
+    #                 return redirect(f"/account/{cust_type}/{add1.add_det_id}")
+
+    #         elif add.applicant_type == "2nd Co-Applicant":
+    #             add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "3rd Co-Applicant").first()
+
+    #             if add1 == None:
+    #                 return redirect(f"/account/property_details/{add.lead_id.lead_id}")
+    #             else:
+    #                 cust_type = add1.cust_type.lower()
+    #                 return redirect(f"/account/{cust_type}/{add1.add_det_id}")
+
+    #         elif add.applicant_type == "3rd Co-Applicant":
+    #             add1 = AdditionalDetails.objects.filter(lead_id=add.lead_id, applicant_type = "4th Co-Applicant").first()
+
+    #             if add1 == None:
+    #                 return redirect(f"/account/property_details/{add.lead_id.lead_id}")
+    #             else:
+    #                 cust_type = add1.cust_type.lower()
+    #                 return redirect(f"/account/{cust_type}/{add1.add_det_id}")
+
+    #         else:
+    #             return redirect(f"/account/property_details/{add.lead_id.lead_id}")
 
 def selfemployed(request):
 

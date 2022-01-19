@@ -267,3 +267,27 @@ class DeductionType(models.Model):
     ineffective_date = models.DateField(null = True)
     def __str__(self): 
         return self.deduction_type
+
+
+class LesseType(models.Model): 
+    lesse_type       = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.lesse_type
+
+
+class ResidenceType(models.Model): 
+    residence_type   = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.residence_type
+
+
+class PaymentDelayYear(models.Model): 
+    payment_delay_year = models.CharField(max_length=30)
+    effective_date     = models.DateField(null = True)
+    ineffective_date   = models.DateField(null = True)
+    def __str__(self): 
+        return self.payment_delay_year

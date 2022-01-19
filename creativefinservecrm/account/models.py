@@ -95,6 +95,8 @@ class AdditionalDetails(models.Model):
     con_phone        = models.CharField(max_length=10)
     con_person_name  = models.CharField(max_length=25,blank= True)
     con_person_phone = models.CharField(max_length=10,blank= True)
+
+
 class PersonalDetails(models.Model): 
     per_det_id            = models.AutoField(primary_key=True)
     loan_amount           = models.IntegerField(null=True)
@@ -140,35 +142,34 @@ class SalIncomeDetails(models.Model):
 
 
 class SalOtherIncomes(models.Model): 
-    other_inc_det_id            = models.AutoField(primary_key=True)
-    rental_income               = models.CharField(max_length=10)
-    Lessee_Type                 = models.CharField(max_length=50)
-    Lessee_Name                 = models.CharField(max_length=50)
-    rent_amount                 = models.CharField(max_length=10)
-    tenure_of_arguement         = models.CharField(max_length=10)
-    tenure_pending              = models.CharField(max_length=10)
-    valid_rent_agreement        = models.CharField(max_length=10)
-    Will_u_make_agreement       = models.CharField(max_length=10)
-    How_old_is_agreement        = models.CharField(max_length=50)
-    agreement_Type              = models.CharField(max_length=50)
-    reflection_in_bank_acc      = models.CharField(max_length=10)
-    reflection_in_ITR_acc       = models.CharField(max_length=100)
-    extension_expected_in_years = models.CharField(max_length=70)
-    addi_details_id_other_inc   = models.ForeignKey(
-        AdditionalDetails, on_delete=models.CASCADE)
+    other_inc_id               = models.AutoField(primary_key=True)
+    rental_income              = models.IntegerField()
+    lessee_type                = models.ForeignKey(LesseType, on_delete=models.CASCADE, blank=True, null=True)
+    lessee_name                = models.CharField(max_length=50, blank=True, null=True)
+    rent_amount                = models.IntegerField()
+    tenure_of_agreement        = models.IntegerField()
+    tenure_pending             = models.IntegerField()
+    valid_rent_agreement       = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    will_you_make_agreement    = models.BooleanField(choices=YES_NO_CHOICES, blank=True, null=True)
+    how_old_is_agreement       = models.IntegerField(blank=True, null=True)
+    agreement_type             = models.ForeignKey(AgreementType, on_delete=models.CASCADE, blank=True, null=True)
+    reflection_in_bank_account = models.BooleanField(choices=YES_NO_CHOICES, blank=True, null=True)
+    reflection_in_itr          = models.BooleanField(choices=YES_NO_CHOICES, blank=True, null=True)
+    extension_expected_years   = models.IntegerField()
+    addi_details_id            = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 
-class SalAdditonalOtherIncome(models.Model): 
-    add_oth_inc_det_id = models.AutoField(primary_key=True)
-    other_income       = models.CharField(max_length=50)
-    income_amount      = models.CharField(max_length=10)
-    add_det_id         = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+class SalAdditionalOtherIncomes(models.Model): 
+    add_oth_inc_id  = models.AutoField(primary_key=True)
+    other_income    = models.CharField(max_length=50)
+    income_amount   = models.IntegerField()
+    addi_details_id = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 class ContactPerson(models.Model):
     name = models.CharField(max_length=20)
 class SalCompanyDetails(models.Model): 
     comp_det_id     = models.AutoField(primary_key=True)
-    comp_type       = models.CharField(max_length=50)
+    company_type       = models.ForeignKey(CompanyType, on_delete=models.CASCADE)
     comp_name       = models.CharField(max_length=50)
     location        = models.CharField(max_length=50)
     paid_up_cap     = models.CharField(max_length=10)
@@ -186,34 +187,34 @@ class SalCompanyDetails(models.Model):
 
 
 class SalExistingLoanDetails(models.Model): 
-    existing_loan_det_id     = models.AutoField(primary_key=True)
-    bank_name                = models.CharField(max_length=50)
-    products                 = models.CharField(max_length=100)
-    loan_amount              = models.CharField(max_length=10)
-    emi                      = models.CharField(max_length=10)
-    rate_of_interest         = models.CharField(max_length=5)
-    tenure                   = models.CharField(max_length=50)
-    emi_start_date           = models.CharField(max_length=50)
-    emi_end_date             = models.DateField()
-    outstan_paid_by_customer = models.CharField(max_length=10)
-    outstanding_amount       = models.CharField(max_length=10)
-    any_bounces              = models.CharField(max_length=50)
-    moratorium_taken         = models.CharField(max_length=10)
-    application_type         = models.CharField(max_length=10)
-    add_det_id               = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+    existing_loan_det_id                = models.AutoField(primary_key=True)
+    bank_name                           = models.ForeignKey(BankName, on_delete=models.CASCADE)
+    products                            = models.ForeignKey(Product, on_delete=models.CASCADE)
+    loan_amount                         = models.IntegerField()
+    emi                                 = models.DecimalField(max_digits=12, decimal_places=2)
+    rate_of_interest                    = models.DecimalField(max_digits=12, decimal_places=2)
+    tenure                              = models.IntegerField()
+    emi_start_date                      = models.DateField()
+    emi_end_date                        = models.DateField()
+    outstanding_amount_paid_by_customer = models.IntegerField()
+    outstanding_amount                  = models.IntegerField()
+    any_bounces                         = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    moratorium_taken                    = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    applicant_type                      = models.ForeignKey(ApplicantType, on_delete=models.CASCADE)
+    addi_details_id                     = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 
-class SalExistingCardDetails(models.Model): 
-    existing_card_det_id = models.AutoField(primary_key=True)
-    card_bank_name       = models.CharField(max_length=50)
-    credit_limit         = models.CharField(max_length=100)
-    limit_utilized       = models.CharField(max_length=10)
-    min_due              = models.CharField(max_length=10)
-    credit_card_age      = models.CharField(max_length=5)
-    payment_delay        = models.CharField(max_length=50)
-    payment_delay_year   = models.CharField(max_length=50)
-    mor_taken            = models.CharField(max_length=50)
-    add_det_id           = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+class SalExistingCreditCard(models.Model): 
+    existing_credit_card_id = models.AutoField(primary_key=True)
+    bank_name               = models.ForeignKey(BankName, on_delete=models.CASCADE)
+    credit_limit            = models.IntegerField()
+    limit_utilized          = models.IntegerField()
+    minimum_due             = models.DecimalField(max_digits=12, decimal_places=2)
+    credit_card_age         = models.IntegerField()
+    payment_delay           = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    payment_delay_year      = models.ForeignKey(PaymentDelayYear, on_delete=models.CASCADE)
+    moratorium_taken        = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    addi_details_id         = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 
 class SalAdditionalDetails(models.Model): 
@@ -229,6 +230,13 @@ class Investments(models.Model):
     investments_u_have = models.CharField(max_length=50)
     add_det_id         = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
+
+class SalResidenceDetails(models.Model):
+    sal_res_det_id         = models.AutoField(primary_key=True)
+    current_residence_type = models.ForeignKey(ResidenceType, on_delete=models.CASCADE)
+    current_location_city  = models.ForeignKey(City, on_delete=models.CASCADE)
+    state                  = models.ForeignKey(State, on_delete=models.CASCADE)
+    addi_details_id        = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 #--------------------------------------------------------Property Details--------------------------------------------------------------#
 

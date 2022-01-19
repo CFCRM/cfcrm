@@ -4,7 +4,7 @@ from datetime import date
 from .models import *
 from account.models import Leads, AdditionalDetails, ContactPerson
 from account.models import PropertyDetails, PropType1, PropType2, PropType3
-from account.models import PersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditonalOtherIncome, SalCompanyDetails, SalAdditionalDetails, SalExistingCardDetails, SalExistingLoanDetails, Investments
+from account.models import PersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditionalOtherIncomes, SalCompanyDetails, SalAdditionalDetails, SalExistingCreditCard, SalExistingLoanDetails, Investments
 # Create your views here.
 
 
@@ -79,7 +79,7 @@ def eligibility(request, id):
                 oth_inc = SalOtherIncomes.objects.filter(addi_details_id_other_inc = add_det.add_det_id)
                 inc_foir = IncomeFoir.objects.filter(bank_id = bank.bank_id)
                 obl = Obligation.objects.filter(bank_id = bank.bank_id).first()
-                exi_card = SalExistingCardDetails.objects.filter(add_det_id = add_det.add_det_id)
+                exi_card = SalExistingCreditCard.objects.filter(add_det_id = add_det.add_det_id)
                 exi_loan = SalExistingLoanDetails.objects.filter(add_det_id = add_det.add_det_id)
                 oth_roi = OtherDetailsROI.objects.filter(bank_id = bank.bank_id)
                 cmp_det = SalCompanyDetails.objects.filter(add_det_id = add_det.add_det_id).first()
