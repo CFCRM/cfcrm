@@ -9,40 +9,41 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import datetime
 
 YES_NO_CHOICES = (
+    (None,('Select Yes Or No')),
     (True, ('Yes')),
     (False, ('No'))
 )
 
 GOOD_BAD_CHOICES = (
-  ('1', '-- Good or Bad --'),
-  ('2', 'Good'),
-  ('3', 'Bad')
+  (None, '-- Good or Bad --'),
+  ('1', 'Good'),
+  ('2', 'Bad')
 )
 
 KNOWN_UNKNOWN_CHOICES = (
-  ('1', '-- Select Cibil Type --'),
-  ('2', 'Known'),
-  ('3', 'Unknown')
+  (None, '-- Select Cibil Type --'),
+  ('1', 'Known'),
+  ('2', 'Unknown')
 )
 
 DEFAULT_YEAR_CHOICES = (
     ('1', '-- Select --'),
-    ('2', 'Last 12 Months'),
-    ('3', 'Past')
+    ('Last 12 Months', 'Last 12 Months'),
+    ('Past', 'Past')
 )
 
 MARITAL_STATUS_CHOICES = (
     ('1', '-- Select MARITAL STATUS --'),
-    ('2', 'Single'),
-    ('3', 'Married'),
-    ('4', 'Divorced')
+    ('Single', 'Single'),
+    ('Married', 'Married'),
+    ('divorced', 'Divorced')
 )
 
 GENDER_CHOICES = (
   ('1', '-- Select Gender --'),
-  ('2', 'Male'),
-  ('3', 'Female'),
-  ('4', 'Others')
+  ('Male', 'Male'),
+  ('Female', 'Female'),
+  ('Others', 'Others')
 )
 
 def year_choices():
@@ -223,6 +224,23 @@ class SalAdditionalDetails(models.Model):
     loan_enq_det      = models.CharField(max_length=100)
     add_det_id        = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
+class SalCompanyDetails(models.Model): 
+    comp_det_id        = models.AutoField(primary_key=True)
+    company_type       = models.ForeignKey(CompanyType, on_delete=models.CASCADE, blank=True, null=True)
+    company_name       = models.ForeignKey(CompanyName, on_delete=models.CASCADE, blank=True, null=True)
+    location           = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    paid_up_capital    = models.IntegerField()
+    company_age        = models.IntegerField()
+    nature_of_business = models.CharField(max_length=50)
+    designation        = models.CharField(max_length=50)
+    designation_type   = models.ForeignKey(DesignationType, on_delete=models.CASCADE, blank=True, null=True)
+    current_experience = models.IntegerField()
+    total_experience   = models.IntegerField()
+    employment_type    = models.ForeignKey(EmploymentType, on_delete=models.CASCADE, blank=True, null=True)
+    form_16            = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    office_phone       = models.CharField(max_length=10)
+    office_email       = models.EmailField(max_length=50)
+    addi_details_id    = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE, blank=True, null=True)
 
 class Investments(models.Model): 
     sal_inv_id         = models.AutoField(primary_key=True)
@@ -258,22 +276,22 @@ class PropType1(models.Model): #Underconstruction buying from builder
     prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in             = models.ForeignKey(PropertyIn,on_delete=CASCADE)
     cc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
-    cc_rec_upto         = models.IntegerField()
+    cc_rec_upto         = models.IntegerField(blank=True, null=True)
     municipal_approved  = models.BooleanField( choices = YES_NO_CHOICES )
     area_size           = models.IntegerField()
     area_in             = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
     area_type           = models.ForeignKey(AreaType,on_delete=models.CASCADE)
     room_type           = models.ForeignKey(RoomType,on_delete= models.CASCADE)
     agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
-    pay_till_date       = models.CharField(max_length=10)
+    pay_till_date       = models.DecimalField( max_digits=12, decimal_places=2)
     stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
     stamp_duty_amt      = models.CharField(max_length=10)
-    cost_sheet          = models.CharField(max_length=3)
-    cost_sheet_amt      = models.CharField(max_length=7)
+    cost_sheet          = models.BooleanField(choices = YES_NO_CHOICES,default = True)
+    cost_sheet_amt      = models.CharField(max_length=7,blank=True,null=True)
     lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
     future_rent         = models.IntegerField()
-    car_parking_amt     = models.IntegerField()
-    subvention_scheme   = models.BooleanField(choices = YES_NO_CHOICES)
+    car_parking_amt     = models.IntegerField(blank=True, null=True)
+    subvention_scheme   = models.BooleanField(choices = YES_NO_CHOICES,blank=True, null=True)
     car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 class PropType2(models.Model):# Underconstruction buying from seller
@@ -295,21 +313,21 @@ class PropType2(models.Model):# Underconstruction buying from seller
     prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in             = models.ForeignKey(PropertyIn,on_delete=CASCADE)
     cc_rec              = models.BooleanField( choices = YES_NO_CHOICES )
-    cc_rec_upto         = models.IntegerField()
+    cc_rec_upto         = models.IntegerField(blank=True,null=True)
     municipal_approved  = models.BooleanField( choices = YES_NO_CHOICES )
     area_size           = models.IntegerField()
     area_in             = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
     area_type           = models.ForeignKey(AreaType,on_delete=models.CASCADE)
     room_type           = models.ForeignKey(RoomType,on_delete= models.CASCADE)
     agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
-    pay_till_date       = models.CharField(max_length=10)
+    pay_till_date       = models.CharField(blank=True, null=True,max_length=20)
     stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
-    stamp_duty_amt      = models.CharField(max_length=10)
-    cost_sheet          = models.CharField(max_length=3)
-    cost_sheet_amt      = models.CharField(max_length=7)
+    stamp_duty_amt      = models.IntegerField()
+    cost_sheet          = models.BooleanField(default = False,choices = YES_NO_CHOICES)
+    cost_sheet_amt      = models.IntegerField(blank=True, null=True)
     lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
     future_rent         = models.IntegerField()
-    car_parking_amt     = models.IntegerField()
+    car_parking_amt     = models.IntegerField(blank=True, null=True)
     car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 
@@ -337,11 +355,11 @@ class PropType3(models.Model):
    agreement_type      = models.ForeignKey(AgreementType,on_delete=models.CASCADE)
    pay_till_date       = models.CharField(max_length=10)
    stamp_duty          = models.BooleanField( choices = YES_NO_CHOICES )
-   stamp_duty_amt      = models.CharField(max_length=10)
-   cost_sheet          = models.CharField(max_length=3)
-   cost_sheet_amt      = models.CharField(max_length=7)
+   stamp_duty_amt      = models.IntegerField(blank=True, null=True)
+   cost_sheet          = models.BooleanField( choices = YES_NO_CHOICES)
+   cost_sheet_amt      = models.IntegerField(blank=True, null=True)
    lead_id             = models.ForeignKey(Leads,on_delete=models.CASCADE)
-   car_parking_amt     = models.IntegerField()
+   car_parking_amt     = models.IntegerField(blank=True, null=True)
    car_parking         = models.BooleanField(choices = YES_NO_CHOICES)
 
 
@@ -358,12 +376,12 @@ class PropType4(models.Model):
     agreement_val                        = models.IntegerField()
     market_val                           = models.IntegerField()
     prop_loc                             = models.CharField(max_length=50)
-    prop_city           = models.ForeignKey(City,on_delete=models.CASCADE)
-    prop_state          = models.ForeignKey(State,on_delete=models.CASCADE)
+    prop_city                            = models.ForeignKey(City,on_delete=models.CASCADE)
+    prop_state                           = models.ForeignKey(State,on_delete=models.CASCADE)
     prop_in                              = models.ForeignKey(PropertyIn,on_delete=CASCADE)
     cc_available                         = models.BooleanField( choices = YES_NO_CHOICES )
     oc_rec                               = models.BooleanField( choices = YES_NO_CHOICES )
-    oc_rec_floor                         = models.IntegerField()
+    oc_rec_floor                         = models.IntegerField(blank=True, null=True)
     municipal_approved                   = models.BooleanField( choices = YES_NO_CHOICES )
     area_size                            = models.IntegerField()
     area_in                              = models.ForeignKey(AreaIn,on_delete = models.CASCADE)
@@ -375,10 +393,10 @@ class PropType4(models.Model):
     registration_done_previous_aggremnet = models.CharField(max_length=100)
     concern_area                         = models.CharField(max_length=100)
     stamp_duty_registration_paid         = models.BooleanField(choices=YES_NO_CHOICES)
-    stamp_duty_amt                       = models.IntegerField()
+    stamp_duty_amt                       = models.IntegerField(blank=True, null=True)
     property_tax_paid                    = models.BooleanField(null=True,blank=True,choices = YES_NO_CHOICES)
     society_informed                     = models.BooleanField(null=True,blank=True,choices = YES_NO_CHOICES)
-    car_parking_amt                      = models.IntegerField()
+    car_parking_amt                      = models.IntegerField(blank=True, null=True)
     car_parking                          = models.BooleanField(choices = YES_NO_CHOICES)
     lead_id                              = models.ForeignKey(Leads,on_delete=models.CASCADE)
 

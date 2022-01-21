@@ -758,20 +758,70 @@ def housewife(request, id):
     return render(request, 'account/Housewife.html', {'applicanttypes':applicanttypes, 'products':products, 'nationalities':nationalities, 'cust':cust})
 
 def property_type_1(request,id):
-    form = PropertyDetailsType1Form() 
+    form = PropertyDetailsType1Form()
+    if request.method == 'POST':
+        form = PropertyDetailsType1Form(request.POST or None)
+        if form.is_valid():
+            form_instance = form.save(commit = False)
+            form_instance.lead_id = Leads.objects.get(pk=id)
+            form_instance.save()
+            messages.success(request,"Property Details Updated Successfully !" )
+            return redirect (f"/account/property_details/{id}")  
+        else:
+            messages.error(request,form.errors)
+            return redirect (f"/account/property_type_1/{id}")  
     return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
 
 def property_type_2(request,id):
     form = PropertyType2Form()
-    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+    if request.method == 'POST':
+        form = PropertyType2Form(request.POST or None)
+        if form.is_valid():
+            form_instance = form.save(commit = False)
+            form_instance.lead_id = Leads.objects.get(pk=id)
+            form_instance.save()
+            messages.success(request,"Property Details Updated Successfully !" )
+            return redirect (f"/account/property_type_2/{id}")  
+
+        else:
+            messages.error(request,form.errors)
+            return redirect (f"/account/property_type_2/{id}")  
+
+    return render(request,'account/property_type_2.html',context={"form":form,"lead_id":id})
 
 def property_type_3(request,id):
     form = PropType3Form()
-    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+    if request.method == 'POST':
+        form = PropType3Form(request.POST or None)
+        if form.is_valid():
+            form_instance = form.save(commit = False)
+            form_instance.lead_id = Leads.objects.get(pk=id)
+            form_instance.save()
+            messages.success(request,"Property Details Updated Successfully !" )
+            return redirect (f"/account/property_type_3/{id}")  
+
+        else:
+            messages.error(request,form.errors)
+            return redirect (f"/account/property_type_3/{id}")  
+
+    return render(request,'account/property_type_3.html',context={"form":form,"lead_id":id})
 
 def property_type_4(request,id):
     form =  PropType4Form()
-    return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+    if request.method == 'POST':
+        form = PropType4Form(request.POST or None)
+        if form.is_valid():
+            form_instance = form.save(commit = False)
+            form_instance.lead_id = Leads.objects.get(pk=id)
+            form_instance.save()
+            messages.success(request,"Property Details Updated Successfully !" )
+            return redirect (f"/account/property_type_4/{id}")  
+
+        else:
+            messages.error(request,form.errors)
+            return redirect (f"/account/property_type_4/{id}")  
+
+    return render(request,'account/property_type_4.html',context={"form":form,"lead_id":id})
 
 def add_applicant_additional_details(request,id):
     additional_details_instances = AdditionalDetails.objects.filter(lead_id = id)
@@ -782,7 +832,10 @@ def add_applicant_additional_details(request,id):
 
 def add_individual_details(request,id):
     add_instance = AdditionalDetails.objects.get(pk = id)
-    return render(request,'account/base.html')
+    customer_type = add_instance.cust_type 
+    if customer_type == CustomerType.objects.filter(cust_type='Salaried').first():
+        return redirect(f"/account/salaried/{id}")
+    return render(request,'base/base.html')
 
 def property_details(request,id):
     additional_details_instance = AdditionalDetails.objects.filter(lead_id = id)

@@ -57,9 +57,13 @@ class PropertyDetailsType1Form(ModelForm):
         super(PropertyDetailsType1Form, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+        
     class Meta:
         model = PropType1
         exclude = ('lead_id',)
+        widgets = {
+            'possession_date': widgets.DateInput(attrs={'type': 'date'})
+        }
 
 
 class PropertyType2Form(ModelForm):
@@ -67,9 +71,27 @@ class PropertyType2Form(ModelForm):
         super(PropertyType2Form, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+    
+    def clean_data(self):
+        cleaned_data = super(PropertyType2Form, self).clean()
+        cc_rec = cleaned_data.get('cc_rec')
+        cost_sheet = cleaned_data.get('cost_sheet')
+        car_parking = cleaned_data.get('car_parking')
+        if cc_rec == True:
+            if not cleaned_data.get('cc_rec_upto'):
+                raise forms.ValidationError("Please enter cc_rec")
+        if cost_sheet == True:
+            if not cleaned_data.get('cost_sheet_amt'):
+                raise forms.ValidationError("Please enter cost_sheet amount")
+        if car_parking == True:
+            if not cleaned_data.get('car_parking_amt'):
+                raise forms.ValidationError("Please enter car parking amt")
     class Meta:
         model = PropType2
         exclude = ('lead_id',)
+        widgets = {
+            'possession_date': widgets.DateInput(attrs={'type': 'date'})
+        }
  
 
 
@@ -82,6 +104,7 @@ class PropType3Form(ModelForm):
         model = PropType3
         exclude = ('lead_id',)
 
+
 class PropType4Form(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PropType4Form, self).__init__(*args, **kwargs)
@@ -90,7 +113,6 @@ class PropType4Form(ModelForm):
     class Meta:
         model = PropType4
         exclude = ('lead_id',)
-
 
 class SalIncomeDetailsForm(ModelForm):
     def __init__(self, *args, **kwargs):
