@@ -291,3 +291,27 @@ class PaymentDelayYear(models.Model):
     ineffective_date   = models.DateField(null = True)
     def __str__(self): 
         return self.payment_delay_year
+
+
+class CompanyName(models.Model): 
+    company_name     = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.company_name
+
+
+class EmploymentType(models.Model): 
+    employment_type  = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.employment_type
+
+
+class InvestmentType(models.Model): 
+    investment_type  = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(null = True)
+    def __str__(self): 
+        return self.investment_type

@@ -122,7 +122,7 @@ class SalIncomeDetailsForm(ModelForm):
 
     class Meta:
         model = SalIncomeDetails
-        exclude = ('inc_det_id', 'addi_details_id_inc',)
+        exclude = ('inc_det_id', 'addi_details_id',)
 
 
 class SalOtherIncomesForm(ModelForm):
@@ -147,13 +147,13 @@ class SalOtherIncomesForm(ModelForm):
 #         exclude = ('con_id', 'add_det_id',)
 
 
-class PersonalDetailsForm(ModelForm):
+class SalPersonalDetailsForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        super(PersonalDetailsForm, self).__init__(*args, **kwargs)
+        super(SalPersonalDetailsForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
     class Meta:
-        model = PersonalDetails
+        model = SalPersonalDetails
         exclude = ('additional_details_id', 'per_det_id',)
         widgets = {
             'dob': widgets.DateInput(attrs={'type': 'date'})

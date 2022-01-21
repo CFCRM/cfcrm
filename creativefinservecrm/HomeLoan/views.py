@@ -4,7 +4,7 @@ from datetime import date
 from .models import *
 from account.models import Leads, AdditionalDetails, ContactPerson
 from account.models import PropertyDetails, PropType1, PropType2, PropType3
-from account.models import PersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditionalOtherIncomes, SalCompanyDetails, SalAdditionalDetails, SalExistingCreditCard, SalExistingLoanDetails, Investments
+from account.models import SalPersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditionalOtherIncomes, SalCompanyDetails, SalAdditionalDetails, SalExistingCreditCard, SalExistingLoanDetails, SalInvestments
 # Create your views here.
 
 
@@ -73,7 +73,7 @@ def eligibility(request, id):
 
                 age = Age.objects.filter(bank_id = bank.bank_id).first()
                 oth = OtherDetails.objects.filter(bank_id = bank.bank_id).first()
-                per_det = PersonalDetails.objects.filter(addi_details_id = add_det.add_det_id).first()
+                per_det = SalPersonalDetails.objects.filter(addi_details_id = add_det.add_det_id).first()
                 inc = Income.objects.filter(bank_id = bank.bank_id).first()
                 inc_det = SalIncomeDetails.objects.filter(addi_details_id_inc = add_det.add_det_id).first()
                 oth_inc = SalOtherIncomes.objects.filter(addi_details_id_other_inc = add_det.add_det_id)
@@ -167,7 +167,7 @@ def eligibility(request, id):
 
     #-> Loan towards valuation
     add_det2 = AdditionalDetails.objects.filter(lead_id = id, applicant_type="Applicant").first()
-    app_det = PersonalDetails.objects.filter(addi_details_id = add_det2.add_det_id).first()
+    app_det = SalPersonalDetails.objects.filter(addi_details_id = add_det2.add_det_id).first()
     agreement_value = int(property.property_type.agreement_val)
     market_value = int(property.property_type.market_val)
     loan_req = int(app_det.loan_amt)

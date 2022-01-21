@@ -98,7 +98,7 @@ class AdditionalDetails(models.Model):
     con_person_phone = models.CharField(max_length=10,blank= True)
 
 
-class PersonalDetails(models.Model): 
+class SalPersonalDetails(models.Model): 
     per_det_id            = models.AutoField(primary_key=True)
     loan_amount           = models.IntegerField(null=True)
     cibil_type            = models.ForeignKey(CibilType, on_delete=models.CASCADE, blank=True, null=True)
@@ -137,7 +137,7 @@ class SalIncomeDetails(models.Model):
     incentives_type   = models.ForeignKey(IncentivesType, on_delete=models.CASCADE, blank=True, null=True)
     incentives_amount = models.IntegerField(blank=True, null=True)
     deduction         = models.ForeignKey(DeductionType, on_delete=models.CASCADE, blank=True, null=True)
-    deduction_choice  = models.CharField(choices=YES_NO_CHOICES, max_length=3, blank=True, null=True)
+    deduction_choice  = models.BooleanField(choices=YES_NO_CHOICES, blank=True, null=True)
     addi_details_id   = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
     # bonus_tenure      = models.IntegerField()
 
@@ -168,23 +168,25 @@ class SalAdditionalOtherIncomes(models.Model):
 
 class ContactPerson(models.Model):
     name = models.CharField(max_length=20)
+
+
 class SalCompanyDetails(models.Model): 
-    comp_det_id     = models.AutoField(primary_key=True)
-    company_type       = models.ForeignKey(CompanyType, on_delete=models.CASCADE)
-    comp_name       = models.CharField(max_length=50)
-    location        = models.CharField(max_length=50)
-    paid_up_cap     = models.CharField(max_length=10)
-    comp_age        = models.CharField(max_length=3)
-    nature_business = models.CharField(max_length=50)
-    designation     = models.CharField(max_length=50)
-    des_type        = models.CharField(max_length=50)
-    curr_exp        = models.CharField(max_length=3)
-    total_exp       = models.CharField(max_length=3)
-    emp_type        = models.CharField(max_length=50)
-    form16          = models.CharField(max_length=3)
-    office_phone    = models.CharField(max_length=11)
-    office_email    = models.CharField(max_length=50)
-    add_det_id      = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+    comp_det_id        = models.AutoField(primary_key=True)
+    company_type       = models.ForeignKey(CompanyType, on_delete=models.CASCADE, blank=True, null=True)
+    company_name       = models.ForeignKey(CompanyName, on_delete=models.CASCADE, blank=True, null=True)
+    location           = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    paid_up_capital    = models.IntegerField()
+    company_age        = models.IntegerField()
+    nature_of_business = models.CharField(max_length=50)
+    designation        = models.CharField(max_length=50)
+    designation_type   = models.ForeignKey(DesignationType, on_delete=models.CASCADE, blank=True, null=True)
+    current_experience = models.IntegerField()
+    total_experience   = models.IntegerField()
+    employment_type    = models.ForeignKey(EmploymentType, on_delete=models.CASCADE, blank=True, null=True)
+    form_16            = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    office_phone       = models.CharField(max_length=10)
+    office_email       = models.EmailField(max_length=50)
+    addi_details_id    = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE, blank=True, null=True)
 
 
 class SalExistingLoanDetails(models.Model): 
@@ -219,11 +221,11 @@ class SalExistingCreditCard(models.Model):
 
 
 class SalAdditionalDetails(models.Model): 
-    sal_add_det_id    = models.AutoField(primary_key=True)
-    inw_cheque_return = models.CharField(max_length=50)
-    loan_enq_disburse = models.CharField(max_length=100)
-    loan_enq_det      = models.CharField(max_length=100)
-    add_det_id        = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+    sal_add_det_id                    = models.AutoField(primary_key=True)
+    inward_cheque_return              = models.IntegerField()
+    loan_inquiry_disbursement         = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    loan_inquiry_disbursement_details = models.TextField(blank=True, null=True)
+    addi_details_id                   = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 class SalCompanyDetails(models.Model): 
     comp_det_id        = models.AutoField(primary_key=True)
@@ -243,10 +245,10 @@ class SalCompanyDetails(models.Model):
     office_email       = models.EmailField(max_length=50)
     addi_details_id    = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE, blank=True, null=True)
 
-class Investments(models.Model): 
-    sal_inv_id         = models.AutoField(primary_key=True)
-    investments_u_have = models.CharField(max_length=50)
-    add_det_id         = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
+class SalInvestments(models.Model): 
+    sal_inv_id      = models.AutoField(primary_key=True)
+    investments     = models.ForeignKey(InvestmentType, on_delete=models.CASCADE)
+    addi_details_id = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 
 class SalResidenceDetails(models.Model):

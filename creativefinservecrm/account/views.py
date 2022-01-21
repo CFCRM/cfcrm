@@ -557,14 +557,14 @@ def additionaldetails(request,id):
                 if 'next' in request.POST:
                     return redirect('base_dashboard')
                 else:
-                    return redirect(f"/account/additionaldetails/{id}")
+                    return redirect('additionaldetails', id)
             else:
                 messages.success(request,f"Additional Details of {add_instance.applicant_type} added successfully ")
                 add_instance.save()
                 if 'next' in request.POST:
                     return redirect('base_dashboard')
                 else:
-                    return redirect(f"/account/additionaldetails/{id}")
+                    return redirect('additionaldetails', id)
         else:
             messages.error(request,add_form.errors)
     else:
@@ -1174,14 +1174,27 @@ def retired(request,id):
 def salaried(request,id):
     if request.method == 'POST':
         if 'personal_details' in request.POST:
-            form = PersonalDetailsForm(request.POST)
+            form = SalPersonalDetailsForm(request.POST)
             if form.is_valid():
                 instance = form.save(commit=False)
-                instance.additional_details_id = id
+                instance.additional_details_id = AdditionalDetails.objects.get(pk=id)
                 instance.save()
                 messages.success(request, 'Personal Details Saved Successfully')
-                return redirect('account:salaried', id)
-        
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'income_details' in request.POST:
+            form = SalIncomeDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, 'Income Details Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
 
 
     # cust = AdditionalDetails.objects.filter(add_det_id=id).first()
@@ -1213,9 +1226,10 @@ def salaried(request,id):
     # }
     context = {
         "id" : id,
-        "personal_details_form": PersonalDetailsForm()
+        "personal_details_form": SalPersonalDetailsForm(),
+        "income_details_form": SalIncomeDetailsForm()
     }
-    return render(request, 'account/salaried.html', context)
+    return render(request, 'account/salaried.html', context=context)
 
     # if request.method == 'POST':
     #     user = request.user
@@ -1257,7 +1271,7 @@ def salaried(request,id):
     #     # country = request.POST['country']
     #     enduse = request.POST['enduse']
 
-    #     sal_personal_det = PersonalDetails(loan_amt=loan_amt, cibil_type=cibil_type, cibil_score=cibil_score,
+    #     sal_personal_det = SalPersonalDetails(loan_amt=loan_amt, cibil_type=cibil_type, cibil_score=cibil_score,
     #                                         loanTaken= loanTaken, repaymentHistory=repaymentHistory, defaultYear=defaultYear,
     #                                         details_bout_default=details_bout_default, gender=gender, dob=dob, age=age,
     #                                         retire_age=retire_age, proof=proof, consi_age=consi_age, maritalStatus=maritalStatus, qualification=qualification,
