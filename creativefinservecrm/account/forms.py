@@ -148,9 +148,14 @@ class SalOtherIncomesForm(ModelForm):
 
 
 class PersonalDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PersonalDetailsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
     class Meta:
         model = PersonalDetails
-        exclude = ('addi_details_id', 'per_det_id',)
+        exclude = ('additional_details_id', 'per_det_id',)
         widgets = {
             'dob': widgets.DateInput(attrs={'type': 'date'})
         }
+    
