@@ -1019,11 +1019,11 @@ def retired(request,id):
 
     if request.method == 'POST':
         user = request.user
-        add = AdditionalDetails.objects.filter(add_det_id=id).first()
+        add = AdditionalDetails.objects.filter(pk=id).first()
 
         if 'cancel' in request.POST:
             if user.role == "Admin":
-                return redirect('dashboard')
+                return redirect('base_dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
 
@@ -1173,13 +1173,15 @@ def retired(request,id):
 
 def salaried(request,id):
     if request.method == 'POST':
+        if 'cancel' in request.POST:
+            return redirect('base_dashboard')
         if 'personal_details' in request.POST:
             form = SalPersonalDetailsForm(request.POST)
             if form.is_valid():
                 instance = form.save(commit=False)
                 instance.additional_details_id = AdditionalDetails.objects.get(pk=id)
                 instance.save()
-                messages.success(request, 'Personal Details Saved Successfully')
+                messages.success(request, '"Personal Details" Saved Successfully')
                 return redirect('salaried', id)
             else:
                 messages.error(request, form.errors)
@@ -1190,7 +1192,95 @@ def salaried(request,id):
                 instance = form.save(commit=False)
                 instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
                 instance.save()
-                messages.success(request, 'Income Details Saved Successfully')
+                messages.success(request, '"Income Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'other_incomes' in request.POST:
+            form = SalOtherIncomesForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Other Incomes Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'additional_other_incomes' in request.POST:
+            form = SalAdditionalOtherIncomesForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Other than Income Mentioned Above Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'company_details' in request.POST:
+            form = SalCompanyDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Company Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'residence_details' in request.POST:
+            form = SalResidenceDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Residence Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'existing_loan_details' in request.POST:
+            form = SalExistingLoanDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Existing Loan Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'existing_card_details' in request.POST:
+            form = SalExistingCreditCardForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Existing Card Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'additional_details' in request.POST:
+            form = SalAdditionalDetailsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Additional Details" Saved Successfully')
+                return redirect('salaried', id)
+            else:
+                messages.error(request, form.errors)
+                return redirect('salaried', id)
+        elif 'investment' in request.POST:
+            form = SalInvestmentsForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.addi_details_id = AdditionalDetails.objects.get(pk=id)
+                instance.save()
+                messages.success(request, '"Investment Details" Saved Successfully')
                 return redirect('salaried', id)
             else:
                 messages.error(request, form.errors)
@@ -1224,10 +1314,21 @@ def salaried(request,id):
     #     'additional_details_id': id,
     #     'cust':cust
     # }
+    additional_details_instance = AdditionalDetails.objects.get(pk=id)
     context = {
-        "id" : id,
-        "personal_details_form": SalPersonalDetailsForm(),
-        "income_details_form": SalIncomeDetailsForm()
+        "id"                           : id,
+        "name"                         : additional_details_instance.cust_name,
+        "applicant_type"               : additional_details_instance.applicant_type,
+        "personal_details_form"        : SalPersonalDetailsForm(),
+        "income_details_form"          : SalIncomeDetailsForm(),
+        "other_incomes_form"           : SalOtherIncomesForm(),
+        "additional_other_incomes_form": SalAdditionalOtherIncomesForm(),
+        "company_details_form"         : SalCompanyDetailsForm(),
+        "residence_details_form"       : SalResidenceDetailsForm(),
+        "existing_loan_details_form"   : SalExistingLoanDetailsForm(),
+        "existing_card_details_form"   : SalExistingCreditCardForm(),
+        "additional_details_form"      : SalAdditionalDetailsForm(),
+        "investment_form"              : SalInvestmentsForm(),
     }
     return render(request, 'account/salaried.html', context=context)
 

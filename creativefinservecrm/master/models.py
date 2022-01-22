@@ -233,13 +233,6 @@ class RoomType(models.Model):
     def __str__(self):
         return self.room_type
 
-class RepaymentHistory(models.Model): 
-    repayment_history = models.CharField(max_length = 30)
-    effective_date    = models.DateField(null = True)
-    ineffective_date  = models.DateField(null = True)
-    def __str__(self): 
-        return self.repayment_history
-
 class DefaultYear(models.Model): 
     default_year     = models.CharField(max_length=30)
     effective_date   = models.DateField(null = True)
@@ -315,3 +308,11 @@ class InvestmentType(models.Model):
     ineffective_date = models.DateField(null = True)
     def __str__(self): 
         return self.investment_type
+
+
+class ProductsOrServices(models.Model): 
+    products_or_services = models.CharField(max_length=30)
+    effective_date       = models.DateField(null = True)
+    ineffective_date     = models.DateField(null = True)
+    def __str__(self): 
+        return self.products_or_services

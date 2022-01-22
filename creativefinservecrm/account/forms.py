@@ -133,7 +133,17 @@ class SalOtherIncomesForm(ModelForm):
 
     class Meta:
         model = SalOtherIncomes
-        exclude = ('other_inc_det_id', 'addi_details_id_other_inc',)
+        exclude = ('other_inc_id', 'addi_details_id',)
+    
+class SalAdditionalOtherIncomesForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalAdditionalOtherIncomesForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    class Meta:
+        model = SalAdditionalOtherIncomes
+        exclude = ('add_oth_inc_id', 'addi_details_id',)
 
 
 # class ContactPersonForm(ModelForm):
@@ -159,3 +169,69 @@ class SalPersonalDetailsForm(ModelForm):
             'dob': widgets.DateInput(attrs={'type': 'date'})
         }
     
+
+class SalCompanyDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalCompanyDetailsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalCompanyDetails
+        exclude = ('comp_det_id', 'addi_details_id',)
+
+
+class SalResidenceDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalResidenceDetailsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalResidenceDetails
+        exclude = ('sal_res_det_id', 'addi_details_id',)
+
+
+class SalExistingLoanDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalExistingLoanDetailsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalExistingLoanDetails
+        exclude = ('existing_loan_det_id', 'addi_details_id',)
+        widgets = {
+            'emi_start_date': widgets.DateInput(attrs={'type': 'date'}),
+            'emi_end_date': widgets.DateInput(attrs={'type': 'date'}),
+        }
+    
+
+class SalExistingCreditCardForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalExistingCreditCardForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalExistingCreditCard
+        exclude = ('existing_credit_card_id', 'addi_details_id',)
+
+
+class SalAdditionalDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalAdditionalDetailsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalAdditionalDetails
+        exclude = ('sal_add_det_id', 'addi_details_id',)
+        widgets = {
+            'loan_inquiry_disbursement_details': forms.Textarea(attrs={'rows':2}),
+            }
+    
+
+class SalInvestmentsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SalInvestmentsForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+    class Meta:
+        model = SalInvestments
+        exclude = ('sal_inv_id', 'addi_details_id',)

@@ -16,8 +16,8 @@ YES_NO_CHOICES = (
 
 GOOD_BAD_CHOICES = (
   (None, '-- Good or Bad --'),
-  ('1', 'Good'),
-  ('2', 'Bad')
+  ('Good', 'Good'),
+  ('Bad', 'Bad')
 )
 
 KNOWN_UNKNOWN_CHOICES = (
@@ -104,8 +104,8 @@ class SalPersonalDetails(models.Model):
     cibil_type            = models.ForeignKey(CibilType, on_delete=models.CASCADE, blank=True, null=True)
     cibil_score           = models.IntegerField(null=True, blank=True)
     loan_taken            = models.BooleanField(choices=YES_NO_CHOICES, default=False)
+    repayment_history     = models.CharField(max_length=4, choices=GOOD_BAD_CHOICES, default=None, blank=True, null=True)
     product_id            = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
-    repayment_history     = models.ForeignKey(RepaymentHistory, on_delete=models.CASCADE, blank=True, null=True)
     default_year          = models.ForeignKey(DefaultYear, on_delete=models.CASCADE, blank=True, null=True)
     details_about_default = models.CharField(max_length=200, blank=True)
     gender                = models.ForeignKey(Gender, on_delete=models.CASCADE, blank=True, null=True)
@@ -192,7 +192,7 @@ class SalCompanyDetails(models.Model):
 class SalExistingLoanDetails(models.Model): 
     existing_loan_det_id                = models.AutoField(primary_key=True)
     bank_name                           = models.ForeignKey(BankName, on_delete=models.CASCADE)
-    products                            = models.ForeignKey(Product, on_delete=models.CASCADE)
+    products_or_services                = models.ForeignKey(ProductsOrServices, on_delete=models.CASCADE)
     loan_amount                         = models.IntegerField()
     emi                                 = models.DecimalField(max_digits=12, decimal_places=2)
     rate_of_interest                    = models.DecimalField(max_digits=12, decimal_places=2)
@@ -254,8 +254,8 @@ class SalInvestments(models.Model):
 class SalResidenceDetails(models.Model):
     sal_res_det_id         = models.AutoField(primary_key=True)
     current_residence_type = models.ForeignKey(ResidenceType, on_delete=models.CASCADE)
-    current_location_city  = models.ForeignKey(City, on_delete=models.CASCADE)
     state                  = models.ForeignKey(State, on_delete=models.CASCADE)
+    current_location_city  = models.ForeignKey(City, on_delete=models.CASCADE)
     addi_details_id        = models.ForeignKey(AdditionalDetails, on_delete=models.CASCADE)
 
 #--------------------------------------------------------Property Details--------------------------------------------------------------#
