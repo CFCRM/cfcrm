@@ -3,7 +3,8 @@ from django.conf import settings
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from master.models import Product
+from master.models import CompanyType, CustomerType, DesignationType, Product, SalaryType
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Bank(models.Model):
@@ -244,3 +245,107 @@ class BankCodes(models.Model):
     code = models.CharField(max_length=25)
     name_of_company = models.CharField(max_length=50)
 
+
+class HlBasicDetails(models.Model): 
+    customer_type               = models.ForeignKey(CustomerType, on_delete=models.CASCADE)
+    nationality                 = models.CharField(max_length=50)
+    minimum_age                 = models.IntegerField()
+    retirement_age              = models.IntegerField()
+    maximum_age_consider_govt   = models.IntegerField()
+    maximum_age_consider_others = models.IntegerField()
+    minimum_loan_amount         = models.FloatField()
+    maximum_loan_amount         = models.FloatField()
+    total_experience            = models.IntegerField()
+    designation                 = models.ForeignKey(DesignationType, on_delete=models.CASCADE)
+    company_type                = models.ForeignKey(CompanyType, on_delete=models.CASCADE)
+    company_profitability       = models.BooleanField()
+    form_16                     = models.BooleanField()
+    salary_type                 = models.ForeignKey(SalaryType, on_delete=models.CASCADE)
+    profession_tax_deduction    = models.BooleanField()
+    negative_employer_profile   = models.BooleanField()
+
+class HlObligation(models.Model): 
+    emi_obligation                 = models.BooleanField()
+    emi_obligation_not_consider    = models.IntegerField()
+    credit_card                    = models.BooleanField()
+    credit_card_obligation_percent = models.IntegerField()
+    gold_loan                      = models.BooleanField()
+    gold_loan_percent              = models.IntegerField()
+    basic_details_id               = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)
+
+
+class HlOtherDetails(models.Model): 
+    rate_of_interest      = models.IntegerField()
+    prevailing_rate       = models.IntegerField()
+    tenure                = models.IntegerField()
+    inward_cheque_return  = models.BooleanField()
+    multiple_inquiry      = models.BooleanField()
+    relation_eligible     = models.CharField(max_length=25)
+    relation_not_eligible = models.CharField(max_length=25)
+    basic_details_id      = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)
+
+
+class HlProperty(models.Model): 
+    builder_category              = models.BooleanField()
+    apf                           = models.BooleanField()
+    property_type                 = models.ForeignKey(PropertyType, on_delete=models.CASCADE)
+    occupation_certificate        = models.BooleanField()
+    cc_municipal_plan_tax_receipt = models.BooleanField()
+    previous_aggrement_available  = models.BooleanField()
+    subvention_scheme             = models.BooleanField()
+    room_type                     = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    stage_of_construction         = models.ForeignKey(StageOfConstruction, on_delete=models.CASCADE)
+    percent_of_completion         = models.FloatField( validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
+    negative_area                 = models.ForeignKey(NegativeArea, on_delete=models.CASCADE)
+    property_age                  = models.IntegerField(blank=True, null=True)
+    basic_details_id              = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)
+
+
+#From Builder
+class HlLoan_To_Value_Type_1(models.Model): 
+    loan_amount        = models.ForeignKey(LoanAmount, on_delete=models.CASCADE)
+    rbi_guidelines     = models.IntegerField()
+    amenity            = models.IntegerField()
+    car_parking        = models.BooleanField()
+    car_parking_amount = models.IntegerField(blank=True, null=True)
+    basic_details_id   = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)
+
+
+#For Resale
+class HlLoan_To_Value_Type_2(models.Model): 
+    building_age                        = models.IntegerField()
+    ltv_percent_for_fresh               = models.IntegerField()
+    ltv_percent_for_balance_transfer    = models.IntegerField()
+    tenure_percent_for_fresh            = models.IntegerField()
+    tenure_percent_for_balance_transfer = models.IntegerField()
+    basic_details_id                    = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)
+
+    
+class HlIncome(models.Model): 
+    gross_salary                            = models.BooleanField(default=None)
+    net_salary                              = models.BooleanField(default=None)
+    bonus                                   = models.BooleanField(default=None)
+    bonus_avg_yearly                        = models.IntegerField()
+    bonus_avg_yearly_percentage             = models.IntegerField()
+    income_foir_yearly                      = models.BooleanField(default=None)
+    bonus_avg_quarter                       = models.IntegerField()
+    bonus_avg_quarter_percentage            = models.IntegerField()
+    income_foir_quarter                     = models.BooleanField(default=None)
+    bonus_avg_half_yearly                   = models.IntegerField()
+    bonus_avg_half_yearly_percentage        = models.IntegerField()
+    income_foir_half_yearly                 = models.BooleanField(default=None)
+    rent_income                             = models.BooleanField(default=None)
+    rent_agreement_type                     = models.CharField(max_length=25)
+    bank_reflection                         = models.BooleanField(default=None)
+    rent_reflection_in_bank                 = models.IntegerField()
+    rent_income_percentage                  = models.IntegerField()
+    co_applicant_no_income_only_rent_income = models.BooleanField(default=None)
+    co_applicant_mandatory                  = models.BooleanField(default=None)
+    future_rent                             = models.BooleanField(default=None)
+    future_rent_percentage                  = models.IntegerField()
+    income_foir_future_rent                 = models.IntegerField()
+    incentive                               = models.BooleanField(default=None)
+    incentive_avg_months                    = models.IntegerField()
+    income_foir_incentive                   = models.BooleanField(default=None)
+    income_foir                             = models.IntegerField()
+    basic_details_id                        = models.ForeignKey(HlBasicDetails,on_delete=models.CASCADE)

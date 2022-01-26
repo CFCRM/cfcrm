@@ -165,37 +165,6 @@
         </form>
     </div>
   </div>
-  <div class="modal fade" id="otherThanIncomeMentionedAbove" tabindex="-1" role="dialog" aria-labelledby="otherThanIncomeMentionedAboveLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title font-weight-normal" id="otherThanIncomeMentionedAboveLabel">Other Than Income Mentioned Above</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form method="POST" action={% url 'salaried' id=id %}>
-          {% csrf_token %}
-          <div class="modal-body">
-            <div class="row g-4 p-4">
-              {% for field in additional_other_incomes_form %}
-                  <div class="col-sm-4">
-                      <div class="input-group input-group-static">
-                          <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
-                          {{ field }}
-                      </div>
-                  </div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" name="additional_other_incomes" type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <div class="modal fade" id="companyDetailsModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -378,6 +347,38 @@
           <div class="modal-footer">
             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
             <button class="btn btn-primary" name="investment" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Keep id="otherThanIncomeMentionedAbove" modal at the end of page -->
+  <div class="modal fade" id="otherThanIncomeMentionedAbove" tabindex="-1" role="dialog" aria-labelledby="otherThanIncomeMentionedAboveLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title font-weight-normal" id="otherThanIncomeMentionedAboveLabel">Other Than Income Mentioned Above</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="POST" action={% url 'salaried' id=id %}>
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="row g-4 p-4">
+              {% for field in additional_other_incomes_form %}
+                  <div class="col-sm-4">
+                      <div class="input-group input-group-static">
+                          <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
+                          {{ field }}
+                      </div>
+                  </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" name="additional_other_incomes" type="submit">Submit</button>
           </div>
         </form>
       </div>
