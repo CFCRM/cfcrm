@@ -33,21 +33,56 @@
 {% endblock other_body %}
 {% block other_js %}
 <script>
-   if($("#id_car_parking").val() != "True"){
-    $("#id_car_parking_amt").val("");
-    document.getElementById("Car parking amt").style['display']="none";
-    $("#id_car_parking_amt").attr('required', 'false');
-
-   }
-   $(document).on('change','#id_car_parking',function(){
+    if($("#id_car_parking").val() != "True"){
+         $("#id_car_parking_amt").val("");
+         document.getElementById("Car Parking Amount").style['display']="none";
+         $("#id_car_parking_amt").attr('required', '');
+    }
+    if($("#id_stamp_duty").val() != "True"){
+     $("#stamp_duty_amt").val("");
+     document.getElementById("Stamp Duty Amount").style['display']="none";
+     $("#id_stamp_duty_amt").attr('required', 'false');
+    }
+    if($("#id_cost_sheet").val() != "True"){
+     $("#id_cost_sheet_amt").val("");
+     document.getElementById("Cost Sheet Amount").style['display']="none";
+     $("#id_cost_sheet_amt").attr('required', 'false');
+    }
+    
+    $(document).on('change','#id_car_parking',function(){
         if ($(this).val() == "True"){
-            document.getElementById("Car parking amt").style['display']="";
-            $("#id_car_parking_amt").attr('required', 'true');
+            document.getElementById("Car Parking Amount").style['display']="";
+            $("#id_car_parking_amt").attr('required', 'required');
         }
         else{
             $("#id_car_parking_amt").val("");
-            document.getElementById("Car parking amt").style['display']="none";
-            $("#id_car_parking_amt").attr('required', 'false');
+            document.getElementById("Car Parking Amount").style['display']="none";
+            $("#id_car_parking_amt").attr('required', '');
+
+        }
+    });
+    $(document).on('change','#id_stamp_duty',function(){
+        if ($(this).val() == "True"){
+            document.getElementById("Stamp Duty Amount").style['display']="";
+            $("#id_stamp_duty_amt").attr('required', 'true');
+        }
+        else{
+            $("#id_stamp_duty_amt").val("");
+            document.getElementById("Stamp Duty Amount").style['display']="none";
+            $("#id_stamp_duty_amt").attr('required', 'false');
+
+        }
+    });
+
+    $(document).on('change','#id_cost_sheet',function(){
+        if ($(this).val() == "True"){
+            document.getElementById("Cost Sheet Amount").style['display']="";
+            $("#id_cost_sheet_amt").attr('required', 'true');
+        }
+        else{
+            $("#id_cost_sheet_amt").val("");
+            document.getElementById("Cost Sheet Amount").style['display']="none";
+            $("#id_cost_sheet_amt").attr('required', 'false');
 
         }
     });

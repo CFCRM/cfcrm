@@ -1,3 +1,4 @@
+from re import M
 from typing import Text, Type
 from django.forms import DateField, widgets
 from django import forms
@@ -57,12 +58,21 @@ class PropertyDetailsType1Form(ModelForm):
         super(PropertyDetailsType1Form, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
-        
     class Meta:
         model = PropType1
         exclude = ('lead_id',)
         widgets = {
-            'possession_date': widgets.DateInput(attrs={'type': 'date'})
+            'possession_date': widgets.DateInput(attrs={'type': 'date'})}
+        labels = {
+            'proj_name':"Project Name",
+            'prop_loc':"Property Location",
+            'const_stage': "Construction Stage",
+            'per_complete':"Percent Complete",
+            'prop_city':"Property City",
+            'prop_state':"Property State",
+            'market_val':"Market Value",
+            'cc_rec':"CC Recieved",
+            'stamp_duty_amt':"Stamp Duty Amount"
         }
 
 
@@ -92,6 +102,19 @@ class PropertyType2Form(ModelForm):
         widgets = {
             'possession_date': widgets.DateInput(attrs={'type': 'date'})
         }
+        labels = {
+            'proj_name'      : 'Project Name',
+            'prop_loc'       : "Property Location",
+            'prop_city'      : "Property City",
+            'prop_state'     : "Property State",
+            'per_complete'   : 'Percent Complete',
+            'const_stage'    : 'Construction Stage',
+            'pay_till_date'  : 'Payment Made Till Date',
+            'cost_sheet_amt' : 'Cost Sheet Amount',
+            'stamp_duty_amt' : 'Stamp Duty Amount',
+            'car_parking_amt': 'Car Parking Amount',
+            'cc_rec'         : 'CC Recieved'
+        }
  
 
 
@@ -103,6 +126,19 @@ class PropType3Form(ModelForm):
     class Meta:
         model = PropType3
         exclude = ('lead_id',)
+        labels = {
+            'proj_name'      : 'Project Name',
+            'per_complete'   : 'Percent Complete',
+            'proj_name'      : 'Project Name',
+            'prop_loc'       : "Property Location",
+            'prop_city'      : "Property City",
+            'prop_state'     : "Property State",
+            'const_stage'    : 'Construction Stage',
+            'pay_till_date'  : 'Payment Made Till Date',
+            'cost_sheet_amt' : 'Cost Sheet Amount',
+            'stamp_duty_amt' : 'Stamp Duty Amount',
+            'car_parking_amt': 'Car Parking Amount'
+        }
 
 
 class PropType4Form(ModelForm):
@@ -113,6 +149,12 @@ class PropType4Form(ModelForm):
     class Meta:
         model = PropType4
         exclude = ('lead_id',)
+        labels = {
+            'market_val': "Market Value",
+            'prop_loc'  : "Property Location",
+            'prop_city' : "Property City",
+            'prop_state': "Property State",
+            }
 
 class SalIncomeDetailsForm(ModelForm):
     def __init__(self, *args, **kwargs):

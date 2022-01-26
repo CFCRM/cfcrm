@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{%block title%}Underconstruction Buying from Builder {% endblock title %}
+{%block title%} Underconstruction Buying from Builder {% endblock title %}
 {% block other_body_css %}id="page-top"{% endblock other_body_css %} 
 {% block other_body %}
 <div class="container mb-0">
@@ -45,12 +45,17 @@
     $("#id_cc_rec_upto").attr('required', 'false');
 
    }
-   if($("#stamp_duty").val() != "True"){
+   if($("#id_stamp_duty").val() != "True"){
     $("#stamp_duty_amt").val("");
-    document.getElementById("Stamp parking amt").style['display']="none";
+    document.getElementById("Stamp Duty Amount").style['display']="none";
     $("#id_stamp_duty_amt").attr('required', 'false');
-
    }
+   if($("#id_cost_sheet").val() != "True"){
+    $("#id_cost_sheet_amt").val("");
+    document.getElementById("Cost sheet amt").style['display']="none";
+    $("#id_cost_sheet_amt").attr('required', 'false');
+   }
+
    $(document).on('change','#id_car_parking',function(){
         if ($(this).val() == "True"){
             document.getElementById("Car parking amt").style['display']="";
@@ -63,27 +68,39 @@
 
         }
     });
-    $(document).on('change','#id_car_parking',function(){
+    $(document).on('change','#id_stamp_duty',function(){
         if ($(this).val() == "True"){
-            document.getElementById("Car parking amt").style['display']="";
-            $("#id_car_parking_amt").attr('required', 'true');
+            document.getElementById("Stamp Duty Amount").style['display']="";
+            $("#id_stamp_duty_amt").attr('required', 'true');
         }
         else{
-            $("#id_car_parking_amt").val("");
-            document.getElementById("Car parking amt").style['display']="none";
-            $("#id_car_parking_amt").attr('required', 'false');
+            $("#id_stamp_duty_amt").val("");
+            document.getElementById("Stamp Duty Amount").style['display']="none";
+            $("#id_stamp_duty_amt").attr('required', 'false');
 
         }
     });
-    $(document).on('change','#id_car_parking',function(){
+    $(document).on('change','#id_cost_sheet',function(){
         if ($(this).val() == "True"){
-            document.getElementById("Car parking amt").style['display']="";
-            $("#id_car_parking_amt").attr('required', 'true');
+            document.getElementById("Cost sheet amt").style['display']="";
+            $("#id_cost_sheet_amt").attr('required', 'true');
         }
         else{
-            $("#id_car_parking_amt").val("");
-            document.getElementById("Car parking amt").style['display']="none";
-            $("#id_car_parking_amt").attr('required', 'false');
+            $("#id_cost_sheet_amt").val("");
+            document.getElementById("Cost sheet amt").style['display']="none";
+            $("#id_cost_sheet_amt").attr('required', 'false');
+
+        }
+    });
+    $(document).on('change','#id_cc_rec',function(){
+        if ($(this).val() == "True"){
+            document.getElementById("Cc rec upto").style['display']="";
+            $("#id_cc_rec_upto").attr('required', 'true');
+        }
+        else{
+            $("#id_cost_sheet_amt").val("");
+            document.getElementById("Cc rec upto").style['display']="none";
+            $("#id_cc_rec_upto").attr('required', 'false');
 
         }
     });

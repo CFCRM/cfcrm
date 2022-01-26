@@ -36,19 +36,59 @@
     $("#id_car_parking_amt").val("");
     document.getElementById("Car parking amt").style['display']="none";
     $("#id_car_parking_amt").attr('required', 'false');
-
    }
+
+   if($('#id_stamp_duty_registration_paid').val() != "True"){
+       $("#id_stamp_duty_amt").val("");
+       document.getElementById("Stamp duty amt").style['display']="none";
+       $("#id_stamp_duty_amt").attr('required', '');
+   }
+
+   if($('#id_oc_rec').val() != "True"){
+       $("#id_oc_rec_floor").val("");
+       $("#id_oc_rec_floor").attr('required', '');
+       document.getElementById("Oc rec floor").style['display']="none";
+   }
+
+   $(document).on('change','#id_oc_rec',function(){
+        if ($(this).val() == "True"){
+            document.getElementById("Oc rec floor").style['display']="";
+            $("#id_oc_rec_floor").attr('required', 'required');
+        }
+        else{
+            $("#id_oc_rec_floor").val("");
+            document.getElementById("Oc rec floor").style['display']="none";
+            $("#id_oc_rec_floor").attr('required', '');
+
+        }
+    });
+
    $(document).on('change','#id_car_parking',function(){
         if ($(this).val() == "True"){
             document.getElementById("Car parking amt").style['display']="";
-            $("#id_car_parking_amt").attr('required', 'true');
+            $("#id_car_parking_amt").attr('required', 'required');
         }
         else{
             $("#id_car_parking_amt").val("");
             document.getElementById("Car parking amt").style['display']="none";
-            $("#id_car_parking_amt").attr('required', 'false');
+            $("#id_car_parking_amt").attr('required', '');
 
         }
     });
+
+    $(document).on('change','#id_stamp_duty_registration_paid',function(){
+        if ($(this).val() == "True"){
+            document.getElementById("Stamp duty amt").style['display']="";
+            $("#id_stamp_duty_amt").attr('required', 'required');
+        }
+        else{
+            $("#id_stamp_duty_amt").val("");
+            document.getElementById("Stamp duty amt").style['display']="none";
+            $("#id_stamp_duty_amt").attr('required', '');
+
+        }
+    });
+
+
 </script>
 {% endblock other_js %}
