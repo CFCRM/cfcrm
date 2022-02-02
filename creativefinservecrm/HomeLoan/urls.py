@@ -4,9 +4,11 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('eligibility/<int:id>', views.eligibility, name="eligibility"),
-
+    path('ajax/cities/',views.load_cities,name = "ajax_load_cities"),
+    path('ajax/subproducts/',views.load_subproducts,name = "ajax_load_subproducts"),
+    
     #product policy master
-    path('editproductandpolicy/<int:ppid>/age', views.PPAge, name='PPAge'),
+    path('editproductandpolicy/<int:ppid>/age', views.PPage, name='PPage'),
     path('editproductandpolicy/<int:ppid>/editage/<int:ageid>', views.PPeditAge, name='PPeditAge'),
     path('editproductandpolicy/<int:ppid>/negativearea', views.PPnegativearea, name='PPnegativearea'),
     path('editproductandpolicy/<int:ppid>/editnegativearea/<int:negativeareaid>', views.PPeditNegativearea, name='PPeditnegativearea'),
@@ -47,7 +49,7 @@ urlpatterns = [
     path('editproductandpolicy/<int:ppid>/Loantowardsvaluation', views.PPLoantowardsvaluation, name='PPLoantowardsvaluation'),
     path('editproductandpolicy/<int:ppid>/LtvResale', views.PPLtvResale, name='PPLtvResale'),
     path('editproductandpolicy/<int:ppid>/editLtvResale/<int:ltvresaleid>', views.PPeditLtvResale, name='PPeditLtvResale'),
-    path('AddProductsAndPolicy', views.AddProductsAndPolicy, name='AddProductsAndPolicy'),
+    path('productsandpolicy/<str:action>', views.productsandpolicy, name='AddProductsAndPolicy'),
     path('listproductandpolicy', views.listproductandpolicy, name='listproductandpolicy'),
     path('editproductandpolicy/<int:id>', views.editproductandpolicy, name='editproductandpolicy'),
     path('editproductandpolicy/<int:ppid>/editproperty/<int:propertyid>', views.PPeditproperty, name='PPeditproperty'),
@@ -56,5 +58,12 @@ urlpatterns = [
     path('editproductandpolicy/<int:ppid>/editincome/<int:incomeid>', views.PPeditincome, name='PPeditincome'),
     path('editproductandpolicy/<int:ppid>/editcustomerdesignation/<int:customerdesignationid>', views.ppeditcustomerdesignation, name='ppeditcustomerdesignation'),
     path('editproductandpolicy/<int:ppid>/editotherdetails/<int:otherdetailid>', views.ppeditotherdetail, name='ppeditotherdetail'),
-
+    path('basicdetails/<int:id>',views.productsandpolicy_basicdetails, name='ProductsAndPolicyBasicDetails'),
+    path('incomedetails/<int:id>',views.productsandpolicy_incomedetails, name='ProductsAndPolicyIncomeDetails'),
+    path('obligations/<int:id>',views.productsandpolicy_obligation,name='ProductsAndPolicyObligationDetails'),
+    path('otherdetails/<int:id>',views.productsandpolicy_otherdetails,name='ProductsAndPolicyOtherDetails'),
+    path('propertydetails/<int:id>',views.productsandpolicy_propertydetails,name='ProductsAndPolicyPropertyDetails'),
+    path('loantovaluedetails/<int:id>',views.productsandpolicy_loantovaluedetails,name='ProductsAndPolicyLoanToValueDetails'),
+    path('revieworedit/<int:id>',views.productsandpolicy_revieworedit,name='ProductsAndPolicyReviewOrEdit'),
+    path('cibildetails/<int:id>',views.productsandpolicy_cibildetails,name='ProductsAndPolicyCibilDetails'),
 ]

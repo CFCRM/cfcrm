@@ -2,11 +2,21 @@ from LoanClaculator import AgeVerification, LoanCalculation, PropertyVerificatio
 from django.shortcuts import redirect, render
 from datetime import date
 from .models import *
-from account.models import Leads, AdditionalDetails, ContactPerson
-from account.models import PropertyDetails, PropType1, PropType2, PropType3
-from account.models import SalPersonalDetails, SalIncomeDetails, SalOtherIncomes, SalAdditionalOtherIncomes, SalCompanyDetails, SalAdditionalDetails, SalExistingCreditCard, SalExistingLoanDetails, SalInvestments
-# Create your views here.
+from .forms import *
+from django.contrib import messages
+from account.models import *
 
+
+# Create your views here.
+def load_cities(request):
+    state_id = request.GET.get('state_id')
+    cities = City.objects.filter(state = state_id)
+    return render(request,'HomeLoan/city_dropdown_list_options.html',{'cities':cities})
+
+def load_subproducts(request):
+    product_id = request.GET.get('product_id')
+    subproducts = SubProduct.objects.filter(product=product_id)
+    return render(request,'HomeLoan/subproducts_dropdown_list_options.html',{'subproducts':subproducts})
 
 def eligibility(request, id):
     lead = Leads.objects.filter(lead_id = id).first()
@@ -16,9 +26,7 @@ def eligibility(request, id):
     data = {}
     remarks = {}
 
-    for add_det in add_dets:     #-> looping through all applicants as well as co applicants
-
-        #-> setting dictionary to current applicant/co-applicant
+    for add_det in add_dets:   
         data[add_det.applicant_type] = {}
         remarks[add_det.applicant_type] = {}
 
@@ -227,7 +235,7 @@ def eligibility(request, id):
     return render(request, "HomeLoan/eligibility.html", {'remarks':remarks, 'display':display , 'loan_approved':loan_approved, 'total_emi':total_emi})
 
 
-def PPAge(request, ppid):
+def PPage(request, ppid):
     if request.method == 'POST':
         min_age = int(request.POST['min_age'])
         retire_age = int(request.POST['retire_age'])
@@ -244,6 +252,7 @@ def PPAge(request, ppid):
         'banks': Bank.objects.all(),
     }
     return render(request, 'HomeLoan/age.html', context=context)
+
 
 def PPeditAge(request, ppid, ageid):
     if request.method == 'POST':
@@ -970,248 +979,489 @@ def ppeditotherdetail(request, ppid, otherdetailid):
     }
     return render(request, 'HomeLoan/editotherdetails.html', context=context)
 
-def AddProductsAndPolicy(request):
+def editproductandpolicy(request, id):
+    pass
+
+
+def productsandpolicy(request,action='no'):
+    # action = request.GET['action']
+    if action == 'edit':
+        id = int(action)
+        product_and_policy_instance = ProductsAndPolicy.objects.get(pk = id)
+        if product_and_policy_instance != 'no':
+            productandpolicy_form = ProductsandPolicyForm(instance = product_and_policy_instance)
+            if not product_and_policy_instance.lock:
+                if request.method == 'POST':
+                    current_value_form = ProductsandPolicyForm(request.POST)
+                    if current_value_form.is_valid():
+                        current_instance = current_value_form.save(commit = False)
+                        current_instance.pk = product_and_policy_instance.pk
+                        current_instance.save()
+                        messages.success(request,"Product And Policy Details Updated Successfully")
+                        return redirect("AddProductsAndPolicy", current_instance.pk)
+                    else:
+                        messages.error(request,current_value_from.errors)
+                else:
+                    return render(request,'HomeLoan/AddProductsAndPolicy.html',context = {"form":productandpolicy_form,"id":id})
+        else:
+            return render(request,'HomeLoan/AddProductsAndPolicy.html',context = {"form":ProductsandPolicyForm(),"id":'no'})
+    else:
+        if request.method == 'POST':
+            current_value_form = ProductsandPolicyForm(request.POST)
+            if current_value_form.is_valid():
+                current_instance = current_value_form.save(commit = False)
+                current_instance.save()
+                messages.success(request," Products and Policy Details Added Successfully !")
+                return redirect('ProductsAndPolicyBasicDetails', current_instance.pk)
+            else:
+                messages.error(request,current_value_form.errors)
+                return redirect('AddProductsAndPolicy', 'new')
+        else:
+            context = {
+                "ProductsandPolicy":ProductsandPolicyForm(),
+                "action":'new'
+            }
+            return render(request,'HomeLoan/ProductsAndPolicy.html',context)
+
+
+         
+
+    # if request.method == 'POST':
+    #     product = Products(
+    #         prod_name = request.POST['productname'],
+    #         bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #     )
+    #     product.save()
+    #     if request.POST['min_age'] != '':
+    #         Age(
+    #             min_age = int(request.POST['min_age']),
+    #             retire_age = int(request.POST['retire_age']),
+    #             max_age_consi_others = int(request.POST['Max_age_consi_others']),
+    #             max_age_consi_gov = int(request.POST['Max_age_consi_others']),
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['cibil_range_min'] != '':
+    #         Cibil(
+    #             cibil_range_min = int(request.POST['cibil_range_min']),
+    #             cibil_range_max = int(request.POST['cibil_range_max']),
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['comp_type'] != '':
+    #         Company(
+    #             comp_type = request.POST['comp_type'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['min_age'] != '':
+    #         Customer(
+    #             min_age = int(request.POST['min_age']),
+    #             total_Exp = int(request.POST['total_exp']),
+    #             form16 = request.POST['form16'],
+    #             salary_type = request.POST['salary_type'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['cust_desig'] != '':
+    #         CustomerDesignation(
+    #             cust_desig = request.POST['cust_desig'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['cust_nat'] != '':
+    #         CustomerNationality(
+    #             cust_nat = request.POST['cust_nat'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['loginfees'] != '':
+    #         Fees(
+    #             login_fees = request.POST['loginfees'],
+    #             proc_fee_app = request.POST['procfeeapp'],
+    #             proc_fee_type = request.POST['procfeetype'],
+    #             proc_fee_flat_loan_amtwise = request.POST['procfeeflatloanamtwise'],
+    #             proc_fee_percent_loan_amtwise = request.POST['procfeepercentloanamtwise'],
+    #             offers = request.POST['offers'],
+    #             offline_or_online = request.POST['offlineonline'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #     if request.POST['grosssal'] != '':
+    #         Income(
+    #             gross_sal = request.POST['grosssal'],
+    #             net_sal = request.POST['netsal'],
+    #             bonus = request.POST['bonus'],
+    #             bonus_avg_yearly = request.POST['bonus_avg_yearly'],
+    #             bonus_avg_yearly_percent = request.POST['bonus_avg_yearly_percent'],
+    #             bonus_avg_qtr = request.POST['bonus_avg_qtr'],
+    #             bonus_avg_qtr_percent = request.POST['bonus_avg_qtr_percent'],
+    #             bonus_avg_half_yearly = request.POST['bonus_avg_half_yearly'],
+    #             bonus_avg_half_yearly_percent = request.POST['bonus_avg_half_yearly_percent'],
+    #             rent_income = request.POST['rent_income'],
+    #             rent_agreement_type = request.POST['rentagreementtype'],
+    #             bank_ref = request.POST['bank_ref'],
+    #             rent_ref_in_bank = request.POST['rent_ref_in_bank'],
+    #             rent_inc_percent = request.POST['rent_inc_percent'],
+    #             fut_rent = request.POST['fut_rent'],
+    #             fut_rent_percent = request.POST['fut_rent_percent'],
+    #             incentive = request.POST['incentive'],
+    #             incen_avg_months = request.POST['incen_avg_months'],
+    #             incen_percent = request.POST['incen_percent'],
+    #             coApplicant_No_Income_only_Rent_income = request.POST['coApplicant_No_Income_only_Rent_income'],
+    #             bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #         ).save()
+
+    #         if request.POST['min_amt'] != '':
+    #             IncomeFoir(
+    #                 min_amt = int(request.POST['min_amt']),
+    #                 max_amt = int(request.POST['max_amt']),
+    #                 percent = int(request.POST['percent']),
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['min_loan_amt'] != '':
+    #             LoanAmount(
+    #                 min_loan_amt = int(request.POST['min_loan_amt']),
+    #                 max_loan_amt = int(request.POST['max_loan_amt']),
+    #                 total_Exp = int(request.POST['total_exp']),
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['cost_sheet'] != '':
+    #             LoanTowardsValuation(
+    #                 cost_sheet = request.POST['cost_sheet'],
+    #                 min_amount = int(request.POST['min_amount']),
+    #                 max_amount = int(request.POST['max_amount']),
+    #                 rbi_guidelines = request.POST['rbi_guideline'],
+    #                 ammenity = request.POST['ammenity'],
+    #                 additional = request.POST['additional'],
+    #                 car_parking = request.POST['car_parking'],
+    #                 car_parking_percent = request.POST['car_parking_parcent'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['min_amount'] != '':
+    #             LtvResale(
+    #                 min_amount = int(request.POST['min_amount']),
+    #                 max_amount = int(request.POST['max_amount']),
+    #                 rbi_guidelines = int(request.POST['ltvrbi_guideline']),
+    #                 doccument_cost = int(request.POST['doccument_cost']),
+    #                 additional = int(request.POST['additional']),
+    #                 car_parking = int(request.POST['car_parking']),
+    #                 total = int(request.POST['total']),
+    #                 market_value = int(request.POST['market_value']),
+    #                 av_capping = int(request.POST['av_capping']),
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['neg_emp_pro'] != '':
+    #             NegativeEmployerProfile(
+    #                 neg_emp_pro = request.POST['neg_emp_pro'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['neg_area'] != '':
+    #             NegativeArea(
+    #                 neg_area = request.POST['neg_area'],
+    #                 bank_id  = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['emioblig'] != '':
+    #             Obligation(
+    #                 emi_oblig = request.POST['emioblig'],
+    #                 emi_oblig_not_consi = request.POST['emioblignotconsidered'],
+    #                 credit_card = request.POST['creditcard'],
+    #                 credit_card_oblig_percent = int(request.POST['creditcardobligperc']),
+    #                 gold_loan = request.POST['goldloan'],
+    #                 gold_loan_percent = int(request.POST['goldloanpercent']),
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['prevailingrate'] != '':
+    #             OtherDetails(
+    #                 prevailing_rate = int(request.POST['prevailingrate']),
+    #                 tenure = request.POST['tenur'],
+    #                 inward_cheque_return = request.POST['inwardchequereturn'],
+    #                 multiple_inquiry = request.POST['multipleinquiry'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['min_loan_amt'] != '':
+    #             OtherDetailsROI(
+    #                 min_loan_amt = int(request.POST['min_loan_amt']),
+    #                 max_loan_amt = int(request.POST['max_loan_amt']),
+    #                 min_val = int(request.POST['min_val']),
+    #                 max_val = int(request.POST['max_val']),
+    #                 roi_women = request.POST['roi_women'],
+    #                 roi_men = request.POST['roi_men'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['buildercategory'] != '':
+    #             Property(
+    #                 builder_cat = request.POST['buildercategory'],
+    #                 occupation_certi = request.POST['occupationcerti'],
+    #                 prev_agreement = request.POST['previousagreement'],
+    #                 sub_scheme = request.POST['subscheme'],
+    #                 perc_completion = int(request.POST['perccompletion']),
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['prop_type'] != '':
+    #             PropertyType(
+    #                 prop_type = request.POST['prop_type'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['room_type'] != '':
+    #             RoomType(
+    #                 room_type = request.POST['room_type'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+    #         if request.POST['stage'] != '':
+    #             StageOfConstruction(
+    #                 stage = request.POST['stage'],
+    #                 bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
+    #             ).save()
+
+
+    #     return redirect('editproductandpolicy', id=product.prod_id)
+
+    # context = {
+    #     'banks': Bank.objects.all(),
+    # }
+
+def productsandpolicy_basicdetails(request,id):
     if request.method == 'POST':
-        product = Products(
-            prod_name = request.POST['productname'],
-            bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-        )
-        product.save()
-        if request.POST['min_age'] != '':
-            Age(
-                min_age = int(request.POST['min_age']),
-                retire_age = int(request.POST['retire_age']),
-                max_age_consi_others = int(request.POST['Max_age_consi_others']),
-                max_age_consi_gov = int(request.POST['Max_age_consi_others']),
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+        previous_instance = HlBasicDetails.objects.filter(pid = id).first()
+        if previous_instance is not None:
+            if previous_instance.effective_date is not None:
+                if previous_instancec.ineffective_date is not None or previous_instance.ineffective_date >= datetime.now():
+                    messages.error(request,"Cannot Change Or Add Basic Details Please check previous effective or ineffective Date")
+                    return redirect('listproductandpolicy')
+                else:
+                    current_value_form = HlBasicDetailsForm(request.POST)
+                    if current_value_form.is_valid():
+                        current_instance = current_value_form.save(commit = False)
+                        current_instance.pk = previous_instance.pk
+                        current_instance.save()
+                        message.success(request,'Basic Details Updated Successfully')
+                    else:
+                        messages.error(request,current_value_form.errors)
+        current_value_form = HlBasicDetailsForm(request.POST)
+        if current_value_form.is_valid():
+            current_instance = current_value_form.save(commit = False)
+            current_instance.pid = ProductsAndPolicy.objects.get(pk=id)
+            current_instance.save()
+            messages.success(request,"Basic Details Added Successfully !")
+            return redirect('ProductsAndPolicyIncomeDetails',id)
+        else:
+            messages.error(request,current_value_form.errors)
+            return redirect('ProductsAndPolicyBasicDetails', id)
+    else:
+        context={
+            "basic_details_form" : HlBasicDetailsForm(),
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_basicdetailsform.html",context)
 
-        if request.POST['cibil_range_min'] != '':
-            Cibil(
-                cibil_range_min = int(request.POST['cibil_range_min']),
-                cibil_range_max = int(request.POST['cibil_range_max']),
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_incomedetails(request,id):
+    if request.method == 'POST':
+        income_details_form = HlIncomeForm(request.POST)
+        if income_details_form.is_valid():
+            income_instance = income_details_form.save(commit = False)
+            income_instance.basic_details_id = HlBasicDetails.objects.get(pid = id)
+            income_instance.save()
+            messages.success(request," Income Details Added Successfully !")
+            return redirect('ProductsAndPolicyObligationDetails', id)
+        else:
+            messages.error(request,income_details_form.errors)
+            return redirect('ProductsAndPolicyIncomeDetails', id)
+    else:
+        context={
+            "income_details_form" : HlIncomeForm(),
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_incomedetailsform.html",context)
 
-        if request.POST['comp_type'] != '':
-            Company(
-                comp_type = request.POST['comp_type'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_obligation(request,id):
+    if request.method == 'POST':
+        obligation_details_form = HlObligationForm(request.POST)
+        if obligation_details_form.is_valid():
+            obligation_instance = obligation_details_form.save(commit = False)
+            obligation_instance.basic_details_id = HlBasicDetails.objects.filter(pid = id).first()
+            obligation_instance.save()
+            messages.success(request,"Obligation Details Added Successfully ! ")
+            return redirect('ProductsAndPolicyOtherDetails',id)
+        else:
+            messages.error(request,obligation_details_form.errors)
+            return redirect('ProductsAndPolicyObligationDetails',id)
+    else:
+        context={
+            "obligation_details_form" : HlObligationForm(),
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_obligationdetailsform.html",context)        
 
-        if request.POST['min_age'] != '':
-            Customer(
-                min_age = int(request.POST['min_age']),
-                total_Exp = int(request.POST['total_exp']),
-                form16 = request.POST['form16'],
-                salary_type = request.POST['salary_type'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_otherdetails(request,id):
+    if request.method == 'POST':
+        other_details_form = HlOtherDetailsForm(request.POST)
+        if other_details_form.is_valid():
+            other_details_instance = other_details_form.save(commit = False)
+            other_details_instance.basic_details_id = HlBasicDetails.objects.filter(pid = id).first()
+            other_details_instance.save()
+            messages.success(request,"Other Details Added Successfully ! ")
+            return redirect('ProductsAndPolicyPropertyDetails',id)
+        else:
+            messages.error(request,other_details_form.errors)
+            return redirect('ProductsAndPolicyOtherDetails',id)
+    else:
+        context={
+            "other_details_form" : HlOtherDetailsForm(),
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_otherdetailsform.html",context) 
 
-        if request.POST['cust_desig'] != '':
-            CustomerDesignation(
-                cust_desig = request.POST['cust_desig'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_propertydetails(request,id):
+    if request.method == 'POST':
+        property_details_form = HlPropertyForm(request.POST)
+        if property_details_form.is_valid():
+            property_details_instance = property_details_form.save(commit = False)
+            property_details_instance.basic_details_id = HlBasicDetails.objects.filter(pid = id).first()
+            property_details_instance.save()
+            messages.success(request,"Property Details Added Successfully ! ")
+            return redirect('ProductsAndPolicyLoanToValueDetails',id)
+        else:
+            messages.error(request,other_details_form.errors)
+            return redirect('ProductsAndPolicyPropertyDetails',id)
+    else:
+        context={
+            "property_details_form" : HlPropertyForm(),
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_propertydetailsform.html",context) 
 
-        if request.POST['cust_nat'] != '':
-            CustomerNationality(
-                cust_nat = request.POST['cust_nat'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_loantovaluedetails(request,id):
+    if request.method == 'POST':
+        if request.POST['action'] == 'Type1':
+            form = HlLoan_To_Value_Type_1Form(request.POST)
+            if form.is_valid():
+                instance = form.save(commit = False)
+                instance.basic_details_id = HlBasicDetails.objects.get(pid = id)
+                instance.save()
+                messages.success(request,"Loan To Value - Fresh Details Added Successfully ! ")
+                return redirect('ProductsAndPolicyCibilDetails',id)
+            else:
+                messages.error(request,form.errors)
+                return redirect('ProductsAndPolicyLoanToValueDetails',id)
+        else:
+            form = HlLoan_To_Value_Type_2Form(request.POST)
+            if form.is_valid():
+                instance = form.save(commit = False)
+                instance.basic_details_id = HlBasicDetails.objects.get(pid = id)
+                instance.save()
+                messages.success(request,"Loan To Value - Resale Details Added Successfully ! ")
+                return redirect('ProductsAndPolicyCibilDetails',id)
+            else:
+                messages.error(request,form.errors)
+                return redirect('ProductsAndPolicyLoanToValueDetails',id)
+    else:
+        hl_property = HlProperty.objects.filter(basic_details_id = HlBasicDetails.objects.get(pid=ProductsAndPolicy.objects.get(pk=id))).first()
+        action, title = '',''
+        if hl_property.property_type.property_type == 'Fresh':
+            form = HlLoan_To_Value_Type_1Form()
+            action = 'Type1'
+            title = 'Underconstruction & Ready Possession from Builder'
+        else:
+            form = HlLoan_To_Value_Type_2Form()
+            action = 'Type2'
+            title = 'Resale'
+        context={
+            "form" : form,
+            "action" : action,
+            "title" : title,
+            "id" : id
+        }
+        return render(request,"HomeLoan/pap_loantovaluedetailsform.html",context)
 
-        if request.POST['loginfees'] != '':
-            Fees(
-                login_fees = request.POST['loginfees'],
-                proc_fee_app = request.POST['procfeeapp'],
-                proc_fee_type = request.POST['procfeetype'],
-                proc_fee_flat_loan_amtwise = request.POST['procfeeflatloanamtwise'],
-                proc_fee_percent_loan_amtwise = request.POST['procfeepercentloanamtwise'],
-                offers = request.POST['offers'],
-                offline_or_online = request.POST['offlineonline'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
+def productsandpolicy_cibildetails(request,id):
+    if request.method == 'POST':
+        cibil_form_instance = CibilForm(request.POST)
+        if cibil_form_instance.is_valid():
+            cibil_instance = cibil_form_instance.save(commit = False)
+            cibil_instance.basic_details_id =  HlBasicDetails.objects.get(pid = id)
+            cibil_instance.save()
+            messages.success(request,"Cibil Details Added Successfully ! ")
+            return redirect('ProductsAndPolicyReviewOrEdit',id)
+        else:
+            messages.error(request,cibil_form_instance.errors)
+            return redirect('ProductsAndPolicyCibilDetails',id)
+    else:
+        cibil_form = CibilForm()
+        return render(request,'HomeLoan/pap_cibildetails.html',context = {"id":id,"cibil_form":cibil_form})
 
-        if request.POST['grosssal'] != '':
-            Income(
-                gross_sal = request.POST['grosssal'],
-                net_sal = request.POST['netsal'],
-                bonus = request.POST['bonus'],
-                bonus_avg_yearly = request.POST['bonus_avg_yearly'],
-                bonus_avg_yearly_percent = request.POST['bonus_avg_yearly_percent'],
-                bonus_avg_qtr = request.POST['bonus_avg_qtr'],
-                bonus_avg_qtr_percent = request.POST['bonus_avg_qtr_percent'],
-                bonus_avg_half_yearly = request.POST['bonus_avg_half_yearly'],
-                bonus_avg_half_yearly_percent = request.POST['bonus_avg_half_yearly_percent'],
-                rent_income = request.POST['rent_income'],
-                rent_agreement_type = request.POST['rentagreementtype'],
-                bank_ref = request.POST['bank_ref'],
-                rent_ref_in_bank = request.POST['rent_ref_in_bank'],
-                rent_inc_percent = request.POST['rent_inc_percent'],
-                fut_rent = request.POST['fut_rent'],
-                fut_rent_percent = request.POST['fut_rent_percent'],
-                incentive = request.POST['incentive'],
-                incen_avg_months = request.POST['incen_avg_months'],
-                incen_percent = request.POST['incen_percent'],
-                coApplicant_No_Income_only_Rent_income = request.POST['coApplicant_No_Income_only_Rent_income'],
-                bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-            ).save()
-
-            if request.POST['min_amt'] != '':
-                IncomeFoir(
-                    min_amt = int(request.POST['min_amt']),
-                    max_amt = int(request.POST['max_amt']),
-                    percent = int(request.POST['percent']),
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['min_loan_amt'] != '':
-                LoanAmount(
-                    min_loan_amt = int(request.POST['min_loan_amt']),
-                    max_loan_amt = int(request.POST['max_loan_amt']),
-                    total_Exp = int(request.POST['total_exp']),
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['cost_sheet'] != '':
-                LoanTowardsValuation(
-                    cost_sheet = request.POST['cost_sheet'],
-                    min_amount = int(request.POST['min_amount']),
-                    max_amount = int(request.POST['max_amount']),
-                    rbi_guidelines = request.POST['rbi_guideline'],
-                    ammenity = request.POST['ammenity'],
-                    additional = request.POST['additional'],
-                    car_parking = request.POST['car_parking'],
-                    car_parking_percent = request.POST['car_parking_parcent'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['min_amount'] != '':
-                LtvResale(
-                    min_amount = int(request.POST['min_amount']),
-                    max_amount = int(request.POST['max_amount']),
-                    rbi_guidelines = int(request.POST['ltvrbi_guideline']),
-                    doccument_cost = int(request.POST['doccument_cost']),
-                    additional = int(request.POST['additional']),
-                    car_parking = int(request.POST['car_parking']),
-                    total = int(request.POST['total']),
-                    market_value = int(request.POST['market_value']),
-                    av_capping = int(request.POST['av_capping']),
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['neg_emp_pro'] != '':
-                NegativeEmployerProfile(
-                    neg_emp_pro = request.POST['neg_emp_pro'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['neg_area'] != '':
-                NegativeArea(
-                    neg_area = request.POST['neg_area'],
-                    bank_id  = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['emioblig'] != '':
-                Obligation(
-                    emi_oblig = request.POST['emioblig'],
-                    emi_oblig_not_consi = request.POST['emioblignotconsidered'],
-                    credit_card = request.POST['creditcard'],
-                    credit_card_oblig_percent = int(request.POST['creditcardobligperc']),
-                    gold_loan = request.POST['goldloan'],
-                    gold_loan_percent = int(request.POST['goldloanpercent']),
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['prevailingrate'] != '':
-                OtherDetails(
-                    prevailing_rate = int(request.POST['prevailingrate']),
-                    tenure = request.POST['tenur'],
-                    inward_cheque_return = request.POST['inwardchequereturn'],
-                    multiple_inquiry = request.POST['multipleinquiry'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['min_loan_amt'] != '':
-                OtherDetailsROI(
-                    min_loan_amt = int(request.POST['min_loan_amt']),
-                    max_loan_amt = int(request.POST['max_loan_amt']),
-                    min_val = int(request.POST['min_val']),
-                    max_val = int(request.POST['max_val']),
-                    roi_women = request.POST['roi_women'],
-                    roi_men = request.POST['roi_men'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['buildercategory'] != '':
-                Property(
-                    builder_cat = request.POST['buildercategory'],
-                    occupation_certi = request.POST['occupationcerti'],
-                    prev_agreement = request.POST['previousagreement'],
-                    sub_scheme = request.POST['subscheme'],
-                    perc_completion = int(request.POST['perccompletion']),
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['prop_type'] != '':
-                PropertyType(
-                    prop_type = request.POST['prop_type'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['room_type'] != '':
-                RoomType(
-                    room_type = request.POST['room_type'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-            if request.POST['stage'] != '':
-                StageOfConstruction(
-                    stage = request.POST['stage'],
-                    bank_id = Bank.objects.filter(bank_id=int(request.POST['bank']))[0]
-                ).save()
-
-
-        return redirect('editproductandpolicy', id=product.prod_id)
-
+def productsandpolicy_revieworedit(request,id):
+    product_and_policy_instance      = ProductsAndPolicy.objects.get(pk = id)
+    hl_basicdetails_instance         = HlBasicDetails.objects.filter(pid = id)
+    hl_income_instance               = HlIncome.objects.filter(basic_details_id__in=hl_basicdetails_instance )
+    cibil_details                    = Cibil.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    hl_obligations_instance          = HlObligation.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    hl_property_instance             = HlProperty.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    hl_loan_to_value_type_1_instance = HlLoan_To_Value_Type_1.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    hl_loan_to_value_type_2_instance = HlLoan_To_Value_Type_2.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    hl_otherdetails_instance         = HlOtherDetails.objects.filter(basic_details_id__in = hl_basicdetails_instance)
+    type_1                           = hl_property_instance[0].property_type.property_type == 'Fresh'
+    product_and_policy_form          = ProductsandPolicyForm(instance = product_and_policy_instance)
+    hl_basicdetails_form             = HlBasicDetailsForm(instance = hl_basicdetails_instance.first())
+    hl_cibildetails_form             = CibilForm(instance = cibil_details.first())
+    hl_obligations_form              = HlObligationForm(instance = hl_obligations_instance.first())
+    hl_property_form                 = HlPropertyForm(instance = hl_property_instance.first())
+    hl_income_form                   = HlIncomeForm(instance = hl_income_instance.first())  
+    hl_loan_to_value_type_1_form     = HlLoan_To_Value_Type_1Form()
+    hl_loan_to_value_type_2_form     = HlLoan_To_Value_Type_2Form()
+    if type_1:
+        hl_loan_to_value_type_1_form = HlLoan_To_Value_Type_1Form(instance = hl_loan_to_value_type_1_instance.first())
+    else:
+        hl_loan_to_value_type_2_form = HlLoan_To_Value_Type_2Form(instance = hl_loan_to_value_type_2_instance.first())
     context = {
-        'banks': Bank.objects.all(),
+        "id":id,
+        "product_and_policy_instance":product_and_policy_instance,
+        
     }
-    return render(request, 'HomeLoan/AddProductsAndPolicy.html', context=context)
+    return render(request, 'HomeLoan/editproductandpolicy.html', context)
+
+
 
 
 def listproductandpolicy(request):
     context = {
-        'Products': Products.objects.all()
+        'ProductsAndPolicy': ProductsAndPolicy.objects.all()
     }
     return render(request, 'HomeLoan/listproductsandpolicy.html', context=context)
-
-def editproductandpolicy(request, id):
-    product = Products.objects.filter(prod_id=id)[0]
-    context =  {
-        'product': product,
-        'ages': Age.objects.filter(bank_id=product.bank_id),
-        'cibils': Cibil.objects.filter(bank_id=product.bank_id),
-        'companys': Company.objects.filter(bank_id=product.bank_id),
-        'costsheets': CostSheet.objects.all(),
-        'customers': Customer.objects.filter(bank_id=product.bank_id),
-        'customerdesinations': CustomerDesignation.objects.filter(bank_id=product.bank_id),
-        'customernationalities': CustomerNationality.objects.filter(bank_id=product.bank_id),
-        'fees': Fees.objects.filter(bank_id=product.bank_id),
-        'incomes': Income.objects.filter(bank_id=product.bank_id),
-        'incomefoirs': IncomeFoir.objects.filter(bank_id=product.bank_id),
-        'loanamounts': LoanAmount.objects.filter(bank_id=product.bank_id),
-        'loantowardsvalutions': LoanTowardsValuation.objects.filter(bank_id=product.bank_id),
-        'ltvresales': LtvResale.objects.filter(bank_id=product.bank_id),
-        'negativeemployerprofiles': NegativeEmployerProfile.objects.filter(bank_id=product.bank_id),
-        'negativeareas': NegativeArea.objects.filter(bank_id=product.bank_id),
-        'obligations': Obligation.objects.filter(bank_id=product.bank_id),
-        'otherdetails': OtherDetails.objects.filter(bank_id=product.bank_id),
-        'otherdetailsrois': OtherDetailsROI.objects.filter(bank_id=product.bank_id),
-        'properties': Property.objects.filter(bank_id=product.bank_id),
-        'propertytypes': PropertyType.objects.filter(bank_id=product.bank_id),
-        'roomtypes': RoomType.objects.filter(bank_id=product.bank_id),
-        'stageofconstructions': StageOfConstruction.objects.filter(bank_id=product.bank_id),
-    }
-    return render(request, 'HomeLoan/editproductandpolicy.html', context=context)
-
+    # context =  {
+    #     'product'                 : product,
+    #     'ages'                    : Age.objects.filter(bank_id=product.bank_id),
+    #     'cibils'                  : Cibil.objects.filter(bank_id=product.bank_id),
+    #     'companys'                : Company.objects.filter(bank_id=product.bank_id),
+    #     'costsheets'              : CostSheet.objects.all(),
+    #     'customers'               : Customer.objects.filter(bank_id=product.bank_id),
+    #     'customerdesinations'     : CustomerDesignation.objects.filter(bank_id=product.bank_id),
+    #     'customernationalities'   : CustomerNationality.objects.filter(bank_id=product.bank_id),
+    #     'fees'                    : Fees.objects.filter(bank_id=product.bank_id),
+    #     'incomes'                 : Income.objects.filter(bank_id=product.bank_id),
+    #     'incomefoirs'             : IncomeFoir.objects.filter(bank_id=product.bank_id),
+    #     'loanamounts'             : LoanAmount.objects.filter(bank_id=product.bank_id),
+    #     'loantowardsvalutions'    : LoanTowardsValuation.objects.filter(bank_id=product.bank_id),
+    #     'ltvresales'              : LtvResale.objects.filter(bank_id=product.bank_id),
+    #     'negativeemployerprofiles': NegativeEmployerProfile.objects.filter(bank_id=product.bank_id),
+    #     'negativeareas'           : NegativeArea.objects.filter(bank_id=product.bank_id),
+    #     'obligations'             : Obligation.objects.filter(bank_id=product.bank_id),
+    #     'otherdetails'            : OtherDetails.objects.filter(bank_id=product.bank_id),
+    #     'otherdetailsrois'        : OtherDetailsROI.objects.filter(bank_id=product.bank_id),
+    #     'properties'              : Property.objects.filter(bank_id=product.bank_id),
+    #     'propertytypes'           : PropertyType.objects.filter(bank_id=product.bank_id),
+    #     'roomtypes'               : RoomType.objects.filter(bank_id=product.bank_id),
+    #     'stageofconstructions'    : StageOfConstruction.objects.filter(bank_id=product.bank_id),
+    # }

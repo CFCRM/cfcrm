@@ -110,7 +110,7 @@ class SalPersonalDetails(models.Model):
     details_about_default = models.CharField(max_length=200, blank=True)
     gender                = models.ForeignKey(Gender, on_delete=models.CASCADE, blank=True, null=True)
     dob                   = models.DateField(blank=True, null=True)
-    age                   = models.IntegerField(blank=True, null=True)
+    age                   = models.IntegerField()
     retirement_age        = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(50), MaxValueValidator(70)])
     marital_status        = models.ForeignKey(MaritalStatus, on_delete=models.CASCADE, blank=True, null=True)
     qualification         = models.ForeignKey(Qualification, on_delete=models.CASCADE, blank=True, null=True)  

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.core import serializers
 from .forms import *
 from django.db.models import Q
 from django.contrib.auth.models import auth
@@ -34,7 +35,7 @@ def base_dashboard(request):
     context = {
         'title': 'Dashboard'
     }
-    return render(request, 'base/base.html', context)
+    return render(request, 'account/base.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -1285,50 +1286,28 @@ def salaried(request,id):
             else:
                 messages.error(request, form.errors)
                 return redirect('salaried', id)
-
-
-    # cust = AdditionalDetails.objects.filter(add_det_id=id).first()
-    # genders = Gender.objects.all()
-    # qualifications = Qualification.objects.all()
-    # degrees = Degree.objects.all()
-    # professions = Profession.objects.all()
-    # nationalities = Nationality.objects.all()
-    # maritalstatues = MaritalStatus.objects.all()
-    # salarytypes = SalaryType.objects.all()
-    # agreementtypes = AgreementType.objects.all()
-    # companytypes = CompanyType.objects.all()
-    # designationtypes = DesignationType.objects.all()
-    # products = Product.objects.all()
-    # context = {
-    #     'genders': genders,
-    #     'qualifications': qualifications,
-    #     'degrees': degrees,
-    #     'professions': professions,
-    #     'nationalities': nationalities,
-    #     'maritalstatues': maritalstatues,
-    #     'salarytypes': salarytypes,
-    #     'agreementtypes': agreementtypes,
-    #     'companytypes': companytypes,
-    #     'designationtypes': designationtypes,
-    #     'products': products,
-    #     'additional_details_id': id,
-    #     'cust':cust
-    # }
     additional_details_instance = AdditionalDetails.objects.get(pk=id)
+    # qualifications_list = []
+    # for qualification_instance in Qualification.objects.all():
+    #     qualifications_list.append({qualification_instance.qualification:qualification_instance.is_degree})
+
+    
     context = {
-        "id"                           : id,
-        "name"                         : additional_details_instance.cust_name,
-        "applicant_type"               : additional_details_instance.applicant_type,
-        "personal_details_form"        : SalPersonalDetailsForm(),
-        "income_details_form"          : SalIncomeDetailsForm(),
-        "other_incomes_form"           : SalOtherIncomesForm(),
-        "additional_other_incomes_form": SalAdditionalOtherIncomesForm(),
-        "company_details_form"         : SalCompanyDetailsForm(),
-        "residence_details_form"       : SalResidenceDetailsForm(),
-        "existing_loan_details_form"   : SalExistingLoanDetailsForm(),
-        "existing_card_details_form"   : SalExistingCreditCardForm(),
-        "additional_details_form"      : SalAdditionalDetailsForm(),
-        "investment_form"              : SalInvestmentsForm(),
+        "id"                            : id,
+        "name"                          : additional_details_instance.cust_name,
+        "applicant_type"                : additional_details_instance.applicant_type,
+        "personal_details_form"         : SalPersonalDetailsForm(),
+        "personal_details_qualification": Qualification.objects.all(),
+        "personal_details_profession"   : Profession.objects.all(),
+        "income_details_form"           : SalIncomeDetailsForm(),
+        "other_incomes_form"            : SalOtherIncomesForm(),
+        "additional_other_incomes_form" : SalAdditionalOtherIncomesForm(),
+        "company_details_form"          : SalCompanyDetailsForm(),
+        "residence_details_form"        : SalResidenceDetailsForm(),
+        "existing_loan_details_form"    : SalExistingLoanDetailsForm(),
+        "existing_card_details_form"    : SalExistingCreditCardForm(),
+        "additional_details_form"       : SalAdditionalDetailsForm(),
+        "investment_form"               : SalInvestmentsForm(),
     }
     return render(request, 'account/salaried.html', context=context)
 

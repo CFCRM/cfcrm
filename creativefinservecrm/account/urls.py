@@ -7,10 +7,10 @@ from django.conf import settings
 
 
 urlpatterns = [
+    path('', views.base_dashboard, name="base_dashboard"),
     path('ajax/cities/',views.load_cities,name = "ajax_load_cities"),
     path('ajax/addapplicant',views.add_applicants,name = "ajax_add_applicant"),
     path('ajax/subproducts/',views.load_subproducts,name = "ajax_load_subproducts"),
-    path('', views.base_dashboard, name="base_dashboard"),
     path('homeloan/',include('HomeLoan.urls')),
     path('register', views.register, name="register"),
     path('login', views.login, name="login"),

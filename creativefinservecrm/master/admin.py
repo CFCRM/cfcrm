@@ -45,4 +45,7 @@ admin.site.register(CompanyName)
 admin.site.register(EmploymentType)
 admin.site.register(InvestmentType)
 admin.site.register(ProductsOrServices)
-
+admin.site.register(CibilLoanType)
+admin.site.register(PropertyType)
+admin.site.register(NegativeArea)
+admin.site.register(LoanAmount)
