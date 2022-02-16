@@ -1,6 +1,6 @@
 from django.forms import DateField, widgets
 from django import forms
-from django.forms.models import ModelChoiceField, ModelForm
+from django.forms.models import *
 from django.forms.widgets import EmailInput, NumberInput, TextInput
 from .models import *
 from account.models import *
@@ -27,7 +27,7 @@ class ProductsandPolicyForm(ModelForm):
 
     class Meta:
         model = ProductsAndPolicy
-        exclude = ('prod_id', 'lock',)
+        exclude = ('pid', 'lock','effective_date')
         widgets = {
             'effective_date': widgets.DateInput(attrs={'type': 'date'}),
             'ineffective_date': widgets.DateInput(attrs={'type': 'date'}),
@@ -60,10 +60,10 @@ class HlBasicDetailsForm(ModelForm):
         )
         self.fields['customer_type'] = ModelChoiceField(queryset=CustomerType.objects.filter(
             Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)), empty_label="-- Select Customer --")
-        self.fields['designation'] = ModelChoiceField(queryset=DesignationType.objects.filter(
-            Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)), empty_label="-- Select Designation --")
-        self.fields['company_type'] = ModelChoiceField(queryset=CompanyType.objects.filter(
-            Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)), empty_label="-- Select CompanyType --")
+        self.fields['designation'] = ModelMultipleChoiceField(queryset=DesignationType.objects.filter(
+            Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)))
+        self.fields['company_type'] = ModelMultipleChoiceField(queryset=CompanyType.objects.filter(
+            Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)))
         self.fields['salary_type'] = ModelChoiceField(queryset=SalaryType.objects.filter(
             Q(ineffective_date__gte=datetime.now()) | Q(ineffective_date=None)), empty_label="-- Select SalaryType --")
         for field in self.fields:
@@ -97,7 +97,7 @@ class HlObligationForm(ModelForm):
 
     class Meta:
         model = HlObligation
-        exclude = ('basic_details_id','effective_date')
+        exclude = ('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date': widgets.DateInput(attrs={'type': 'date'})
         }
@@ -113,7 +113,7 @@ class HlOtherDetailsForm(ModelForm):
 
     class Meta:
         model = HlOtherDetails
-        exclude = ('basic_details_id','effective_date')
+        exclude = ('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date':widgets.DateInput(attrs={'type':'date'})
         }
@@ -136,7 +136,7 @@ class HlPropertyForm(ModelForm):
 
     class Meta:
         model = HlProperty
-        exclude = ('basic_details_id',)
+        exclude = ('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date':widgets.DateInput(attrs = {'type':'date'})
         }
@@ -152,7 +152,7 @@ class HlLoan_To_Value_Type_1Form(ModelForm):
 
     class Meta:
         model = HlLoan_To_Value_Type_1
-        exclude = ('basic_details_id','effective_date')
+        exclude = ('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date':widgets.DateInput(attrs={'type':'date'})
         }
@@ -166,7 +166,7 @@ class HlLoan_To_Value_Type_2Form(ModelForm):
 
     class Meta:
         model = HlLoan_To_Value_Type_2
-        exclude = ('basic_details_id','effective_date')
+        exclude = ('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date':widgets.DateInput(attrs={'type':'date'})
         }
@@ -186,11 +186,15 @@ class HlIncomeForm(ModelForm):
         (True, 'Yes'),
         (False, 'No')),
         )
+        self.fields['income_foir_monthly'] = forms.ChoiceField(choices=((None, '-- Yes Or No --'),
+        (True, 'Yes'),
+        (False, 'No')),
+        )
         self.fields['income_foir_yearly'] = forms.ChoiceField(choices=((None, '-- Yes Or No --'),
         (True, 'Yes'),
         (False, 'No')),
         )
-        self.fields['income_foir_quarter'] = forms.ChoiceField(choices=((None, '-- Yes Or No --'),
+        self.fields['income_foir_quarterly'] = forms.ChoiceField(choices=((None, '-- Yes Or No --'),
         (True, 'Yes'),
         (False, 'No')),
         )
@@ -240,10 +244,25 @@ class HlIncomeForm(ModelForm):
 
     class Meta:
         model=HlIncome
-        exclude=('basic_details_id','effective_date')
+        exclude=('pid','basic_details_id','effective_date')
         widgets = {
             'ineffective_date': widgets.DateInput(attrs={'type': 'date'}),
         }
+
+
+class HlIncomeFoirForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(HlIncomeFoirForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    class Meta:
+        model = HlIncomeFoir
+        exclude=('pid','basic_details_id','effective_date')
+        widgets = {
+            'ineffective_date': widgets.DateInput(attrs={'type': 'date'}),
+        }
+
 
 class CibilForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -252,7 +271,7 @@ class CibilForm(ModelForm):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
     class Meta:
         model=Cibil
-        exclude=('basic_details_id', 'cibil_id','effective_date',)
+        exclude=('pid','basic_details_id', 'cibil_id','effective_date')
         widgets = {
             'ineffective_date': widgets.DateInput(attrs={'type': 'date'}),
         }

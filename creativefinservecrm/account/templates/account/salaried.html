@@ -67,12 +67,11 @@
       </div>
     </div>
   </div>
-
-  <div class="modal fade" id="personalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="personalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="personalDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Personal details</h5>
+          <h5 class="modal-title font-weight-normal" id="personalDetailsModalLabel">Personal details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -160,16 +159,47 @@
         </form>
     </div>
   </div>
-  <div class="modal fade" id="companyDetailsModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="otherThanIncomeMentionedAbove" tabindex="-1" role="dialog" aria-labelledby="otherThanIncomeMentionedAboveLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Company Details</h5>
+            <h5 class="modal-title font-weight-normal" id="otherThanIncomeMentionedAboveLabel">Other Than Income Mentioned Above</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="POST" action="{% url 'salaried' id=id %}">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="row g-4 p-4">
+              {% for field in additional_other_incomes_form %}
+                  <div class="col-sm-4">
+                      <div class="input-group input-group-static">
+                          <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
+                          {{ field }}
+                      </div>
+                  </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" name="additional_other_incomes" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="companyDetailsModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="companyDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-normal" id="companyDetailsModalLabel">Company Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST" action={% url 'salaried' id=id %}>
+        <form method="POST" action="{% url 'salaried' id=id %}">
           {% csrf_token %}
           <div class="modal-body">
             <div class="row g-4 p-4">
@@ -191,11 +221,11 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="residenceDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="residenceDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="residenceDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Residence Details</h5>
+          <h5 class="modal-title font-weight-normal" id="residenceDetailModalLabel">Residence Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -222,11 +252,11 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="existingloanDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="existingloanDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="existingloanDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Existing Loan Details</h5>
+          <h5 class="modal-title font-weight-normal" id="existingloanDetailModalLabel">Existing Loan Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -253,11 +283,11 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="existingcardDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="existingcardDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="existingcardDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Existing Card Details</h5>
+          <h5 class="modal-title font-weight-normal" id="existingcardDetailModalLabel">Existing Card Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -285,11 +315,11 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="additionalDetailsModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="additionalDetailsModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="additionalDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Additional Details</h5>
+          <h5 class="modal-title font-weight-normal" id="additionalDetailsModalLabel">Additional Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -316,11 +346,11 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="investmentDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="investmentDetailModal" role="dialog" tabindex="-1" role="dialog" aria-labelledby="investmentDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Investment Details</h5>
+          <h5 class="modal-title font-weight-normal" id="investmentDetailModalLabel">Investment Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -347,382 +377,9 @@
       </div>
     </div>
   </div>
-  <!-- Keep id="otherThanIncomeMentionedAbove" modal at the end of page -->
-  <div class="modal fade" id="otherThanIncomeMentionedAbove" tabindex="-1" role="dialog" aria-labelledby="otherThanIncomeMentionedAboveLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title font-weight-normal" id="otherThanIncomeMentionedAboveLabel">Other Than Income Mentioned Above</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form method="POST" action={% url 'salaried' id=id %}>
-          {% csrf_token %}
-          <div class="modal-body">
-            <div class="row g-4 p-4">
-              {% for field in additional_other_incomes_form %}
-                  <div class="col-sm-4">
-                      <div class="input-group input-group-static">
-                          <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
-                          {{ field }}
-                      </div>
-                  </div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" name="additional_other_incomes" type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 {% endblock other_body %}
 
 {% block other_js %}
-  <script>
-    $("#existingCardDetailsButton1").click(function(){
-      // swal("One More", "Existing Card Details is Added", "success");
-      x++; //Increment field counter
-      $('.additionalCustomerDetail1').append(`
-        <div class="customerDetails1${x}">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="bank_name">Bank Name</label>
-                <input type="text" name="bank_name" id="bank_name" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="credit_limit">Credit Limit</label>
-                <input type="number" name="credit_limit" id="credit_limit" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="limit_utilized">Limit Utilize</label>
-                <input type="number" name="limit_utilized" id="limit_utilized" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="min_due">Minimum Due</label>
-                <input type="text" name="min_due" id="min_due" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="card_due">CRedit Card Age</label>
-                <input type="number" name="card_due" id="card_due" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay" class="ms-0 text-primary fw-bold col-12">Any Delay In Payment</label>
-                  <select class="form-control col-12" name="pay_delay" id="pay_delay">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay" class="ms-0 text-primary fw-bold col-12">Any Delay In Payment</label>
-                  <select class="form-control col-12" name="pay_delay" id="pay_delay">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay_year" class="ms-0 text-primary fw-bold col-12">Year of Payment Delay</label>
-                  <select class="form-control col-12" name="pay_delay_year" id="pay_delay_year">
-                    <option value="last_year">Last 1 year</option>
-                    <option value="prior_year">Prior to 1 year</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="moratorium_taken" class="ms-0 text-primary fw-bold col-12">Year of Payment DelayMoratorium Taken?</label>
-                  <select class="form-control col-12" name="moratorium_taken" id="moratorium_taken">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group-row">
-                <div>
-                  <button class="btn btn-primary mr-3 remmoveexistingCardDetails1${x}Button" onclick="remmoveexistingCardDetails1('customerDetails1${x}')" >
-                    <i class="fas fa-window-close fa-lg"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>      
-      `); //Add field html
-    });
-    function remmoveexistingCardDetails1(parentclass){
-      // swal("Additional Existing Card Details", "have been deleted", "warning");
-      $("."+`${parentclass}`).remove();
-    }
-  </script>
-  <script>
-    var x=1;
-    $("#addCustomerButton").click(function(){
-      // alert("One More Existing Loan Details is Added");
-      // swal("One More", "Existing Loan details is Added", "success");
-      x++; //Increment field counter
-      $('.additionalCustomerDetail').append(`
-        <div class="customerDetails${x}">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="bank_name">Bank name</label>
-                <input type="text" name="bank_name" id="bank_name" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="product_services" class="ms-0 text-primary fw-bold col-12">Product/Services</label>
-                  <select class="form-control col-12" name="product_services" id="product_services">
-                    <option value="Indian">Personal</option>
-                    <option value="Non Resident Indian">Buiness</option>
-                    <option value="Non Resident Indian">Home</option>
-                    <option value="Non Resident Indian">LAP</option>
-                    <option value="Non Resident Indian">2Wheeler</option>
-                    <option value="Non Resident Indian">4Wheeler</option>
-                    <option value="Non Resident Indian">Consumer</option>
-                  </select>
-                </div>
-              </div>
-            </div>    
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="loan_amt">Loan Amount</label>
-                <input type="number" name="loan_amt" id="loan_amt" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="emi">EMI</label>
-                <input type="number" name="emi" id="emi" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="roi">Rate of interest</label>
-                <input type="text" name="roi" id="roi" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="tenure">Tenure</label>
-                <input type="number" name="tenure" id="tenure" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="emi_start_date">EMI Start Date</label>
-                <input type="date" name="emi_start_date" id="emi_start_date" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="emi_end_date">EMI End Date</label>
-                <input type="date" name="emi_end_date" id="emi_end_date" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="outstanding_paid">Outstanding Paid by Customer if any</label>
-                <input type="number" name="outstanding_paid" id="outstanding_paid" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="outstanding_amt">Outstanding Amount</label>
-                <input type="number" name="outstanding_amt" id="outstanding_amt" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="any_bounce" class="ms-0 text-primary fw-bold col-12">Any Bounces?</label>
-                  <select class="form-control col-12" name="any_bounce" id="any_bounce">
-                    <option value="yes">Yes</option>
-                    <option value="no" Resident Indian">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="moratorium_taken" class="ms-0 text-primary fw-bold col-12">Moratorium Taken?</label>
-                  <select class="form-control col-12" name="moratorium_taken" id="moratorium_taken">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="applicant_type" class="ms-0 text-primary fw-bold col-12">Applicant Type</label>
-                  <select class="form-control col-12" name="applicant_type" id="applicant_type">
-                    <option value="applicant">Applicant</option>
-                    <option value="co_applicant">Co-Applicant</option>
-                    <option value="gurantor">Guarantor</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div style="text-align:left">
-              <button class="btn btn-primary mr-3 removeCustomerDetails${x}Button" onclick="removeCustomerDetail('customerDetails${x}')" >
-                Remove
-              </button>
-            </div>
-          </div>
-        </div>
-      `); //Add field html
-    });
-    function removeCustomerDetail(parentclass){
-      // alert("Remove Existing Loan Details")
-      alert("Existing Loan Details have being deleted warning");
-      $("."+`${parentclass}`).remove();
-    }
-  </script>
-  <script>
-    var x=1;
-    $("#addCustomerButton1").click(function(){
-      alert("One More Existing Card details is Added success");
-      x++; //Increment field counter
-      $('.additionalCustomerDetail1').append(`
-        <div class="customerDetails1${x}">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="bank_name">Bank Name</label>
-                <input type="text" name="bank_name" id="bank_name" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="credit_limit">Credit Limit</label>
-                <input type="number" name="credit_limit" id="credit_limit" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="limit_utilized">Limit Utilize</label>
-                <input type="number" name="limit_utilized" id="limit_utilized" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="min_due">Minimum Due</label>
-                <input type="text" name="min_due" id="min_due" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="input-group input-group-outline mb-4">
-                <label class="form-label text-primary fw-bold" for="card_due">CRedit Card Age</label>
-                <input type="number" name="card_due" id="card_due" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay" class="ms-0 text-primary fw-bold col-12">Any Delay In Payment</label>
-                  <select class="form-control col-12" name="pay_delay" id="pay_delay">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay" class="ms-0 text-primary fw-bold col-12">Any Delay In Payment</label>
-                  <select class="form-control col-12" name="pay_delay" id="pay_delay">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="pay_delay_year" class="ms-0 text-primary fw-bold col-12">Year of Payment Delay</label>
-                  <select class="form-control col-12" name="pay_delay_year" id="pay_delay_year">
-                    <option value="last_year">Last 1 year</option>
-                    <option value="prior_year">Prior to 1 year</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <div class="input-group input-group-static mb-4">
-                  <label for="moratorium_taken" class="ms-0 text-primary fw-bold col-12">Year of Payment DelayMoratorium Taken?</label>
-                  <select class="form-control col-12" name="moratorium_taken" id="moratorium_taken">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="form-group-row">
-              <br>
-              <div>
-                <button class="btn btn-primary mr-3 removeCustomerDetails1${x}Button" onclick="removeCustomerDetail1('customerDetails1${x}')" >
-                  Remove
-                </button>
-              </div>
-            </div>
-            <br>
-          </div>
-        </div>      
-      `); //Add field html
-    });
-    function removeCustomerDetail1(parentclass){
-      // alert("Remove Existing Card Details?")
-      alert("Existing Loan Details have being deleted warning");
-      $("."+`${parentclass}`).remove();
-    }
-  </script>
-  <script>
-    $(function () {
-      $("#AdditionalDetails").click(function () {
-        if ($(this).is(":checked")) {
-          $("#details9").show();
-        } else {
-          $("#details9").hide();
-        }
-      });
-    });
-  </script> 
   <script>
     var qualifications = {};
     {% for instance in personal_details_qualification %}

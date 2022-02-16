@@ -6,7 +6,7 @@
 {% block other_body %}
 <h1 class="mb-5 mt-3 display-3 text-center text-dark">{{title}}</h1>
     <div class="container" style="width:95%; margin:25px auto;">
-        <form action={% url 'ProductsAndPolicyLoanToValueDetails' id=id %} method="POST" class="bg-white rounded p-5 shadow-blur">
+        <form action={% url 'ProductsAndPolicyLoanToValue1Details' id=id %} method="POST" class="bg-white rounded p-5 shadow-blur">
             {% csrf_token %}
             <div class="row g-4 p-4">
                 {% for field in form %}

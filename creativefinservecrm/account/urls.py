@@ -18,9 +18,7 @@ urlpatterns = [
     path('deleteapplicant/<int:id>',views.delapplicant,name = "deleteapplicant"),
     path('editapplicant',views.editapplicant,name = "edit_applicant"),
 
-     path('reset_password/',
-     auth_views.PasswordResetView.as_view(template_name="account/password_reset.html"),
-     name="reset_password"),
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name="account/password_reset.html"),name="reset_password"),
 
     path('reset_password_sent/',
         auth_views.PasswordResetDoneView.as_view(template_name="account/password_reset_sent.html"),
@@ -34,7 +32,7 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="account/password_reset_done.html"),
         name="password_reset_complete"),
 
-    path('forgot_uname', views.forgot_uname, name="forgot_uname"),
+    path('forgot_username', views.forgot_username, name="forgot_username"),
     path('emailverificationmsg', views.email_ver_msg, name="email_ver_msg"),
     path('activate/<uidb64>/<token>', VerificationView.as_view(), name="activate"),
     path('uname_pw_gen', views.uname_pw_gen, name="uname_pw_gen"),

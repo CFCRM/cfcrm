@@ -1,29 +1,20 @@
-{% extends 'base/base.html'%}
-{%block title%} Cibil Details {%endblock title%}
-{%block other_body%}
-    <div class ="container-fluid">
-        <div class="container" style="width:800px; margin:0 auto;">
-            <h3 class="card-title text-center header"> </h3>
-            <form class="form-container" action={% url 'PPeditCibil' ppid=product.prod_id cibilid=cibil.cibil_id %} method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6"> 
-                        <div class="input-group input-group-outline my-3">
-                            <label class="form-label"> <b>Cibil Range Minimum</b> </label>
-                            <input type="text" class="form-control" value='{{ cibil.cibil_range_min }}' name="cibil_range_min">
-                        </div>
-                    </div>
-                    <div class="col-md-6"> 
-                        <div class="input-group input-group-outline my-3">
-                            <label class="form-label"> <b>Cibil Range Maximum</b> </label>
-                            <input type="text" class="form-control" value='{{ cibil.cibil_range_max }}' name="cibil_range_max">
-                        </div>
-                    </div>
-                    <div style="text-align:center">
-                        <button class="btn btn-primary mr-3 !important" type="submit">Submit</button>
+{% include 'base/messages.html' %}
+{% load static %}
+
+<form method="POST" action="{% url 'EditCibilDetails' %}" id="hlcibildetailsform">
+    {% csrf_token %}
+    <div class="row g-4 p-4">
+        {% for field in hl_cibildetails_form %}
+                <div class="col-sm-4 mb-2">
+                    <div class="input-group input-group-static">
+                        <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
+                        {{ field }}
                     </div>
                 </div>
-            </form>
-        </div>
+        {% endfor %}
     </div>
-{%endblock other_body%}
+    <input type = "hidden" name = "id" id = "hidden_id_cibil_details">
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+</form>

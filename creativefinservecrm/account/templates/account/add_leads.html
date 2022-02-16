@@ -7,105 +7,27 @@
 {% block title %}Add Leads{% endblock title %}
 
 {% block other_body %}
-  <div class="container" style="width:90%; margin:25px auto;">
+  <div class="container" style="margin:25px auto;">
       {% csrf_token %}
       <div class="form-group row"></div>
       <div class="container">
         <h1 class=" mt-3 mb-4 display-3 text-center">Add Leads</h1> 
         <div class="card-body">
           <div class="container">
-            <form class="form-container bg-white rounded shadow-blur p-3" action = "{% url 'add_leads' %}" 
-            id = "leadform" class="form-container bg-white rounded shadow-blur pt-3" method="POST" 
-            data-cities-url="ajax/cities/" 
-            data-subproducts-url = "ajax/subproducts/">
+            <form method="POST" action="{% url 'add_leads' %}" class="form-container bg-white rounded shadow-blur p-3" id="leadform" data-cities-url="ajax/cities/" data-subproducts-url = "ajax/subproducts/">
               {% csrf_token %}
-               <div class="row">
-                <div class="col-md-4">
-                  <div class="input-group input-group-static mb-4">
-                      <label  class="text-primary fw-bold">Prefix</label>
-                      {{form.prefix}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label  class="form-label text-primary fw-bold">Customer Name</label>
-                      {{form.name}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label   class="form-label text-primary fw-bold">Customer Mobile No</label>
-                      {{form.phone}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label   class="form-label text-primary fw-bold">Alternate Mobile No</label>
-                      {{form.alt_phone}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label   class="form-label text-primary fw-bold">Email-id</label>
-                      {{form.email}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label   class="form-label text-primary fw-bold">Reference Name</label>
-                      {{form.reference}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group input-group-static mb-4">
-                      <label  class="ms-0 text-primary fw-bold col-12">Product</label>
-                      {{form.product}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group input-group-static mb-4">
-                      <label  class="ms-0 text-primary fw-bold col-12">Sub Products</label>
-                        {{form.sub_product}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                      <label  class="ms-0 form-label text-primary fw-bold">Loan amount</label>
-                        {{form.loan_amt}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <label  class="ms-0 form-label text-primary fw-bold">Address</label>
-                    <div class="input-group input-group-outline mb-4">
-                      {{form.address}}
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group input-group-outline mb-4">
-                    <label  class="ms-0 form-label text-primary fw-bold">Pincode</label>
-                    {{form.pincode}}
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                      <div class="input-group input-group-static mb-4">
-                        <label  class="ms-0 text-primary fw-bold col-12">State</label>
-                        {{form.state}}
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                      <div class="input-group input-group-static mb-4">
-                        <label class="ms-0 text-primary fw-bold col-12">City</label>
-                       {{form.city}}
-                      </div>
-                  </div>
-                </div>
-               </div> 
-              <div style="text-align:center">
-                {% comment %} <button class="btn btn-primary" name="cancel" type="submit">Cancel</button> {% endcomment %}
-                <button class="btn btn-primary" name="save" type="submit">Save & Submit</button>
+              <div class="row g-4 p-4">
+                  {% for field in form %}
+                          <div class="col-sm-4 mb-2">
+                              <div class="input-group input-group-static">
+                                  <label class="ms-0 text-primary fw-bold">{{field.label}}</label>
+                                  {{ field }}
+                              </div>
+                          </div>
+                  {% endfor %}
+              </div>
+              <div class="text-center">
+                <button class="btn btn-primary" name="save" type="submit">Save & Next</button>
                 <button class="btn btn-primary" name="next" type="submit">Next</button>
               </div>
             </form>

@@ -13,13 +13,15 @@ class LeadsForm(ModelForm):
         exclude = ('added_by',)
     def __init__(self, *args, **kwargs):
         super(LeadsForm, self).__init__(*args, **kwargs)
+        self.fields['sub_product'].queryset = SubProduct.objects.none() 
+        self.fields['city'].queryset = SubProduct.objects.none() 
+        self.fields['address'].widget.attrs['rows'] = 1
+        self.fields['address'].widget.attrs['columns'] = 40
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class':'form-control',
                 'autofocus':''
             })
-        self.fields['sub_product'].queryset = SubProduct.objects.none() 
-        self.fields['city'].queryset = SubProduct.objects.none() 
 
         if 'state' in self.data:
             try:

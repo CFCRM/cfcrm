@@ -61,7 +61,7 @@ class Product(models.Model):
         return self.product
 
 class SubProduct(models.Model): 
-    sub_product      = models.CharField(max_length=25)
+    sub_product      = models.CharField(max_length=50)
     effective_date   = models.DateField(null = True)
     ineffective_date = models.DateField(blank=True, null = True)
     product          = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -217,14 +217,16 @@ class RejectionType(models.Model):
 
 # Create your models here.
 class AreaIn(models.Model): 
-    area_in = models.CharField(max_length=10)
-
+    area_in          = models.CharField(max_length=50)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(blank=True, null = True)
     def __str__(self): 
         return self.area_in
 
 class AreaType(models.Model): 
-    area_type = models.CharField(max_length=30)
-
+    area_type        = models.CharField(max_length=50)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(blank=True, null = True)
     def __str__(self): 
         return self.area_type
 
@@ -270,15 +272,6 @@ class LesseType(models.Model):
     ineffective_date = models.DateField(blank=True, null = True)
     def __str__(self): 
         return self.lesse_type
-
-
-class ResidenceType(models.Model): 
-    residence_type   = models.CharField(max_length=30)
-    effective_date   = models.DateField(null = True)
-    ineffective_date = models.DateField(blank=True, null = True)
-    def __str__(self): 
-        return self.residence_type
-
 
 class PaymentDelayYear(models.Model): 
     payment_delay_year = models.CharField(max_length=30)
@@ -352,4 +345,11 @@ class LoanAmount(models.Model):
     ineffective_date = models.DateField(blank=True, null = True)
     def __str__(self): 
         return self.loan_amount
-    
+
+
+class RateOfInterest(models.Model): 
+    rate_of_interest = models.CharField(max_length=30)
+    effective_date   = models.DateField(null = True)
+    ineffective_date = models.DateField(blank=True, null = True)
+    def __str__(self): 
+        return self.rate_of_interest

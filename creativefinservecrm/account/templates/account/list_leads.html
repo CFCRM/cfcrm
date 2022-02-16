@@ -51,23 +51,23 @@
                 <tbody>
                   {% for lead in listleads %}
                     <tr>
-                      <td><center>{{ lead.lead_id }}.</center></td>
+                      <td><center>{{ lead.pk }}.</center></td>
                       <td class="text-center">
-                        <a href={% url 'eligibility' id=lead.lead_id %} title="Check Eligibility">
+                        <a href={% url 'eligibility' id=lead.pk %} title="Check Eligibility">
                               <span class="text-warning">
                                 <i class="fa fa-check-circle"></i>
                               </span>
                         </a>
                       </td>
                       <td class="text-center">
-                        <a href={% url 'list_lead_view' id=lead.lead_id %} title="View Details">
+                        <a href={% url 'list_lead_view' id=lead.pk %} title="View Details">
                           <span class="text-info">
                             <i class="fa fa-eye"></i>
                           </span>
                         </a>
                       </td>
                       <td class="text-center">
-                        <a href={% url 'list_lead_edit' id=lead.lead_id %} title="Edit Details">
+                        <a href={% url 'list_lead_edit' id=lead.pk %} title="Edit Details">
                           <span class="text-dark">
                             <i class="fa fa-edit"></i>
                           </span>

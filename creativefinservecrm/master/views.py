@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import *
 from datetime import date
+from django.contrib.auth.decorators import login_required
+from stronghold.decorators import public
 
 # Create your views here.
 def Agreementtype_form(request):
@@ -362,36 +364,34 @@ def City_form(request):
     return render(request, 'master/master_details.html', context=context)
 
 
+@login_required (redirect_field_name='login', login_url='login')
 def Masterdetails(request):
-
     print(SubProduct.objects.all()[0].product.product)
-
     context = {
-        'qualifications': Qualification.objects.all(),
-        'professions': Profession.objects.all(),
-        'roles': Role.objects.all(),
-        'products': Product.objects.all(),
-        'subproducts': SubProduct.objects.all(),
-        'customertypes': CustomerType.objects.all(),
-        'designationtypes': DesignationType.objects.all(),
-        'companytypes': CompanyType.objects.all(),
-        'salarytypes': SalaryType.objects.all(),
-        'residencetypes': ResidenceType.objects.all(),
-        'banknames': BankName.objects.all(),
-        'leadsources': LeadSource.objects.all(),
-        'degrees': Degree.objects.all(),
-        'nationalitys': Nationality.objects.all(),
-        'states': State.objects.all(),
-        'citys': City.objects.all(),
-        'applicanttypes': ApplicantType.objects.all(),
-        'propertyins': PropertyIn.objects.all(),
-        'statues': Status.objects.all(),
-        'natureofbusinesss': NatureOfBusiness.objects.all(),
-        'ayyears': AYYear.objects.all(),
-        'agreementtypes': AgreementType.objects.all(),
+        'qualifications'      : Qualification.objects.all(),
+        'professions'         : Profession.objects.all(),
+        'roles'               : Role.objects.all(),
+        'products'            : Product.objects.all(),
+        'subproducts'         : SubProduct.objects.all(),
+        'customertypes'       : CustomerType.objects.all(),
+        'designationtypes'    : DesignationType.objects.all(),
+        'companytypes'        : CompanyType.objects.all(),
+        'salarytypes'         : SalaryType.objects.all(),
+        'residencetypes'      : ResidenceType.objects.all(),
+        'banknames'           : BankName.objects.all(),
+        'leadsources'         : LeadSource.objects.all(),
+        'degrees'             : Degree.objects.all(),
+        'nationalitys'        : Nationality.objects.all(),
+        'states'              : State.objects.all(),
+        'citys'               : City.objects.all(),
+        'applicanttypes'      : ApplicantType.objects.all(),
+        'propertyins'         : PropertyIn.objects.all(),
+        'statues'             : Status.objects.all(),
+        'natureofbusinesss'   : NatureOfBusiness.objects.all(),
+        'ayyears'             : AYYear.objects.all(),
+        'agreementtypes'      : AgreementType.objects.all(),
         'stageOfconstructions': StageOfConstruction.objects.all(),
-        'rejectiontypes': RejectionType.objects.all(),
-
+        'rejectiontypes'      : RejectionType.objects.all(),
     }
     return render(request, 'master/master_details.html', context=context)
 

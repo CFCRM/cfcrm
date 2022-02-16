@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from .utils import token_generator, render_to_pdf
 from django.contrib.auth.base_user import BaseUserManager
@@ -29,6 +29,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 #     return BaseUserManager().make_random_password(size)
 from leadgenerator.settings import EMAIL_HOST_USER
 from HomeLoan.models import *
+from stronghold.decorators import public
 
 @login_required (redirect_field_name='login', login_url='login')
 def base_dashboard(request):
@@ -37,9 +38,9 @@ def base_dashboard(request):
     }
     return render(request, 'account/base.html', context)
 
+@login_required (redirect_field_name='login', login_url='login')
 def register(request):
     if request.method == 'POST':
-
         fname = request.POST['fname']
         Email = request.POST['email']
         phone = request.POST['phone']
@@ -52,12 +53,10 @@ def register(request):
         mapped_to = "admin"
         mapped_to_nm = "admin"
         by_online = "yes"
-
         if CustomUser.objects.filter(email=Email).exists():
             messages.info(request, 'Email Taken')
             return redirect('register')
         else:
-
             user = CustomUser.objects.create_user(username=Email, password="", email=Email, first_name=fname, phone=phone, alt_phone=alt_phone, designation=designation, address=address, role = role, mapped_to = mapped_to, mapped_to_name = mapped_to_nm, by_online = by_online)
             user.is_active = False
             user.save()
@@ -90,24 +89,18 @@ def register(request):
                 ini += "BLD"
             else:
                 ini+="O"
-
             if user.role == "Referral Partner":
                 ini += "RP"
-
             num = '{:04d}'.format(user.id)
             newusername = ini+num
             user.username = newusername
             user.save()
-
-
             # if user.role == "Referral Partner":
             #     ini = "ORP"
             #     num = '{:03d}'.format(user.id)
             #     newusername = ini+num
             #     user.username = newusername
             #     user.save()
-
-
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             domain = get_current_site(request).domain
             link = reverse('activate', kwargs={'uidb64': uidb64, 'token': token_generator.make_token(user)})
@@ -120,49 +113,35 @@ def register(request):
                 [Email],
             )
             email.send(fail_silently=False)
-
             template = get_template('account/Agreement.html')
             context = {
             "partner_name" : user.first_name
             }
             html = template.render(context)
             pdf = render_to_pdf('account/Agreement.html', context)
-
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Agreement_%s.pdf" %(user.username)
             content = "attachment; filename='%s'" %(filename)
             # response['Content-Disposition'] = content
             response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-
-
-
             user.agreement.save(filename, File(BytesIO(pdf.content)))
-
             message="this is test mail"
             subject="terms and conditions"
             mail_id=request.POST.get('email','')
             # mail_id="daghariddhi12@gmail.com"
-
             email=EmailMessage(subject,message, EMAIL_HOST_USER, [mail_id,])
             email.content_subtype='html'
-
             # file2=open("abcd.txt","r")
             # file=open("manage.py","r")
             # email.attach("abcd.txt",file2.read(),'text/plain')
             # email.attach("manage.py",file.read(), 'text/plain')
             # email.attach_file('abc.pdf')
-
             email.send()
             # return render(request, 'account/terms.html')
-
-
         #else:
             #messages.info(request, 'Password did not match')
             #return redirect('register')
-
             return redirect('email_ver_msg')
-
-
         #else:
             #messages.info(request, 'Password did not match')
             #return redirect('register')
@@ -173,7 +152,7 @@ def register(request):
 class VerificationView(View):
     def get(self, request, uidb64, token):
         try:
-            id = force_text(urlsafe_base64_decode(uidb64))
+            id = force_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(pk=id)
 
             if not token_generator.check_token(user, token):
@@ -228,26 +207,27 @@ def login(request):
     else:
         return render(request, 'account/login.html')
 
+@login_required (redirect_field_name='login', login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect('home')
 
-def forgot_uname(request):
+def forgot_username(request):
     if request.method == 'POST':
         email = request.POST['email']
         if CustomUser.objects.filter(email=email).exists():
             p = CustomUser.objects.raw('SELECT * FROM account_customuser WHERE email = %s', [email])
             subject = 'Request for username'
-            message = f'Hi Your Username is: {p[0].username}'
+            message = "Hi Your Username is : " + p[0].username
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [email, ]
-            send_mail( subject, message, email_from, recipient_list )
+            send_mail(subject, message, email_from, recipient_list )
             return redirect('login')
         else:
-            messages.info(request, 'Email not registered')
-            return redirect('forgot_uname')
+            messages.warning(request, 'Email not Registered')
+            return redirect('forgot_username')
     else:
-        return render(request, 'account/forgot_uname.html')
+        return render(request, 'account/forgot_username.html')
 
 def uname_pw_gen(request):
     return render(request, 'account/uname_pw_gen.html')
@@ -279,10 +259,8 @@ def add_leads(request):
                 instance.added_by = request.user.username
                 instance.save()
                 return redirect(f"additionaldetails/{instance.pk}") # additionaldetails/20
-    
-    form  = LeadsForm()
     context = {
-        'form':form
+        'form':LeadsForm()
     }
     return render(request, 'account/add_leads.html', context=context)
 
@@ -443,6 +421,7 @@ def dashboard(request):
 def base(request):
     return render(request, 'account/home.html')
 
+@login_required (redirect_field_name='login', login_url='login')
 def list_leads(request):
     if request.user.role == "Admin":
         ll = Leads.objects.all()
@@ -450,16 +429,16 @@ def list_leads(request):
         ll = Leads.objects.filter(added_by=str(request.user.id))
     ids = []
     for i in ll:
-        ids.append(i.lead_id)
+        ids.append(i.pk)
 
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
-    listleads = Leads.objects.filter(lead_id__in=ids).order_by(preserved)
+    listleads = Leads.objects.filter(pk__in=ids).order_by(preserved)
     # return render(request, 'music/songs.html',  {'song': song})
     return render(request, 'account/list_leads.html', {'listleads': listleads})
 
 def list_lead_del(request, id):
     if request.method == 'POST':
-        lead= Leads.objects.filter(lead_id=id)
+        lead= Leads.objects.filter(pk=id)
         lead.delete()
         return redirect('list_leads')
 
@@ -473,48 +452,46 @@ def list_lead_edit(request, id):
                 return redirect('dashboard')
             elif user.role == "Referral Partner":
                 return redirect('base')
-        name = request.POST['name']
-        ref = request.POST['ref']
-        #username = request.POST['username']
-        email = request.POST['email']
-        #password1 = request.POST['password1']
-        #password2 = request.POST['password2']
-        product = request.POST['pdt']
+        name        = request.POST['name']
+        ref         = request.POST['ref']
+        #username   = request.POST['username']
+        email       = request.POST['email']
+        #password1  = request.POST['password1']
+        #password2  = request.POST['password2']
+        product     = request.POST['pdt']
         sub_product = request.POST['subpdt']
-        loan_amt = request.POST['amt']
-        address = request.POST['address']
-        phone = request.POST['phone']
-        alt_phone = request.POST['alt_phone']
-        city = request.POST['city']
-        state = request.POST['state']
-        pincode = request.POST['pincode']
-        country = request.POST['country']
-        added_by = request.user.id
-
-
-        Leads.objects.filter(lead_id=id).update(name = name, phone = phone, alt_phone = alt_phone, email = email, reference = ref, product = product, sub_product = sub_product, loan_amt = loan_amt, address = address, pincode = pincode, country = country, state = state, city= city, added_by = added_by )
+        loan_amt    = request.POST['amt']
+        address     = request.POST['address']
+        phone       = request.POST['phone']
+        alt_phone   = request.POST['alt_phone']
+        city        = request.POST['city']
+        state       = request.POST['state']
+        pincode     = request.POST['pincode']
+        country     = request.POST['country']
+        added_by    = request.user.id
+        Leads.objects.filter(pk=id).update(name = name, phone = phone, alt_phone = alt_phone, email = email, reference = ref, product = product, sub_product = sub_product, loan_amt = loan_amt, address = address, pincode = pincode, country = country, state = state, city= city, added_by = added_by )
 
 
 
-    lead = Leads.objects.filter(lead_id = id)[0]
-    products = Product.objects.all()
-    subproducts = SubProduct.objects.all()
+    lead           = Leads.objects.filter(pk = id)[0]
+    products       = Product.objects.all()
+    subproducts    = SubProduct.objects.all()
     subproductdict = dict()
     for subproduct in subproducts:
         if subproduct.product.id in subproductdict:
             subproductdict[subproduct.product.id].append({
-                'id':subproduct.id,
-                'sub_product':subproduct.sub_product,
-                'effective_date': subproduct.effective_date,
-                'ineffective_date': subproduct.ineffective_date
+                'id'              : subproduct.id,
+                'sub_product'     : subproduct.sub_product,
+                # 'effective_date'  : subproduct.effective_date,
+                # 'ineffective_date': subproduct.ineffective_date
             })
         else :
             subproductdict[subproduct.product.id] = []
             subproductdict[subproduct.product.id].append({
-                'id':subproduct.id,
-                'sub_product':subproduct.sub_product,
-                'effective_date': subproduct.effective_date,
-                'ineffective_date': subproduct.ineffective_date
+                'id'              : subproduct.id,
+                'sub_product'     : subproduct.sub_product,
+                # 'effective_date'  : subproduct.effective_date,
+                # 'ineffective_date': subproduct.ineffective_date
             })
     # print(json.dumps(subproductdict))
 
@@ -529,7 +506,7 @@ def list_lead_edit(request, id):
     return render(request, 'account/list_lead_edit.html', context=context)
 
 def list_lead_view(request, id):
-    lead = Leads.objects.filter(lead_id = id)[0]
+    lead = Leads.objects.filter(pk = id)[0]
     context = {
         'lead':lead,
     }
@@ -767,7 +744,7 @@ def property_type_1(request,id):
             form_instance.lead_id = Leads.objects.get(pk=id)
             form_instance.save()
             messages.success(request,"Property Details Updated Successfully !" )
-            return redirect (f"/account/property_details/{id}")  
+            return redirect ('add_applicant_additional_details', id)  
         else:
             messages.error(request,form.errors)
             return redirect (f"/account/property_type_1/{id}")  
@@ -782,7 +759,7 @@ def property_type_2(request,id):
             form_instance.lead_id = Leads.objects.get(pk=id)
             form_instance.save()
             messages.success(request,"Property Details Updated Successfully !" )
-            return redirect (f"/account/property_type_2/{id}")  
+            return redirect ('add_applicant_additional_details', id) 
 
         else:
             messages.error(request,form.errors)
@@ -799,7 +776,7 @@ def property_type_3(request,id):
             form_instance.lead_id = Leads.objects.get(pk=id)
             form_instance.save()
             messages.success(request,"Property Details Updated Successfully !" )
-            return redirect (f"/account/property_type_3/{id}")  
+            return redirect ('add_applicant_additional_details', id) 
 
         else:
             messages.error(request,form.errors)
@@ -816,7 +793,7 @@ def property_type_4(request,id):
             form_instance.lead_id = Leads.objects.get(pk=id)
             form_instance.save()
             messages.success(request,"Property Details Updated Successfully !" )
-            return redirect (f"/account/property_type_4/{id}")  
+            return redirect ('add_applicant_additional_details', id)  
 
         else:
             messages.error(request,form.errors)
@@ -839,11 +816,25 @@ def add_individual_details(request,id):
     return render(request,'base/base.html')
 
 def property_details(request,id):
-    additional_details_instance = AdditionalDetails.objects.filter(lead_id = id)
-    if additional_details_instance is None:
-        return redirect(f"additionaldetails/{id}")
-    else:
-        return render(request,"account/add_property_details.html",context = {"lead_id":id})
+    if request.method == 'GET':
+        additional_details_instance = AdditionalDetails.objects.filter(lead_id = id)
+        lead = Leads.objects.get(pk = id)
+        if additional_details_instance is None:
+            return redirect("additionaldetails", id)
+        else:
+            if lead.sub_product.sub_product == 'Underconstruction Buying From Builder':
+                form = PropertyDetailsType1Form()
+                return render(request,'account/property_type_1.html',context={"form":form,"lead_id":id})
+            elif lead.sub_product.sub_product == 'Underconstruction Buying From Seller':
+                form = PropertyType2Form()
+                return render(request,'account/property_type_2.html',context={"form":form,"lead_id":id})
+            elif lead.sub_product.sub_product == 'Ready Possession Buying From Builder':
+                form = PropType3Form()
+                return render(request,'account/property_type_3.html',context={"form":form,"lead_id":id})
+            elif lead.sub_product.sub_product == 'Ready Possession Buying From Seller':
+                form = PropType4Form()
+                return render(request,'account/property_type_4.html',context={"form":form,"lead_id":id})
+        # return render(request,"account/add_property_details.html",context = {"lead_id":id})
     # if request.method == 'POST':
     #     user = request.user
     #     lead = Leads.objects.filter(lead_id = id).first()
@@ -1309,7 +1300,7 @@ def salaried(request,id):
         "additional_details_form"       : SalAdditionalDetailsForm(),
         "investment_form"               : SalInvestmentsForm(),
     }
-    return render(request, 'account/salaried.html', context=context)
+    return render(request, 'account/salaried.html', context)
 
     # if request.method == 'POST':
     #     user = request.user
@@ -1706,21 +1697,24 @@ def student(request,id):
     products = Product.objects.all()
     return render(request, 'account/Student.html', {'nationalities':nationalities, 'products':products, 'genders': genders, 'cust': cust})
 
+@login_required (redirect_field_name='login', login_url='login')
 def whatsapp(request):
     return render(request, 'account/whatsapp.html')
 
+@login_required (redirect_field_name='login', login_url='login')
 def calculator(request):
     return render(request, 'account/calculator.html')
 
 def sidebar(request):
     return render(request, 'account/sidebar.html')
 
+@login_required (redirect_field_name='login', login_url='login')
 def email(request):
     return render(request, 'account/email.html')
 
+@login_required (redirect_field_name='login', login_url='login')
 def register2(request):
     if request.method == 'POST':
-
         fname = request.POST['fname']
         Email = request.POST['email']
         phone = request.POST['phone']
@@ -1829,13 +1823,14 @@ def register2(request):
 
 
 
-
+@login_required (redirect_field_name='login', login_url='login')
 def customer_details(request):
     context = {
         'Leads': Leads.objects.all(),
     }
     return render(request, 'account/customer_details.html', context=context)
 
+@login_required (redirect_field_name='login', login_url='login')
 def partner_list(request):
     users = CustomUser.objects.all()
     partners = [x for x in users if x.role == 'Referral Partner']
@@ -1867,13 +1862,13 @@ def partner_detail_edit(request, id):
     }
     return render(request, 'account/partner_detail_edit.html', context=context)
 
-
+@login_required (redirect_field_name='login', login_url='login')
 def bank_download(request):
     context = {}
     return render(request, 'account/Bank_download.html', context=context)
 
+@login_required (redirect_field_name='login', login_url='login')
 def codes(request):
-
     if request.method == 'POST':
         # print(Bank.objects.filter(id=1))
         BankCodes(
@@ -1883,7 +1878,6 @@ def codes(request):
             name_of_company = request.POST['cmp_name']
         ).save()
         return redirect('codes')
-
     context = {
         'banks': Bank.objects.all(),
         'products': Product.objects.all(),
@@ -1891,13 +1885,17 @@ def codes(request):
     }
     return render(request, 'account/codes.html', context=context)
 
+@login_required (redirect_field_name='login', login_url='login')
 def approved(request):
     context = {}
     return render(request, 'account/approved.html', context=context)
 
+@login_required (redirect_field_name='login', login_url='login')
 def training(request):
     context = {}
     return render(request, 'account/training.html', context=context)
+
+@login_required (redirect_field_name='login', login_url='login')
 def support(request):
     context = {}
     return render(request, 'account/support.html', context=context)
